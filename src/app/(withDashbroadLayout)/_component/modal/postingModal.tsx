@@ -311,7 +311,7 @@ const PostModal = ({ userInfo }: TPostModalProps) => {
 
               {/* Image Upload */}
               <div className="">
-                <label className="mt-4 cursor-pointer text-xs text-pink-400 my-5 flex gap-2 items-center ">
+                <label className="mt-4 cursor-pointer text-xs text-sage-500 dark:text-sage-400 my-5 flex gap-2 items-center ">
                   <IoIosImages className="text-2xl" />
                   <p>Upload Images</p>
                   <input
@@ -333,7 +333,7 @@ const PostModal = ({ userInfo }: TPostModalProps) => {
                         className="rounded w-[100px] h-[80px] object-cover"
                       />
                       <button
-                        className="absolute top-1 right-1 bg-pink-500 text-white rounded-full p-1 text-[8px]"
+                        className="absolute top-1 right-1 bg-sage-600 text-white rounded-full p-1 text-[8px]"
                         onClick={() => removeImagePreview(index)}
                       >
                         <FaX />

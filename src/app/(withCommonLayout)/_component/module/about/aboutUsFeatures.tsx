@@ -41,12 +41,12 @@ const TravelFeatures: React.FC = () => {
         transition={{ duration: 0.6, ease: 'easeOut' }}
         className="lg:w-1/2 space-y-6"
       >
-        <h2 className="text-pink-600 tracking-wider text-sm">
+        <h2 className="text-sage-700 dark:text-sage-300 tracking-wider text-sm">
           Travel Platform
         </h2>
         <h1 className="text-xl md:text-2xl font-bold">
           Explore the{' '}
-          <span className="text-pink-500 bg-pink-100 px-2 rounded">world</span>{' '}
+          <span className="text-sage-600 dark:text-sage-400 bg-sage-100 px-2 rounded">world</span>{' '}
           with the best travel insights
         </h1>
 
@@ -57,7 +57,7 @@ const TravelFeatures: React.FC = () => {
               key={tab.id}
               className={`py-2 px-3 rounded-full text-xs md:text-sm ${
                 activeTab === tab.id
-                  ? 'bg-pink-100 text-pink-600'
+                  ? 'bg-sage-100 text-sage-700 dark:text-sage-300'
                   : 'bg-default-100 text-default-500'
               }`}
               onClick={() => setActiveTab(tab.id)}
@@ -77,13 +77,13 @@ const TravelFeatures: React.FC = () => {
         {/* Feature Highlights */}
         <div className="flex space-x-4 mt-6">
           <motion.div
-            className="px-3 py-2 text-xs md:text-sm rounded-lg bg-default-50 text-pink-600 border border-default-100"
+            className="px-3 py-2 text-xs md:text-sm rounded-lg bg-default-50 text-sage-700 dark:text-sage-300 border border-default-100"
             whileHover={{ scale: 1.05 }}
           >
             Sustainable Travel Tips
           </motion.div>
           <motion.div
-            className="px-3 py-2 text-xs md:text-sm rounded-lg bg-default-50 text-pink-600 border border-default-100"
+            className="px-3 py-2 text-xs md:text-sm rounded-lg bg-default-50 text-sage-700 dark:text-sage-300 border border-default-100"
             whileHover={{ scale: 1.05 }}
           >
             Community Recommendations

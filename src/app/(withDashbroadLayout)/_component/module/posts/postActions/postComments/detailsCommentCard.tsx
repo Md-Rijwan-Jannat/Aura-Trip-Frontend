@@ -155,7 +155,7 @@ const DetailsCommentCard: React.FC<DetailsCommentCardProps> = ({ postId }) => {
                   />
                 ) : (
                   <button
-                    className="text-xs text-pink-500 hover:underline"
+                    className="text-xs text-sage-600 dark:text-sage-400 hover:underline"
                     onClick={() => setReplyingTo(comment.comId)}
                   >
                     Reply

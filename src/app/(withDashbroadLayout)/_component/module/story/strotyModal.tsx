@@ -67,8 +67,10 @@ export function StoryModal({ story, onOpenChange, isOpen }: StoryModalProps) {
             setIsTransitioning(true);
             goToNextStory();
           }
+
           return 100;
         }
+
         return prevProgress + (100 / STORY_DURATION) * 100;
       });
     }, 100);
@@ -127,6 +129,7 @@ export function StoryModal({ story, onOpenChange, isOpen }: StoryModalProps) {
     };
 
     window.addEventListener('keydown', handleKeyDown);
+
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [goToPreviousStory, goToNextStory, onOpenChange]);
 
@@ -134,6 +137,7 @@ export function StoryModal({ story, onOpenChange, isOpen }: StoryModalProps) {
 
   const handleReaction = async (reaction: ReactionType) => {
     const currentStory = story.stories[currentStoryIndex];
+
     if (!currentStory || !currentStory.reactions) {
       return;
     }
@@ -151,6 +155,7 @@ export function StoryModal({ story, onOpenChange, isOpen }: StoryModalProps) {
   const handleDelete = async () => {
     try {
       const currentStoryId = story.stories[currentStoryIndex]._id;
+
       await deleteStoryFn(currentStoryId).unwrap();
       onDeleteModalClose();
       onOpenChange();
@@ -171,6 +176,7 @@ export function StoryModal({ story, onOpenChange, isOpen }: StoryModalProps) {
     if (diffInSeconds < 86400)
       return `${Math.floor(diffInSeconds / 3600)}h ago`; // less than 1 day
     if (diffInSeconds < 172800) return '1d ago'; // less than 2 days
+
     return `${Math.floor(diffInSeconds / 86400)}d ago`; // more than 2 days
   };
 
@@ -199,7 +205,7 @@ export function StoryModal({ story, onOpenChange, isOpen }: StoryModalProps) {
                   <div className="flex items-center space-x-2">
                     <Link href={`/profile/${story?.user?._id}`}>
                       <Avatar
-                        className="w-10 h-10 border-2 border-pink-500"
+                        className="w-10 h-10 border-2 border-sage-600"
                         name={story.user?.name?.[0]?.toUpperCase()}
                         src={story.user?.image || undefined}
                       />
@@ -212,7 +218,7 @@ export function StoryModal({ story, onOpenChange, isOpen }: StoryModalProps) {
                         >
                           {story.user.name}
                           {story.user.verified && (
-                            <GoVerified className="text-pink-500" size={14} />
+                            <GoVerified className="text-sage-600 dark:text-sage-400" size={14} />
                           )}
                         </Link>
                         {!isOwnStory && (
@@ -266,7 +272,7 @@ export function StoryModal({ story, onOpenChange, isOpen }: StoryModalProps) {
                 <Button
                   isIconOnly
                   variant="light"
-                  className="absolute top-1/2 left-2 -translate-y-1/2 bg-default-200 text-pink-500"
+                  className="absolute top-1/2 left-2 -translate-y-1/2 bg-default-200 text-sage-600 dark:text-sage-400"
                   onClick={goToPreviousStory}
                   disabled={currentStoryIndex === 0}
                   aria-label="Previous story"
@@ -276,7 +282,7 @@ export function StoryModal({ story, onOpenChange, isOpen }: StoryModalProps) {
                 <Button
                   isIconOnly
                   variant="light"
-                  className="absolute top-1/2 right-2 -translate-y-1/2 bg-default-200 text-pink-500"
+                  className="absolute top-1/2 right-2 -translate-y-1/2 bg-default-200 text-sage-600 dark:text-sage-400"
                   onClick={goToNextStory}
                   disabled={currentStoryIndex === story.stories.length - 1}
                   aria-label="Next story"
@@ -289,7 +295,7 @@ export function StoryModal({ story, onOpenChange, isOpen }: StoryModalProps) {
                   <p className="text-start">
                     {' '}
                     {currentStory?.reactions?.length || 0}{' '}
-                    <span className="text-pink-500">Reactions</span>
+                    <span className="text-sage-600 dark:text-sage-400">Reactions</span>
                   </p>
                 ) : (
                   <div className="flex gap-5">
@@ -311,7 +317,7 @@ export function StoryModal({ story, onOpenChange, isOpen }: StoryModalProps) {
                           color="default"
                           variant="light"
                           size="sm"
-                          className={`${isActive ? 'text-pink-500' : ''}`} // Change the color based on whether it's active
+                          className={`${isActive ? 'text-sage-600 dark:text-sage-400' : ''}`} // Change the color based on whether it's active
                           onClick={() => handleReaction(key as ReactionType)}
                         >
                           {icon}

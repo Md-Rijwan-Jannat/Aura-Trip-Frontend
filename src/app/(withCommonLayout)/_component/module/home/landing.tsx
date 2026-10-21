@@ -19,7 +19,7 @@ const LandingBanner: FC<TLandingBannerProps> = () => {
   return (
     <section className="relative top-[50px] flex flex-col items-center justify-center gap-4 py-8 md:py-10 overflow-hidden h-[600px] md:h-[65vh]">
       {/* Main Content */}
-      <div className="flex text-pink-500">
+      <div className="flex text-sage-600 dark:text-sage-400">
         <GoHeart className="animate-pulse duration-500" size={35} />
         <GoHeart className="animate-pulse duration-500" size={35} />
         <GoHeart className="animate-pulse duration-500" size={35} />
@@ -28,7 +28,7 @@ const LandingBanner: FC<TLandingBannerProps> = () => {
       </div>
       <div className="inline-block max-w-2xl text-center justify-center z-10 animate-fade-in">
         <h1 className="text-4xl md:text-5xl font-bold text-default-900">
-          Share Your Travel Tips & Destinations Guides
+          Share Your Adventures on Aura Trip
         </h1>
         <div className="text-lg md:text-xl mt-4 text-default-800">
           Discover breathtaking destinations, share travel stories, and create
@@ -39,7 +39,7 @@ const LandingBanner: FC<TLandingBannerProps> = () => {
       {/* Buttons */}
       <div className="flex gap-3 z-10 mt-5 animate-fade-in-up">
         <Button className="primary-button" as={Link} href="/news-feed/posts">
-          View Travel Tips
+          Explore Aura Trip
         </Button>
         <Button className="secondary-button" as={Link} href="/docs">
           Learn More
@@ -79,7 +79,7 @@ const LandingBanner: FC<TLandingBannerProps> = () => {
                   />
                 ))}{" "}
           </div>
-          +<Code color="primary">TT&DG Community</Code>
+          +<Code color="primary">Aura Trip Community</Code>
         </div>
       </div>
     </section>

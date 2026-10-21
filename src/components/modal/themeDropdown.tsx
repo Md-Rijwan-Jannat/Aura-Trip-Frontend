@@ -28,7 +28,7 @@ const ThemeDropdown = () => {
           startContent={
             theme === 'dark' ? <MoonIcon size={18} /> : <SunIcon size={18} />
           }
-        ></Button>
+         />
       </DropdownTrigger>
       <DropdownMenu
         aria-label="Theme selection"

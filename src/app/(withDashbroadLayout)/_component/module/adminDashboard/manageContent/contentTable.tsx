@@ -112,7 +112,7 @@ const ContentTable: React.FC<ContentTableProps> = ({ posts }) => {
                 {post.status === "FREE" ? (
                   <Chip
                     size="sm"
-                    className="bg-primaryColor bg-opacity-30 border border-default-200"
+                    className="bg-sage-500/30 border border-default-200"
                     variant="flat"
                   >
                     Free

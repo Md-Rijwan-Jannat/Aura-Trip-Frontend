@@ -45,14 +45,14 @@ const TravelSlider: FC<TravelSliderProps> = ({ destinations }) => {
           radius="full"
           startContent={<IoIosArrowBack />}
           onClick={handlePrevSlide}
-          className="bg-default-200 p-2 rounded-full text-pink-500"
+          className="bg-default-200 p-2 rounded-full text-sage-600 dark:text-sage-400"
         />
         <Button
           isIconOnly
           radius="full"
           startContent={<IoIosArrowForward />}
           onClick={handleNextSlide}
-          className="bg-default-200 p-2 rounded-full text-pink-500"
+          className="bg-default-200 p-2 rounded-full text-sage-600 dark:text-sage-400"
         />
       </div>
 

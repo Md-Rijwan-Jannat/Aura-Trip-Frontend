@@ -75,7 +75,7 @@ export default function Contact() {
             animate={{ opacity: 1 }}
             transition={{ duration: 1 }}
           >
-            <h2 className="text-pink-600 tracking-wider text-sm md:text-lg my-3">
+            <h2 className="text-sage-700 dark:text-sage-300 tracking-wider text-sm md:text-lg my-3">
               Travel Platform
             </h2>
             <h1 className="text-2xl md:text-3xl font-bold">

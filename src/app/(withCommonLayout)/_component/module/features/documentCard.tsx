@@ -15,7 +15,7 @@ const DocumentCard: React.FC<DocumentCardProps> = ({ title, items, link }) => {
     <Card className="p-4 rounded-md shadow-sm w-full">
       <CardHeader>
         <div className="flex items-center gap-2">
-          <div className="w-6 h-6 bg-pink-500 rounded-full flex items-center justify-center text-white">
+          <div className="w-6 h-6 bg-sage-600 rounded-full flex items-center justify-center text-white">
             ✓
           </div>
           <h3 className="font-semibold">{title}</h3>
@@ -38,7 +38,7 @@ const DocumentCard: React.FC<DocumentCardProps> = ({ title, items, link }) => {
           target="_blank"
           radius="full"
           size="sm"
-          className="w-full text-pink-500"
+          className="w-full text-sage-600 dark:text-sage-400"
         >
           View More →
         </Button>

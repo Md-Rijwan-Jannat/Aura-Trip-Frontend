@@ -47,7 +47,7 @@ export default function About() {
         whileInView={{ opacity: 1 }}
         transition={{ duration: 1 }}
       >
-        <h2 className="text-2xl md:text-3xl font-bold text-pink-600">
+        <h2 className="text-2xl md:text-3xl font-bold text-sage-700 dark:text-sage-300">
           Our Story
         </h2>
         <p className="text-default-600 max-w-2xl mx-auto mt-4">
@@ -68,7 +68,7 @@ export default function About() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.3, duration: 0.5 }}
           >
-            <h3 className="text-xl font-semibold mb-3 text-pink-500">
+            <h3 className="text-xl font-semibold mb-3 text-sage-600 dark:text-sage-400">
               {title}
             </h3>
             <p className="text-default-600">
@@ -85,12 +85,12 @@ export default function About() {
 
       {/* Testimonials Section */}
       <motion.section
-        className="text-center py-16 px-6 bg-pink-50 bg-opacity-10 rounded-lg"
+        className="text-center py-16 px-6 bg-sage-50 bg-opacity-10 rounded-lg"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 1 }}
       >
-        <h2 className="text-2xl md:text-3xl font-bold text-pink-600">
+        <h2 className="text-2xl md:text-3xl font-bold text-sage-700 dark:text-sage-300">
           What Our Travelers Say
         </h2>
         <div className="flex flex-wrap gap-10 justify-center mt-8">
@@ -112,7 +112,7 @@ export default function About() {
                   "Amazing guides and tips for my first solo trip - couldn’t have done it without them!"}
                 &quot;
               </p>
-              <p className="text-pink-500 font-semibold mt-3">{name}</p>
+              <p className="text-sage-600 dark:text-sage-400 font-semibold mt-3">{name}</p>
             </motion.div>
           ))}
         </div>
@@ -120,7 +120,7 @@ export default function About() {
 
       {/* Call to Action */}
       <motion.div
-        className="text-center py-12 px-4 bg-pink-600 text-default-50"
+        className="text-center py-12 px-4 bg-sage-700 text-default-50"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7 }}
@@ -134,7 +134,7 @@ export default function About() {
         </p>
         <Link href="/register">
           <motion.button
-            className="mt-6 px-6 py-3 bg-white text-pink-600 font-bold rounded-full shadow-md"
+            className="mt-6 px-6 py-3 bg-surface text-sage-700 dark:text-sage-300 font-bold rounded-full shadow-md"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >

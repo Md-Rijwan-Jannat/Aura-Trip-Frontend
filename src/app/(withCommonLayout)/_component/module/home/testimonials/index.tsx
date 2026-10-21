@@ -22,7 +22,7 @@ export default function Testimonials() {
             {reviews.map(({ user, quote }: TReview, index: number) => {
               const variant =
                 index === 0 || index === 3
-                  ? "bg-pink-500 text-white"
+                  ? "bg-sage-600 text-white"
                   : "bg-default-50 text-default-700 border border-default-100";
 
               return (
@@ -66,7 +66,7 @@ export default function Testimonials() {
             className="space-y-8"
           >
             <div className="space-y-4">
-              <h2 className="text-lg md:text-2xl lg:text-4xl font-bold text-pink-500">
+              <h2 className="text-lg md:text-2xl lg:text-4xl font-bold text-sage-600 dark:text-sage-400">
                 Join Our Travel Community & Explore Hidden Gems!
               </h2>
               <p className="text-gray-600">

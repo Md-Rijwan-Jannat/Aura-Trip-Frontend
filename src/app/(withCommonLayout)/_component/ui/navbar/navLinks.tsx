@@ -22,7 +22,7 @@ export default function NavLinks() {
               href={item.href}
               className={`${
                 isActive
-                  ? 'text-pink-400 font-medium text-[14px]'
+                  ? 'text-sage-500 dark:text-sage-400 font-medium text-[14px]'
                   : 'text-default-800 text-[14px]'
               }`}
             >

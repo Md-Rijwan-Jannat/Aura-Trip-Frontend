@@ -15,6 +15,7 @@ const generateChartData = () => {
     const date = subDays(currentDate, i); // Subtract days from the current date
     const formattedDate = format(date, 'MMM d'); // Format as 'Jan 1', 'Jan 2', etc.
     const value = Math.floor(Math.random() * 10000) + 35000; // Random value for demonstration
+
     data.push({ date: formattedDate, value });
   }
 
@@ -35,7 +36,7 @@ const MyDashboard = () => {
       <Card className="bg-default-50 border border-default-200 p-4">
         <h2 className="text-xl font-semibold">Exchange</h2>
         {/* Exchange Details */}
-        <Button className="w-full bg-pink-500 text-white hover:bg-pink-600 mt-3 ">
+        <Button className="w-full bg-sage-600 text-white hover:bg-sage-800 mt-3 ">
           Exchange
         </Button>
       </Card>

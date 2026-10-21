@@ -29,11 +29,13 @@ export const PostApi = baseApi.injectEndpoints({
     getAllPosts: builder.query({
       query: (args) => {
         const params = new URLSearchParams();
+
         if (args) {
           Object.entries(args).forEach(([key, value]) => {
             params.append(key, value as string);
           });
         }
+
         return {
           url: "/posts",
           method: "GET",
@@ -44,6 +46,7 @@ export const PostApi = baseApi.injectEndpoints({
         if (!result || !Array.isArray(result)) {
           return [{ type: "posts" as const, id: "LIST" }];
         }
+
         return [
           { type: "posts" as const, id: "LIST" },
           ...result.map(({ id }: { id: string }) => ({
@@ -73,6 +76,7 @@ export const PostApi = baseApi.injectEndpoints({
         if (!result || !Array.isArray(result)) {
           return [{ type: "posts" as const, id: "LIST" }];
         }
+
         return [
           { type: "posts" as const, id: "LIST" },
           ...result.map(({ id }: { id: string }) => ({
@@ -93,6 +97,7 @@ export const PostApi = baseApi.injectEndpoints({
         if (!result || !Array.isArray(result)) {
           return [{ type: "posts" as const, id: "LIST" }];
         }
+
         return [
           { type: "posts" as const, id: "LIST" },
           ...result.map(({ id }: { id: string }) => ({

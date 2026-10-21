@@ -1,5 +1,21 @@
 import { nextui } from "@nextui-org/theme";
 
+/**
+ * Aura Trip — Sage Green design tokens
+ */
+const sage = {
+  50: "#F4FAF6",
+  100: "#EAF5ED", // Soft Mint
+  200: "#D7EDE0",
+  300: "#B4DEC7",
+  400: "#8AC8A6",
+  500: "#65A982", // Primary Sage (brand accents, decorative)
+  600: "#2F7D62", // Accessible primary — white text 5.0:1
+  700: "#245743", // Deep Forest — headings/emphasis, white text 8.2:1
+  800: "#1F4E3D",
+  900: "#194D3A", // Hover/pressed deep state
+};
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -24,8 +40,16 @@ module.exports = {
         "fade-in-up": "fade-in-up 1s ease-in-out",
       },
       colors: {
-        primaryColor: "#ff1f71",
+        // Semantic tokens (flip between light/dark via CSS vars in globals.css)
+        primaryColor: "var(--brand-primary)",
         secondaryColor: "#2db2ff",
+        surface: "var(--surface)",
+        appBackground: "var(--app-background)",
+        textMain: "var(--text-main)",
+        textSecondary: "var(--text-secondary)",
+        borderSubtle: "var(--border-color)",
+        // Aura Trip Sage palette
+        sage,
       },
       fontFamily: {
         sans: ["var(--font-sans)"],
@@ -34,5 +58,22 @@ module.exports = {
     },
   },
   darkMode: "class",
-  plugins: [nextui()],
+  plugins: [
+    nextui({
+      theme: {
+        light: {
+          colors: {
+            background: "#F7FAF7",
+            primary: { DEFAULT: "#2F7D62", foreground: "#FFFFFF" },
+          },
+        },
+        dark: {
+          colors: {
+            background: "#121614",
+            primary: { DEFAULT: "#65A982", foreground: "#10231B" },
+          },
+        },
+      },
+    }),
+  ],
 };

@@ -16,6 +16,7 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
   useEffect(() => {
     if (endpoint && user) {
       const newSocket = io(endpoint);
+
       setSocket(newSocket);
 
       newSocket.emit("setup", user);

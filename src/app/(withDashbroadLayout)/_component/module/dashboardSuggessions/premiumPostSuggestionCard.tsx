@@ -76,7 +76,7 @@ export default function PremiumPostSuggestionCard({
             <h3 className="font-semibold text-lg text-default-900 text-[12px]">
               {truncatedTitle}
             </h3>
-            <p className="text-default-500 text-[10px] bg-pink-500/10 rounded-full px-2">
+            <p className="text-default-500 text-[10px] bg-sage-600/10 rounded-full px-2">
               Recommended
             </p>
           </div>

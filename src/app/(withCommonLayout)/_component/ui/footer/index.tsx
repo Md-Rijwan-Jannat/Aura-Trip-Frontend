@@ -34,7 +34,6 @@ const Footer = () => {
           >
             <Link className="flex items-center gap-2" href="/">
               <BrandLogo />
-              <p className="font-bold text-pink-600 text-xl">TT&DG</p>
             </Link>
             <p className="mt-4 text-sm">
               Exploring the World, one adventure at a time. Connecting travelers
@@ -50,7 +49,7 @@ const Footer = () => {
               <h3 className="text-sm font-semibold text-default-900 mb-2 mt-5 whitespace-nowrap">
                 Satisfied Travelers
               </h3>
-              <div className="text-4xl font-bold text-pink-500">
+              <div className="text-4xl font-bold text-sage-600 dark:text-sage-400">
                 <CountUp end={5879} duration={2.5} separator="," />
               </div>
             </motion.div>
@@ -63,32 +62,32 @@ const Footer = () => {
             transition={{ delay: 0.6 }}
             className="w-full md:w-1/3"
           >
-            <h3 className="text-lg font-semibold text-pink-600 mb-4 mt-1">
+            <h3 className="text-lg font-semibold text-sage-700 dark:text-sage-300 mb-4 mt-1">
               Quick Links
             </h3>
             <ul className="flex flex-col gap-4 text-sm text-default-600">
               <li>
-                <Link href="/" className="hover:text-pink-600">
+                <Link href="/" className="hover:text-sage-700 dark:hover:text-sage-300">
                   Home
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="hover:text-pink-600">
+                <Link href="/about" className="hover:text-sage-700 dark:hover:text-sage-300">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link href="/features" className="hover:text-pink-600">
+                <Link href="/features" className="hover:text-sage-700 dark:hover:text-sage-300">
                   Features
                 </Link>
               </li>
               <li>
-                <Link href="/privacy-policy" className="hover:text-pink-600">
+                <Link href="/privacy-policy" className="hover:text-sage-700 dark:hover:text-sage-300">
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link href="/terms-of-service" className="hover:text-pink-600">
+                <Link href="/terms-of-service" className="hover:text-sage-700 dark:hover:text-sage-300">
                   Terms of Service
                 </Link>
               </li>
@@ -102,20 +101,20 @@ const Footer = () => {
             transition={{ delay: 0.6 }}
             className="w-full md:w-1/3"
           >
-            <h3 className="text-lg font-semibold text-pink-600 mb-4 mt-1">
+            <h3 className="text-lg font-semibold text-sage-700 dark:text-sage-300 mb-4 mt-1">
               Stay Connected
             </h3>
             <div className="flex space-x-4 mb-4">
-              <Link href="#" className="text-pink-500 hover:text-pink-600">
+              <Link href="#" className="text-sage-600 dark:text-sage-400 hover:text-sage-700 dark:hover:text-sage-300">
                 <FaFacebookF size={24} />
               </Link>
-              <Link href="#" className="text-pink-500 hover:text-pink-600">
+              <Link href="#" className="text-sage-600 dark:text-sage-400 hover:text-sage-700 dark:hover:text-sage-300">
                 <FaTwitter size={24} />
               </Link>
-              <Link href="#" className="text-pink-500 hover:text-pink-600">
+              <Link href="#" className="text-sage-600 dark:text-sage-400 hover:text-sage-700 dark:hover:text-sage-300">
                 <FaInstagram size={24} />
               </Link>
-              <Link href="#" className="text-pink-500 hover:text-pink-600">
+              <Link href="#" className="text-sage-600 dark:text-sage-400 hover:text-sage-700 dark:hover:text-sage-300">
                 <FaLinkedinIn size={24} />
               </Link>
             </div>
@@ -124,7 +123,7 @@ const Footer = () => {
                 <p>Email:</p>{" "}
                 <a
                   href="mailto:info@fitnessgear.com"
-                  className="text-pink-500 hover:text-pink-600"
+                  className="text-sage-600 dark:text-sage-400 hover:text-sage-700 dark:hover:text-sage-300"
                 >
                   info@fitnessgear.com
                 </a>
@@ -133,7 +132,7 @@ const Footer = () => {
                 <p>Phone:</p>{" "}
                 <a
                   href="tel:+1234567890"
-                  className="text-pink-500 hover:text-pink-600"
+                  className="text-sage-600 dark:text-sage-400 hover:text-sage-700 dark:hover:text-sage-300"
                 >
                   +1 234 567 890
                 </a>
@@ -151,7 +150,7 @@ const Footer = () => {
         <div className="flex justify-center items-center">
           {/* Footer Copyright */}
           <p className="text-sm text-default-500 text-center">
-            © {date} TT&DG. All rights reserved.
+            © {date} Aura Trip. All rights reserved.
           </p>
         </div>
       </Container>

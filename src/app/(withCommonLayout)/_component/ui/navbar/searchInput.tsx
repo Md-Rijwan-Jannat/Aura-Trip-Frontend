@@ -134,7 +134,7 @@ export default function SearchInput() {
                           dangerouslySetInnerHTML={{
                             __html: post.description.slice(0, 50),
                           }}
-                        ></p>
+                         />
                       </div>
                       <MdOutlineKeyboardArrowRight className="text-[18px] md:text-[22px] lg:text-[30px]" />
                     </Link>

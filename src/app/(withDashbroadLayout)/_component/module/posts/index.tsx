@@ -148,7 +148,7 @@ export default function Post() {
           </div>
         }
         endMessage={
-          <p className="text-center text-xs text-pink-400 my-3">
+          <p className="text-center text-xs text-sage-500 dark:text-sage-400 my-3">
             You seen all posts
           </p>
         }

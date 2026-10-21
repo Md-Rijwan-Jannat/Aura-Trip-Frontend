@@ -30,6 +30,7 @@ const AddConnectionCard: React.FC<AddConnectionCardProps> = ({
   onIgnore,
 }) => {
   const { userInfo: user } = useUser();
+
   return (
     <Card className="max-w-[340px] w-full mx-auto">
       <CardHeader className="justify-between">

@@ -75,7 +75,7 @@ export default function MiniDashboard() {
               as={Link}
               href="/admin-dashboard/analytics"
               size="sm"
-              className="bg-pink-500 text-white hover:bg-pink-600"
+              className="bg-sage-600 text-white hover:bg-sage-800"
             >
               View analytics
             </Button>

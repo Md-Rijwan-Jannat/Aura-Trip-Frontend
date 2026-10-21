@@ -35,7 +35,7 @@ export default function Settings() {
       <div className="w-full mx-auto bg-default-50  rounded-xl shadow-2xl overflow-hidden border border-default-100">
         <div className="p-8">
           <div className="flex items-center justify-between mb-8">
-            <h1 className="text-xl font-bold text-pink-600 ">Settings</h1>
+            <h1 className="text-xl font-bold text-sage-700 dark:text-sage-300 ">Settings</h1>
             <Link href={`/profile/${userInfo?._id}`}>
               <Avatar
                 size="lg"
@@ -62,7 +62,7 @@ export default function Settings() {
 
             {/* Theme Toggle */}
             <div className="flex items-center justify-between bg-default-100 border border-default-200 p-4 rounded-lg">
-              <p className="text-pink-600  flex items-center gap-2">
+              <p className="text-sage-700 dark:text-sage-300  flex items-center gap-2">
                 {theme === 'dark' ? <FiMoon /> : <FiSun />} Theme
               </p>
               <ThemeDropdown />
@@ -70,7 +70,7 @@ export default function Settings() {
 
             {/* Notification Preferences */}
             <div className="bg-default-100 border border-default-200 p-4 rounded-lg">
-              <p className="text-pink-600  flex items-center gap-2 mb-2">
+              <p className="text-sage-700 dark:text-sage-300  flex items-center gap-2 mb-2">
                 <FiBell /> Notifications
               </p>
               <div className="flex flex-col gap-2">
@@ -85,7 +85,7 @@ export default function Settings() {
 
             {/* Privacy Settings */}
             <div className="bg-default-100 border border-default-200 p-4 rounded-lg col-span-full">
-              <p className="text-pink-600  flex items-center gap-2 mb-2">
+              <p className="text-sage-700 dark:text-sage-300  flex items-center gap-2 mb-2">
                 <FiShield /> Privacy
               </p>
               <div className="flex flex-col gap-2">
@@ -105,10 +105,10 @@ export default function Settings() {
       <Modal
         isOpen={isPasswordModalOpen}
         onClose={() => setIsPasswordModalOpen(false)}
-        className="bg-white  p-6 rounded-2xl"
+        className="bg-surface p-6 rounded-2xl"
       >
         <ModalHeader>
-          <p className="text-2xl font-bold text-pink-600 ">Change Password</p>
+          <p className="text-2xl font-bold text-sage-700 dark:text-sage-300 ">Change Password</p>
         </ModalHeader>
         <ModalBody>
           <Input
@@ -146,10 +146,10 @@ export default function Settings() {
       <Modal
         isOpen={isProfileModalOpen}
         onClose={() => setIsProfileModalOpen(false)}
-        className="bg-white  p-6 rounded-2xl"
+        className="bg-surface p-6 rounded-2xl"
       >
         <ModalHeader>
-          <p className="text-2xl font-bold text-pink-600 ">Edit Profile</p>
+          <p className="text-2xl font-bold text-sage-700 dark:text-sage-300 ">Edit Profile</p>
         </ModalHeader>
         <ModalBody>
           <Input label="Name" placeholder="Your Name" className="mb-4" />

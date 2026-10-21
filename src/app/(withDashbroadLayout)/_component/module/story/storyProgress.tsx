@@ -19,7 +19,7 @@ export function StoryProgress({
           className="h-1 bg-default-200 flex-grow rounded-full overflow-hidden"
         >
           <div
-            className="h-full bg-pink-500 transition-all duration-100 ease-linear"
+            className="h-full bg-sage-600 transition-all duration-100 ease-linear"
             style={{
               width:
                 index === currentStory

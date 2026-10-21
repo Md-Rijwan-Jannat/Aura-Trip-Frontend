@@ -49,7 +49,7 @@ export function StoryCard({ story }: StoryCardProps) {
           <Avatar
             name={story?.user?.name?.charAt(0).toUpperCase()}
             src={story?.user?.image || undefined}
-            className="absolute top-1 left-1 border-2 border-pink-500"
+            className="absolute top-1 left-1 border-2 border-sage-600"
             size="sm"
           />
         </Card>

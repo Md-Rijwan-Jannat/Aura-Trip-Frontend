@@ -74,7 +74,7 @@ export default function ChangePasswordModal() {
       >
         <ModalContent className="m-2">
           <ModalHeader>
-            <h1 className="text-xl font-bold text-pink-500">Change Password</h1>
+            <h1 className="text-xl font-bold text-sage-600 dark:text-sage-400">Change Password</h1>
           </ModalHeader>
           <form onSubmit={handleSubmit(onSubmit)}>
             <ModalBody>

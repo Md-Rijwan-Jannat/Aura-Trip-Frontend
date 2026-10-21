@@ -37,7 +37,7 @@ export default function FeaturesSection() {
                 <FaShopify className="text-5xl text-green-500" />
               </motion.div>
               <motion.div whileHover={{ scale: 1.05 }}>
-                <FaSquare className="text-5xl text-black" />
+                <FaSquare className="text-5xl text-textMain" />
               </motion.div>
             </div>
             <p className="text-default-700">
@@ -57,24 +57,24 @@ export default function FeaturesSection() {
             <div className="flex flex-col items-center gap-2 mb-4">
               <motion.div
                 whileHover={{ scale: 1.1 }}
-                className="flex items-center gap-2 bg-pink-200 px-3 py-2 rounded-full"
+                className="flex items-center gap-2 bg-sage-200 px-3 py-2 rounded-full"
               >
-                <FaYoutube className="text-pink-700" />
-                <div className="w-10 h-2 bg-pink-400 rounded-full" />
+                <FaYoutube className="text-sage-800" />
+                <div className="w-10 h-2 bg-sage-500 rounded-full" />
               </motion.div>
               <motion.div
                 whileHover={{ scale: 1.1 }}
-                className="flex items-center gap-2 bg-pink-200 px-3 py-2 rounded-full"
+                className="flex items-center gap-2 bg-sage-200 px-3 py-2 rounded-full"
               >
-                <FaTwitter className="text-pink-700" />
-                <div className="w-10 h-2 bg-pink-400 rounded-full" />
+                <FaTwitter className="text-sage-800" />
+                <div className="w-10 h-2 bg-sage-500 rounded-full" />
               </motion.div>
               <motion.div
                 whileHover={{ scale: 1.1 }}
-                className="flex items-center gap-2 bg-pink-200 px-3 py-2 rounded-full"
+                className="flex items-center gap-2 bg-sage-200 px-3 py-2 rounded-full"
               >
-                <FaSpotify className="text-pink-700" />
-                <div className="w-10 h-2 bg-pink-400 rounded-full" />
+                <FaSpotify className="text-sage-800" />
+                <div className="w-10 h-2 bg-sage-500 rounded-full" />
               </motion.div>
             </div>
             <p className="text-default-700">

@@ -9,7 +9,7 @@ export default function SocialLinks() {
         size={28}
       />
       <FaInstagram
-        className="text-pink-500 hover:scale-110 transition-transform"
+        className="text-sage-600 dark:text-sage-400 hover:scale-110 transition-transform"
         size={28}
       />
       <FaTwitter

@@ -75,12 +75,12 @@ export default function MarketingAnalytics() {
   return (
     <div className="space-y-5">
       <div className="bg-default-50 p-3 rounded-lg mt-5">
-        <h3 className="text-xl font-bold mb-4 text-pink-400">
+        <h3 className="text-xl font-bold mb-4 text-sage-500 dark:text-sage-400">
           Marketing Analytics
         </h3>
         {loadingPayments && <TableSkeleton />}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:5 mb-5">
-          <div className="bg-gradient-to-br from-pink-600/90 to-pink-300/90 px-5 py-6 text-center text-lg font-semibold rounded-xl shadow-md text-white flex items-center justify-center">
+          <div className="bg-gradient-to-br from-sage-700/90 to-sage-600/90 px-5 py-6 text-center text-lg font-semibold rounded-xl shadow-md text-white flex items-center justify-center">
             <FaMoneyBillWave className="text-lg md:text-3xl mr-1" />
             <p className="text-s">Total Sales: ${totalSales}</p>
           </div>
@@ -108,7 +108,7 @@ export default function MarketingAnalytics() {
         </div>
       </div>
       <div className="bg-default-50 p-3 rounded-lg mt-5">
-        <h3 className="text-xl font-bold mb-4 text-pink-400">
+        <h3 className="text-xl font-bold mb-4 text-sage-500 dark:text-sage-400">
           Recent Payments
         </h3>
         {loadingPayments && <TableSkeleton />}

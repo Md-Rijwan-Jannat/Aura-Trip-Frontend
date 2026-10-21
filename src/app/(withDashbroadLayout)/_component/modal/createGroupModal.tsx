@@ -75,6 +75,7 @@ export default function CreateGroupModal({
 
       if (res?.data?.success) {
         const newChat = res.data.data;
+
         setSelectedChat(newChat);
         if (chats && !chats.find((c) => c._id === newChat._id)) {
           setChats([newChat, ...chats]);

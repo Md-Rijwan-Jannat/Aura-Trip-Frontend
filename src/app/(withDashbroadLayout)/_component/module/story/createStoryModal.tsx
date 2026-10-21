@@ -26,6 +26,7 @@ export function CreateStoryModal() {
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
+
     if (file) {
       setSelectedFile(file);
       setPreviewUrl(URL.createObjectURL(file));
@@ -47,6 +48,7 @@ export function CreateStoryModal() {
         setUploadProgress(0);
         setUploading(true);
         const cloudinaryUrl = await uploadToCloudinary(selectedFile);
+
         setUploadProgress(100);
 
         await createStoryFn({ media: cloudinaryUrl });
@@ -68,7 +70,7 @@ export function CreateStoryModal() {
         size="sm"
         radius="full"
         startContent={<PlusIcon className="size-5 text-white" />}
-        className="-mt-4 size-8 rounded-full flex items-center justify-center bg-pink-500 border-2 border-secondary-50"
+        className="-mt-4 size-8 rounded-full flex items-center justify-center bg-sage-600 border-2 border-secondary-50"
       />
       <Modal
         placement="center"
@@ -128,7 +130,7 @@ export function CreateStoryModal() {
                     />
                     <label htmlFor="storyUpload">
                       <div className="flex flex-col items-center justify-center cursor-pointer">
-                        <PlusIcon size={48} className="text-pink-500 mb-4" />
+                        <PlusIcon size={48} className="text-sage-600 dark:text-sage-400 mb-4" />
                         <p className="text-default-600 mb-4">
                           Upload an image or video
                         </p>
@@ -142,7 +144,7 @@ export function CreateStoryModal() {
                       <div
                         className="bg-blue-600 h-2.5 rounded-full"
                         style={{ width: `${uploadProgress}%` }}
-                      ></div>
+                       />
                     </div>
                     <p className="text-sm text-default-600 mt-2">
                       Uploading: {uploadProgress}%

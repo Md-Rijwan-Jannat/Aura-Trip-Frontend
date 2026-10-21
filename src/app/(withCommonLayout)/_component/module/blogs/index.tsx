@@ -182,13 +182,13 @@ export default function Blog() {
                 className="w-full h-40 object-cover"
               />
               <div className="p-5">
-                <h3 className="text-xl font-semibold text-pink-600 mb-2">
+                <h3 className="text-xl font-semibold text-sage-700 dark:text-sage-300 mb-2">
                   {post.title}
                 </h3>
                 <p className="text-default-700 mb-3">{post.description}</p>
                 <Link
                   href={`/blog/${post.id}`}
-                  className="text-pink-500 hover:underline"
+                  className="text-sage-600 dark:text-sage-400 hover:underline"
                 >
                   Read More
                 </Link>

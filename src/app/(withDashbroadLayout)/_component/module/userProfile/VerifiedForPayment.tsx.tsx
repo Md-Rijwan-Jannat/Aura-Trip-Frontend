@@ -58,7 +58,7 @@ export default function VerifiedForPayment({ user }: TVerifiedForPaymentProps) {
         user?.verified || !hasLikedPosts || isLoading
           ? 'cursor-not-allowed'
           : 'cursor-pointer'
-      } flex items-center gap-1 rounded-full px-3 py-1 border border-dashed border-pink-500 hover:bg-default-100 transition-colors-opacity duration-500 ease-in-out text-xs text-default-500`}
+      } flex items-center gap-1 rounded-full px-3 py-1 border border-dashed border-sage-600 hover:bg-default-100 transition-colors-opacity duration-500 ease-in-out text-xs text-default-500`}
       disabled={user?.verified || !hasLikedPosts || isLoading}
     >
       <GoVerified className="text-primaryColor" size={16} />

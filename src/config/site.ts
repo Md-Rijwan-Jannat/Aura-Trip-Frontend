@@ -1,7 +1,7 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: "Travel Tips & Destination Guides",
+  name: "Aura Trip",
   navItems: [
     {
       label: "News Feed",

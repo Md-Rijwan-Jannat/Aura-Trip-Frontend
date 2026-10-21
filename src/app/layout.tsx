@@ -11,9 +11,22 @@ export const metadata: Metadata = {
     default: siteConfig.name,
     template: `%s - ${siteConfig.name}`,
   },
-  description: "This a Travel Tips & Destination Guides Community",
+  description: "Aura Trip — the travel social community for sharing stories, tips, and destinations.",
   icons: {
     icon: "/favicon.ico",
+  },
+  openGraph: {
+    title: siteConfig.name,
+    description:
+      "Aura Trip — the travel social community for sharing stories, tips, and destinations.",
+    siteName: siteConfig.name,
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteConfig.name,
+    description:
+      "Aura Trip — the travel social community for sharing stories, tips, and destinations.",
   },
 };
 

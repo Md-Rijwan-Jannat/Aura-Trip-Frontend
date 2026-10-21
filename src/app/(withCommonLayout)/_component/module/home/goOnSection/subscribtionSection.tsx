@@ -26,6 +26,7 @@ const SubscriptionSection: FC = () => {
     // Simple email validation
     if (!email) {
       toast.error("Please enter your email address");
+
       return;
     }
 
@@ -47,7 +48,7 @@ const SubscriptionSection: FC = () => {
         className="text-center lg:text-left w-full lg:w-1/2 space-y-4"
       >
         <h2 className="text-3xl lg:text-4xl font-bold text-default-800">
-          Discover <span className="text-pink-500">Hidden Gems</span> <br />
+          Discover <span className="text-sage-600 dark:text-sage-400">Hidden Gems</span> <br />
           Around the World
         </h2>
         <p className="text-default-800 text-sm lg:text-base">
@@ -64,11 +65,11 @@ const SubscriptionSection: FC = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)} // Update email state
             placeholder="Enter Your Email Address.."
-            className="p-3 rounded-l-full focus:outline-none bg-white text-gray-700 placeholder:text-gray-700 w-full border border-default-300 h-[41px] text-sm"
+            className="p-3 rounded-l-full focus:outline-none bg-surface text-textSecondary placeholder:text-textSecondary w-full border border-default-300 h-[41px] text-sm"
           />
           <Button
             onClick={handleSubscribe} // Handle subscription on click
-            className="bg-default-50/20 border border-l-default-50 border-pink-500 text-pink-500 font-semibold px-4 md:px-6 py-2.5 rounded-r-full transition duration-300 ease-in-out hover:bg-pink-500 hover:text-white"
+            className="bg-default-50/20 border border-l-default-50 border-sage-600 text-sage-600 dark:text-sage-400 font-semibold px-4 md:px-6 py-2.5 rounded-r-full transition duration-300 ease-in-out hover:bg-sage-700 hover:text-white"
           >
             Subscribe
           </Button>

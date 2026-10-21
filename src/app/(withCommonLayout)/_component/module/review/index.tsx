@@ -30,7 +30,7 @@ export default function Reviews() {
   console.log("Review Data", reviews);
 
   return (
-    <div className="min-h-screen bg-white py-12 pt-24 px-6 md:px-12">
+    <div className="min-h-screen bg-appBackground py-12 pt-24 px-6 md:px-12">
       {/* Hero Section */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
@@ -38,7 +38,7 @@ export default function Reviews() {
         transition={{ duration: 0.8 }}
         className="text-center space-y-4"
       >
-        <h2 className="text-3xl font-bold text-pink-500">
+        <h2 className="text-3xl font-bold text-sage-600 dark:text-sage-400">
           What Our Travelers Say
         </h2>
         <p className="text-gray-600 max-w-2xl mx-auto">
@@ -77,21 +77,21 @@ export default function Reviews() {
                     size="lg"
                   />
                   <div>
-                    <h3 className="text-lg font-bold text-gray-900">
+                    <h3 className="text-lg font-bold text-textMain">
                       {review.user.name}
                     </h3>
                     <p className="text-gray-500 text-sm">{review.user.bio}</p>
                   </div>
                 </div>
                 <p className="mt-4 text-gray-700 italic">
-                  <Quote className="inline-block w-5 h-5 text-pink-500 mr-2" />
+                  <Quote className="inline-block w-5 h-5 text-sage-600 dark:text-sage-400 mr-2" />
                   {isExpanded || review.quote.length <= MAX_LENGTH
                     ? review.quote
                     : `${review.quote.substring(0, MAX_LENGTH)}...`}
                   {review.quote.length > MAX_LENGTH && (
                     <button
                       onClick={toggleExpand}
-                      className="ml-2 text-pink-500 hover:underline"
+                      className="ml-2 text-sage-600 dark:text-sage-400 hover:underline"
                     >
                       {isExpanded ? "See Less" : "See More"}
                     </button>

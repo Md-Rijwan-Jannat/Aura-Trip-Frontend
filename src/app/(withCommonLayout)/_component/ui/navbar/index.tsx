@@ -12,6 +12,7 @@ import NavLinks from "./navLinks";
 import NavDropdown from "./navDropdown";
 import BrandLogo from "@/src/components/shared/logo";
 import ThemeDropdown from "@/src/components/modal/themeDropdown";
+import Link from "next/link";
 
 export default function NavBar() {
   return (
@@ -20,20 +21,19 @@ export default function NavBar() {
       maxWidth="xl"
       position="sticky"
     >
-      <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
-        <NavbarBrand as="li" className="gap-3 max-w-fit">
-          <NextLink className="flex justify-start items-center gap-1" href="/">
-            <BrandLogo />
-            <p className="font-bold text-inherit">TT&DG</p>
-          </NextLink>
+      <NavbarContent className="basis-1/5 sm:basis-auto" justify="start">
+        <NavbarBrand as="li" className="gap-3 max-w-fit shrink-0">
+          <Link className="flex items-center gap-2 shrink-0" href="/">
+              <BrandLogo />
+            </Link>
         </NavbarBrand>
-        <div className="hidden md:block">
+        <div className="hidden md:block shrink-0">
           <NavLinks />
         </div>
       </NavbarContent>
 
       <NavbarContent
-        className="hidden md:flex basis-1/5 sm:basis-full items-center"
+        className="hidden md:flex basis-1/5 sm:basis-auto items-center"
         justify="end"
       >
         <NavbarItem className="hidden md:flex gap-4">

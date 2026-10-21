@@ -32,12 +32,12 @@ export default function NotFound() {
     <div className="flex flex-col items-center justify-center h-screen text-default-600">
       {/* Blurred Background */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="w-[200px] md:w-[300px] h-[300px] bg-pink-400 opacity-70 blur-[100px] absolute top-10 left-20" />
+        <div className="w-[200px] md:w-[300px] h-[300px] bg-sage-500 opacity-70 blur-[100px] absolute top-10 left-20" />
         <div className="w-[200px] md:w-[300px] h-[300px] bg-blue-400 opacity-70 blur-[100px] absolute bottom-10 right-20 " />
       </div>
 
       <motion.h1
-        className="text-2xl md:text-5xl text-pink-500 mb-4"
+        className="text-2xl md:text-5xl text-sage-600 dark:text-sage-400 mb-4"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}

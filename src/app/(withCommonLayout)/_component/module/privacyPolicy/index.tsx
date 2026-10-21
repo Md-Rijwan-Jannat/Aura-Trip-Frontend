@@ -36,7 +36,7 @@ export default function PrivacyPolicy() {
             Privacy Policy
           </h1>
           <p className="text-center text-default-700 mb-12">
-            At TravelTips & Destination Guides, we value your privacy and are
+            At Aura Trip, we value your privacy and are
             committed to protecting your personal information.
           </p>
 

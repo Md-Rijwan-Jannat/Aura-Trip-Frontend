@@ -18,7 +18,7 @@ export const sections = [
     title: "Introduction",
     content: (
       <p>
-        Welcome to TravelTips & Destination Guides. By accessing our website or
+        Welcome to Aura Trip. By accessing our website or
         using our services, you agree to comply with and be bound by the
         following terms and conditions. Please read these Terms of Service
         carefully before using our platform.
@@ -162,7 +162,7 @@ export const sections = [
     content: (
       <>
         <p className="mb-2">
-          All content on TravelTips & Destination Guides, including but not
+          All content on Aura Trip, including but not
           limited to text, graphics, logos, and software, is the property of our
           company or our content suppliers and is protected by international
           copyright laws.
@@ -180,7 +180,7 @@ export const sections = [
     title: "Limitation of Liability",
     content: (
       <p>
-        TravelTips & Destination Guides shall not be liable for any indirect,
+        Aura Trip shall not be liable for any indirect,
         incidental, special, consequential, or punitive damages resulting from
         your use of our services. We do not endorse or guarantee the accuracy of
         user-generated content, and travelers should use their own judgment when
@@ -210,8 +210,8 @@ export const sections = [
       <p>
         If you have any questions, concerns, or feedback regarding these Terms
         of Service or our platform, please do not hesitate to contact our
-        support team. Were here to help ensure your experience with TravelTips &
-        Destination Guides is positive and enriching.
+        support team. Were here to help ensure your experience with Aura Trip
+        is positive and enriching.
       </p>
     ),
     icon: <HeartHandshake size={24} />,

@@ -48,7 +48,7 @@ const WhoIAmSection: React.FC = () => {
             className="lg:w-1/2 w-full flex flex-col items-start xl:max-w-[90%]"
             variants={itemVariants}
           >
-            <h2 className="text-pink-600 tracking-wider text-sm">
+            <h2 className="text-sage-700 dark:text-sage-300 tracking-wider text-sm">
               Travel Community
             </h2>
             <h1 className="text-2xl md:text-3xl font-bold">Who Are We?</h1>
@@ -71,7 +71,7 @@ const WhoIAmSection: React.FC = () => {
           >
             {/* Community-Driven Insights */}
             <motion.div className="flex items-start" variants={itemVariants}>
-              <div className="text-pink-500 mr-4">
+              <div className="text-sage-600 dark:text-sage-400 mr-4">
                 <MdSettings size={34} />
               </div>
               <div>
@@ -88,7 +88,7 @@ const WhoIAmSection: React.FC = () => {
 
             {/* Passion for Exploration */}
             <motion.div className="flex items-start" variants={itemVariants}>
-              <div className="text-pink-500 mr-4">
+              <div className="text-sage-600 dark:text-sage-400 mr-4">
                 <FaFire size={30} />
               </div>
               <div>

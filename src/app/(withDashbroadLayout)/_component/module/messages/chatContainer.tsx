@@ -67,8 +67,10 @@ export default function ChatContainer({ chatId }: { chatId: string }) {
     if (message.trim()) {
       try {
         const res = await createMessageFn({ content: message, chat: chatId });
+
         if (res?.data?.success) {
           const data = res.data.data;
+
           setMessages((prevMessages) => [...prevMessages, data]);
           refetch();
 

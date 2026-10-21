@@ -62,7 +62,7 @@ export default function BlogDetailsPage({ params }: TBlogDetailsProps) {
             {blog.tags.map((tag) => (
               <Chip
                 key={tag}
-                className="bg-default-50 text-pink-500 border border-pink-500"
+                className="bg-default-50 text-sage-600 dark:text-sage-400 border border-sage-600"
                 variant="flat"
               >
                 #{tag}

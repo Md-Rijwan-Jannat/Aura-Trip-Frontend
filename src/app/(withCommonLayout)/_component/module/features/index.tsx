@@ -150,8 +150,8 @@ const Documents: React.FC = () => {
                 key={pageNum}
                 className={`w-8 h-8 flex items-center justify-center rounded-full border ${
                   currentPage === pageNum
-                    ? "bg-pink-600 text-white"
-                    : "hover:bg-pink-100 text-default-700"
+                    ? "bg-sage-700 text-white"
+                    : "hover:bg-sage-100 dark:hover:bg-sage-800 text-default-700"
                 }`}
                 onClick={() => handlePageChange(pageNum)}
                 whileHover={{ scale: 1.1 }}

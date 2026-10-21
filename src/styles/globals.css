@@ -2,11 +2,54 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================
+   Aura Trip — Sage Green Design Tokens
+   ============================================ */
+:root {
+  /* Brand */
+  --brand-sage: #65a982; /* Primary Sage — accents, illustration */
+  --brand-mint: #eaf5ed; /* Soft Mint — selected surfaces */
+  --brand-forest: #245743; /* Deep Forest — headings, emphasis */
+
+  /* Interactive primary (accessible with white text: 5.0:1) */
+  --brand-primary: #2f7d62;
+  --brand-primary-hover: #194d3a;
+
+  /* Surfaces & text (light mode) */
+  --app-background: #f7faf7;
+  --surface: #ffffff;
+  --text-main: #1f2937;
+  --text-secondary: #6b7280;
+  --border-color: #e2e8e2;
+}
+
+.dark {
+  /* Sage steps tuned for readable contrast on dark surfaces */
+  --brand-primary: #8ac8a6;
+  --brand-primary-hover: #65a982;
+
+  --app-background: #121614;
+  --surface: #1b211d;
+  --text-main: #e8ede9;
+  --text-secondary: #9aa5a0;
+  --border-color: #2a332d;
+}
+
+html:not(.dark) body {
+  background-color: var(--app-background);
+  color: var(--text-main);
+}
+
+html.dark body {
+  background-color: var(--app-background);
+  color: var(--text-main);
+}
+
 .secondary-button {
-  @apply bg-default-50/20 border border-pink-500 text-pink-500 font-semibold px-4 md:px-6 hover:scale-x-105 py-3 rounded-full transition duration-300 ease-in-out hover:bg-pink-500 hover:text-white;
+  @apply bg-sage-50/40 border border-sage-600 text-sage-700 font-semibold px-4 md:px-6 hover:scale-x-105 py-3 rounded-full transition duration-300 ease-in-out hover:bg-sage-600 hover:text-white dark:border-sage-400 dark:text-sage-400 dark:hover:bg-sage-500 dark:hover:text-sage-900;
 }
 .primary-button {
-  @apply bg-pink-500 text-white font-semibold px-4 md:px-6 hover:scale-x-105 py-3 rounded-full transition duration-300 ease-in-out hover:bg-pink-500;
+  @apply bg-sage-600 text-white font-semibold px-4 md:px-6 hover:scale-x-105 py-3 rounded-full transition duration-300 ease-in-out hover:bg-sage-700 dark:hover:bg-sage-500 dark:hover:text-sage-900;
 }
 
 .delete-button {

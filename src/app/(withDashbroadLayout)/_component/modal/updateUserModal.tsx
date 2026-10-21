@@ -178,7 +178,7 @@ export default function UpdateUserModal({
         {(isLoading || isUploading) && <GlassLoader />}
         <ModalContent className="m-2">
           <ModalHeader>
-            <h1 className="text-xl font-bold text-pink-500">Update Profile</h1>
+            <h1 className="text-xl font-bold text-sage-600 dark:text-sage-400">Update Profile</h1>
           </ModalHeader>
           <form onSubmit={handleSubmit(onSubmit)}>
             <ModalBody>
@@ -232,7 +232,7 @@ export default function UpdateUserModal({
                     htmlFor="image"
                   >
                     <IoIosImages
-                      className="text-pink-500 cursor-pointer mr-2"
+                      className="text-sage-600 dark:text-sage-400 cursor-pointer mr-2"
                       size={32}
                     />
                     Upload Photo

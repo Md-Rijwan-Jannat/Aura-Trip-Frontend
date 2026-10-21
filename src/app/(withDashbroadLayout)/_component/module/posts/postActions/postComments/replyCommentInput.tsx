@@ -58,7 +58,7 @@ export default function ReplyCommentInput({
         <Button
           size="sm"
           color="default"
-          className="text-[8px] h-4 px-2 bg-primaryColor text-white"
+          className="text-[8px] h-4 px-2 bg-sage-600 text-white"
           onPress={onCancel}
         >
           Cancel

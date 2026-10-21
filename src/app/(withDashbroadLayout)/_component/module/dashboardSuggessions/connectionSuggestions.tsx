@@ -48,7 +48,7 @@ export default function ConnectionsSuggestions() {
         <div className="mt-5 flex justify-start">
           <Link
             href={'/add-connections'}
-            className="hover:underline text-pink-400 hover:text-pink-400 text-xs"
+            className="hover:underline text-sage-500 dark:text-sage-400 hover:text-sage-600 dark:hover:text-sage-400 text-xs"
           >
             See More Connections
           </Link>

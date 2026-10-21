@@ -28,6 +28,7 @@ export default function CreateReview() {
   const handleSubmit = async () => {
     if (!quote || rating === 0) {
       toast.error("Please provide a review and select a rating.");
+
       return;
     }
 
@@ -55,7 +56,7 @@ export default function CreateReview() {
       transition={{ delay: 0.5, duration: 0.8 }}
       className="mt-16 text-center max-w-xl mx-auto"
     >
-      <h3 className="text-2xl font-bold text-gray-900">
+      <h3 className="text-2xl font-bold text-textMain">
         Have an Experience to Share?
       </h3>
       <p className="text-gray-600 mt-2">
@@ -66,7 +67,7 @@ export default function CreateReview() {
         <>
           <div className="mt-6">
             <textarea
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sage-600"
               rows={4}
               placeholder="Write your review here..."
               value={quote}
@@ -92,7 +93,7 @@ export default function CreateReview() {
           <Button
             isLoading={isLoading}
             onClick={handleSubmit}
-            className="mt-4 bg-pink-500 text-white rounded-lg py-2 px-6 hover:bg-pink-600 transition"
+            className="mt-4 bg-sage-600 text-white rounded-lg py-2 px-6 hover:bg-sage-800 transition"
           >
             Send Review
           </Button>
@@ -100,7 +101,7 @@ export default function CreateReview() {
       ) : (
         <Button
           onClick={() => router.push(`/register?redirect=/reviews`)}
-          className="mt-4 bg-pink-500 text-white rounded-lg py-2 px-6 hover:bg-pink-600 transition"
+          className="mt-4 bg-sage-600 text-white rounded-lg py-2 px-6 hover:bg-sage-800 transition"
         >
           Add Review
         </Button>

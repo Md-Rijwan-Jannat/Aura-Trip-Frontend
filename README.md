@@ -1,4 +1,4 @@
-# Travel Tips & Destination Guides - Frontend
+# Aura Trip - Frontend
 
 ## Live Site
 
@@ -6,7 +6,7 @@ Check out the live site [here](https://traveltipsdestinationcommunity.vercel.app
 
 ## Project Overview
 
-The **"Travel Tips & Destination Guides"** platform allows users to share travel tips, guides, and stories, as well as engage with fellow travelers. It features user authentication, profile management, post creation with rich text editing, premium content access, and social interaction features. This README outlines the setup and development instructions for the frontend part of the project.
+**Aura Trip** (formerly "Travel Tips & Destination Guides") is a travel social platform that allows users to share travel tips, guides, and stories, as well as engage with fellow travelers. It features user authentication, profile management, post creation with rich text editing, premium content access, and social interaction features. This README outlines the setup and development instructions for the frontend part of the project.
 
 ## Features
 

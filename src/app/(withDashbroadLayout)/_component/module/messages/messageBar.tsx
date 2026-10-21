@@ -11,6 +11,7 @@ import { useTheme } from 'next-themes';
 import { Theme as EmojiPickerTheme } from 'emoji-picker-react';
 
 const EmojiPicker = dynamic(() => import('emoji-picker-react'), { ssr: false });
+
 interface MessageBarProps {
   onSendMessage: (
     message: string,
@@ -52,7 +53,7 @@ export default function MessageBar({
     <div className="pt-5 bg-background border-t border-default-100">
       <div className="flex items-center gap-2">
         <Button size="sm" isIconOnly radius="full" aria-label="Attach document">
-          <PaperclipIcon className="h-5 w-5 text-pink-500" />
+          <PaperclipIcon className="h-5 w-5 text-sage-600 dark:text-sage-400" />
         </Button>
         <Popover
           isOpen={isEmojiPickerOpen}
@@ -66,7 +67,7 @@ export default function MessageBar({
               radius="full"
               aria-label="Select emoji"
             >
-              <SmileIcon className="h-5 w-5 text-pink-500" />
+              <SmileIcon className="h-5 w-5 text-sage-600 dark:text-sage-400" />
             </Button>
           </PopoverTrigger>
           <PopoverContent className="mb-28">
@@ -91,7 +92,7 @@ export default function MessageBar({
           aria-label="Send message"
           onClick={handleSendClick}
         >
-          <SendIcon className="h-5 w-5 text-pink-500" />
+          <SendIcon className="h-5 w-5 text-sage-600 dark:text-sage-400" />
         </Button>
       </div>
     </div>

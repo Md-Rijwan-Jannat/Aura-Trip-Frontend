@@ -19,8 +19,8 @@ const TermSectionCard = ({
     className="p-6 mb-8 shadow-lg bg-default-50 border border-default-100"
   >
     <div className="flex items-center mb-4">
-      <div className="mr-4 text-pink-500">{icon}</div>
-      <p className="text-lg md:text-2xl font-bold text-pink-500">{title}</p>
+      <div className="mr-4 text-sage-600 dark:text-sage-400">{icon}</div>
+      <p className="text-lg md:text-2xl font-bold text-sage-600 dark:text-sage-400">{title}</p>
     </div>
     <Divider className="my-4" />
     <div className="text-xs md:text-sm text-default-700">{content}</div>

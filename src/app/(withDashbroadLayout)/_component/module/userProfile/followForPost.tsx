@@ -47,7 +47,7 @@ export default function FollowForPost({ userId }: TFollowProps) {
     >
       {exists ? (
         <button
-          className="bg-transparent text-pink-500 text-sm mx-2"
+          className="bg-transparent text-sage-600 dark:text-sage-400 text-sm mx-2"
           onClick={unFollowHandler}
           disabled={unFollowIsLoading}
         >
@@ -55,7 +55,7 @@ export default function FollowForPost({ userId }: TFollowProps) {
         </button>
       ) : (
         <button
-          className="bg-transparent text-pink-500 text-sm"
+          className="bg-transparent text-sage-600 dark:text-sage-400 text-sm"
           onClick={followHandler}
           disabled={followIsLoading}
         >

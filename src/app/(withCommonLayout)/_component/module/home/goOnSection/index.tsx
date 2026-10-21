@@ -47,11 +47,11 @@ const GoOnSection: React.FC = () => {
           <motion.div
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="absolute top-6 right-6 bg-white px-6 py-6 rounded-full shadow-lg flex items-center space-x-2"
+            className="absolute top-6 right-6 bg-surface px-6 py-6 rounded-full shadow-lg flex items-center space-x-2"
           >
             {leftInView && ( // Conditionally render CountUp when in view
               <CountUp
-                className="text-xl font-bold text-pink-500"
+                className="text-xl font-bold text-sage-600 dark:text-sage-400"
                 end={12}
                 duration={2.5}
                 separator=","
@@ -82,9 +82,9 @@ const GoOnSection: React.FC = () => {
         >
           {/* Heading */}
           <h2 className="text-3xl lg:text-4xl font-bold text-default-800">
-            Sharing <span className="text-pink-500">Travel Tips</span> and{" "}
+            Sharing <span className="text-sage-600 dark:text-sage-400">Adventures</span> and{" "}
             <br />
-            Destination Guides!
+            Destinations on Aura Trip!
           </h2>
           {/* Description */}
           <p className="text-default-800 text-sm lg:text-base">
@@ -97,21 +97,21 @@ const GoOnSection: React.FC = () => {
           <div className="flex flex-col md:flex-row md:gap-5 border-y border-default-200 py-3">
             <div className="space-y-2 text-default-800 text-sm lg:text-base">
               <p className="flex items-center text-xs">
-                <span className="text-pink-500 mr-2">✔</span> Expert travel
+                <span className="text-sage-600 dark:text-sage-400 mr-2">✔</span> Expert travel
                 tips and guides.
               </p>
               <p className="flex items-center text-xs">
-                <span className="text-pink-500 mr-2">✔</span> Inspiration for
+                <span className="text-sage-600 dark:text-sage-400 mr-2">✔</span> Inspiration for
                 unique destinations.
               </p>
             </div>
             <div className="space-y-2 text-default-800 text-sm lg:text-base">
               <p className="flex items-center text-xs">
-                <span className="text-pink-500 mr-2">✔</span> Community-driven
+                <span className="text-sage-600 dark:text-sage-400 mr-2">✔</span> Community-driven
                 recommendations.
               </p>
               <p className="flex items-center text-xs">
-                <span className="text-pink-500 mr-2">✔</span> Tips for
+                <span className="text-sage-600 dark:text-sage-400 mr-2">✔</span> Tips for
                 budget-friendly travel.
               </p>
             </div>

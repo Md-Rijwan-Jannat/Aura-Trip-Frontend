@@ -132,7 +132,6 @@ export default function LoginForm() {
           <div className="p-5 absolute cursor-pointer z-20">
             <Link className="flex items-center gap-2" href="/">
               <BrandLogo />
-              <p className="font-bold text-pink-600 text-xl">TT&DG</p>
             </Link>
           </div>
           {/* Left side - Form Section */}

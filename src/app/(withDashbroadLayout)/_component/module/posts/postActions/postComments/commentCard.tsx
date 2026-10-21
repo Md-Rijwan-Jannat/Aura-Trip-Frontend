@@ -161,7 +161,7 @@ const CommentCard: React.FC<TCommentCardProps> = ({ postId }) => {
                   />
                 ) : (
                   <button
-                    className="text-xs text-pink-500 hover:underline"
+                    className="text-xs text-sage-600 dark:text-sage-400 hover:underline"
                     onClick={() => setReplyingTo(comment.comId)}
                   >
                     Reply
@@ -220,14 +220,14 @@ const CommentCard: React.FC<TCommentCardProps> = ({ postId }) => {
         <div className="text-start ml-3">
           {!isAllCommentsVisible ? (
             <button
-              className="text-pink-500 text-xs hover:underline"
+              className="text-sage-600 dark:text-sage-400 text-xs hover:underline"
               onClick={handleLoadMore}
             >
               More comments
             </button>
           ) : (
             <button
-              className="text-pink-500 text-xs hover:underline"
+              className="text-sage-600 dark:text-sage-400 text-xs hover:underline"
               onClick={handleShowLess}
             >
               Less comments

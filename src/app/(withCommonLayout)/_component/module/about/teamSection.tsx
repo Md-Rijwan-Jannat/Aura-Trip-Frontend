@@ -60,7 +60,7 @@ const teamMembers: TeamMember[] = [
 const TeamSection: React.FC = () => {
   return (
     <section className="py-16 bg-default-50 text-center">
-      <h3 className="text-pink-600 font-semibold uppercase mb-4 text-xs md:text-sm">
+      <h3 className="text-sage-700 dark:text-sage-300 font-semibold uppercase mb-4 text-xs md:text-sm">
         Team Members
       </h3>
       <h2 className="text-xl md:text-2xl font-bold mb-8">Meet the Crew</h2>
@@ -102,7 +102,7 @@ const TeamSection: React.FC = () => {
                 aria-label="Facebook"
                 whileHover={{ scale: 1.2, color: '#E1306C' }}
                 transition={{ type: 'spring', stiffness: 300 }}
-                className="text-pink-500"
+                className="text-sage-600 dark:text-sage-400"
               >
                 <FaFacebook size={20} />
               </motion.a>
@@ -111,7 +111,7 @@ const TeamSection: React.FC = () => {
                 aria-label="Twitter"
                 whileHover={{ scale: 1.2, color: '#E1306C' }}
                 transition={{ type: 'spring', stiffness: 300 }}
-                className="text-pink-500"
+                className="text-sage-600 dark:text-sage-400"
               >
                 <FaTwitter size={20} />
               </motion.a>
@@ -120,7 +120,7 @@ const TeamSection: React.FC = () => {
                 aria-label="Instagram"
                 whileHover={{ scale: 1.2, color: '#E1306C' }}
                 transition={{ type: 'spring', stiffness: 300 }}
-                className="text-pink-500"
+                className="text-sage-600 dark:text-sage-400"
               >
                 <FaInstagram size={20} />
               </motion.a>

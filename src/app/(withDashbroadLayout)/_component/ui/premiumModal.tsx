@@ -61,7 +61,7 @@ const PremiumModal: React.FC<PremiumModalProps> = ({
       onOpenChange={onOpenChange}
       placement="center"
       classNames={{
-        base: 'bg-gradient-to-br from-pink-100 to-purple-100 dark:from-pink-900 dark:to-purple-900',
+        base: 'bg-gradient-to-br from-sage-100 to-sage-200 dark:from-sage-800 dark:to-sage-900',
         header: 'border-b-0',
         footer: 'border-t-0',
       }}
@@ -70,8 +70,8 @@ const PremiumModal: React.FC<PremiumModalProps> = ({
         {(onClose) => (
           <>
             <ModalHeader className="flex flex-col items-center gap-1">
-              <FaCrown className="text-5xl text-pink-500 mb-2" />
-              <h2 className="text-2xl font-bold text-pink-600 dark:text-pink-400">
+              <FaCrown className="text-5xl text-sage-600 dark:text-sage-400 mb-2" />
+              <h2 className="text-2xl font-bold text-sage-700 dark:text-sage-300 dark:text-sage-400">
                 Unlock Premium Access
               </h2>
             </ModalHeader>
@@ -81,25 +81,25 @@ const PremiumModal: React.FC<PremiumModalProps> = ({
                   Elevate your experience with exclusive content and features!
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
-                  <Card className="bg-pink-200 dark:bg-pink-800">
+                  <Card className="bg-sage-200 dark:bg-sage-800">
                     <CardBody className="flex flex-col items-center p-4">
-                      <FaLock className="text-3xl text-pink-600 dark:text-pink-400 mb-2" />
+                      <FaLock className="text-3xl text-sage-700 dark:text-sage-300 dark:text-sage-400 mb-2" />
                       <p className="text-sm text-center">
                         Access Premium Posts
                       </p>
                     </CardBody>
                   </Card>
-                  <Card className="bg-purple-200 dark:bg-purple-800">
+                  <Card className="bg-sage-200 dark:bg-sage-800">
                     <CardBody className="flex flex-col items-center p-4">
-                      <FaCrown className="text-3xl text-purple-600 dark:text-purple-400 mb-2" />
+                      <FaCrown className="text-3xl text-sage-700 dark:text-sage-400 mb-2" />
                       <p className="text-sm text-center">
                         Verified Profile Badge
                       </p>
                     </CardBody>
                   </Card>
-                  <Card className="bg-pink-200 dark:bg-pink-800">
+                  <Card className="bg-sage-200 dark:bg-sage-800">
                     <CardBody className="flex flex-col items-center p-4">
-                      <FaBolt className="text-3xl text-pink-600 dark:text-pink-400 mb-2" />
+                      <FaBolt className="text-3xl text-sage-700 dark:text-sage-300 dark:text-sage-400 mb-2" />
                       <p className="text-sm text-center">Exclusive Features</p>
                     </CardBody>
                   </Card>

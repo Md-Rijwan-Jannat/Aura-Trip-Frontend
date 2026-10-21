@@ -27,7 +27,7 @@ export default function PostContent({ post }: PostContentProps) {
   const styleLinksInDescription = (html: string) => {
     return html.replace(
       /<a\s+(href="[^"]*")/g,
-      `<a class="text-pink-500 hover:underline" $1`
+      `<a class="text-sage-600 dark:text-sage-400 hover:underline" $1`
     );
   };
 
@@ -56,7 +56,7 @@ export default function PostContent({ post }: PostContentProps) {
       {/* Button to download the description and images as a PDF */}
       <div className="flex w-full items-end justify-end">
         <Button
-          className="mt-3 h-8 text-pink-500"
+          className="mt-3 h-8 text-sage-600 dark:text-sage-400"
           startContent={<FaFilePdf size={18} />}
           size="sm"
           onClick={downloadPDF}

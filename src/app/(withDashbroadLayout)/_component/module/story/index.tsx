@@ -45,7 +45,7 @@ export default function Stories() {
         <div>
           <CreateStoryCard />
         </div>
-        <div className="flex items-center justify-center flex-col w-full text-pink-500 border border-default-100 rounded-md h-48 bg-pink-50/5">
+        <div className="flex items-center justify-center flex-col w-full text-sage-600 dark:text-sage-400 border border-default-100 rounded-md h-48 bg-sage-50/5">
           <PiEmptyFill size={30} />
           <span className="text-sm mt-1">No stories</span>
         </div>

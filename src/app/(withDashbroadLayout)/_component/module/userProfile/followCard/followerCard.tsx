@@ -45,7 +45,7 @@ export default function FollowerCard({ follower, followers }: TFollowerProps) {
                 {name}{' '}
                 {verified && (
                   <Tooltip content="Verified User">
-                    <GoVerified className="text-pink-500" />
+                    <GoVerified className="text-sage-600 dark:text-sage-400" />
                   </Tooltip>
                 )}
               </Link>
@@ -60,7 +60,7 @@ export default function FollowerCard({ follower, followers }: TFollowerProps) {
         <CardBody>
           <div className="flex items-center justify-center">
             <motion.div
-              className="w-full h-1 bg-gradient-to-r from-pink-300 to-purple-300 dark:from-pink-700 dark:to-purple-700 rounded-full"
+              className="w-full h-1 bg-gradient-to-r from-sage-300 to-sage-300 dark:from-sage-700 dark:to-sage-700 rounded-full"
               initial={{ width: 0 }}
               animate={{ width: '100%' }}
               transition={{ duration: 1, delay: 0.5 }}
@@ -69,7 +69,7 @@ export default function FollowerCard({ follower, followers }: TFollowerProps) {
         </CardBody>
         <CardFooter className="flex-col items-center pt-0">
           <p className="text-default-500 text-sm flex items-center gap-2">
-            <FaUserFriends className="text-pink-500" />
+            <FaUserFriends className="text-sage-600 dark:text-sage-400" />
             <span>{followers?.length || 0} followers</span>
           </p>
           <Follow userId={_id} />
