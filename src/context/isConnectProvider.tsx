@@ -6,6 +6,7 @@ import React, {
   useState,
 } from "react";
 import { io, Socket } from "socket.io-client";
+import { useAppSelector } from "@/src/redux/hook";
 
 interface IsConnectedContextType {
   isConnected: boolean;
@@ -20,13 +21,18 @@ const IsConnectedContext = createContext<IsConnectedContextType | undefined>(
 export const IsConnectedProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const token = useAppSelector((state) => state.auth.token);
+
   const socket = useMemo(
     () =>
       io(`${process.env.NEXT_PUBLIC_SOCKET_HOST}`, {
         withCredentials: true,
         autoConnect: false, // Avoid immediate auto-connection
+        // Server-side handshake auth: connections without a valid JWT are
+        // rejected.
+        auth: token ? { token } : {},
       }),
-    []
+    [token]
   );
 
   const [isConnected, setIsConnected] = useState(false);
@@ -34,19 +40,18 @@ export const IsConnectedProvider: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     const handleConnect = () => {
-      console.log("Socket connected:", socket.id);
       setIsConnected(true);
-      socket.emit("setup", { _id: "sampleUserId" }); // Send user ID to server
-      socket.emit("get online users"); // Explicitly request online users
+      // Server derives identity from the verified handshake token — payload
+      // (previously the hardcoded "sampleUserId") is ignored.
+      socket.emit("setup");
+      socket.emit("get online users");
     };
 
     const handleOnlineUsers = (users: string[]) => {
-      console.log("Online users received:", users);
       setOnlineUsers(users);
     };
 
     const handleDisconnect = () => {
-      console.log("Socket disconnected");
       setIsConnected(false);
       setOnlineUsers([]); // Clear online users when disconnected
     };
