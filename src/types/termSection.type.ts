@@ -3,7 +3,7 @@ export type SectionId =
   | "account-registration"
   | "user-content"
   | "community-guidelines"
-  | "travel-tips"
+  | "aura-trip"
   | "photo-sharing"
   | "reviews-ratings"
   | "third-party-links"

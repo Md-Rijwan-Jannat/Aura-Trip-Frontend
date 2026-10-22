@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import { Button } from '@nextui-org/button';
 import { useTheme } from 'next-themes';
 import { FiMoon, FiSun, FiLock, FiBell, FiShield } from 'react-icons/fi';
@@ -13,6 +13,8 @@ import { useUser } from '@/src/hooks/useUser';
 import Link from 'next/link';
 import UpdateUserModal from '../../modal/updateUserModal';
 import ChangePasswordModal from '../../modal/passwordChangeModal';
+import TwoFactorCard from './twoFactorCard';
+import GoogleConnectionCard from './googleConnectionCard';
 
 export default function Settings() {
   const { userInfo } = useUser();
@@ -74,10 +76,10 @@ export default function Settings() {
                 <FiBell /> Notifications
               </p>
               <div className="flex flex-col gap-2">
-                <Switch color="danger" defaultSelected>
+                <Switch color="secondary" size="sm" defaultSelected>
                   Email Notifications
                 </Switch>
-                <Switch color="danger" defaultSelected>
+                <Switch color="secondary" size="sm" defaultSelected>
                   Push Notifications
                 </Switch>
               </div>
@@ -89,12 +91,25 @@ export default function Settings() {
                 <FiShield /> Privacy
               </p>
               <div className="flex flex-col gap-2">
-                <Switch color="danger" defaultSelected>
+                <Switch color="secondary" size="sm" defaultSelected>
                   Make profile public
                 </Switch>
-                <Switch color="danger">
+                <Switch color="secondary" size="sm">
                   Allow others to see online status
                 </Switch>
+              </div>
+            </div>
+
+            {/* Security */}
+            <div className="col-span-full">
+              <h2 className="text-lg font-bold text-sage-700 dark:text-sage-300 flex items-center gap-2 mb-3">
+                <FiLock /> Security
+              </h2>
+              <div className="grid grid-cols-1 gap-4">
+                <TwoFactorCard />
+                <Suspense fallback={null}>
+                  <GoogleConnectionCard />
+                </Suspense>
               </div>
             </div>
           </div>

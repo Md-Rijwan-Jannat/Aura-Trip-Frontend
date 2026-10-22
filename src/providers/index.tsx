@@ -13,6 +13,7 @@ import { persistor, store } from "../redux/store";
 import ChatProvider from "../context/chatContext";
 import { SocketProvider } from "../context/socketProvider";
 import { IsConnectedProvider } from "../context/isConnectProvider";
+import AuthCookieHydrator from "../components/providers/authCookieHydrator";
 
 export interface ProvidersProps {
   children: React.ReactNode;
@@ -30,6 +31,7 @@ export function Providers({ children, themeProps }: ProvidersProps) {
           <ChatProvider>
             <SocketProvider>
               <PersistGate loading={null} persistor={persistor}>
+                <AuthCookieHydrator />
                 <NextThemesProvider
                   {...themeProps}
                   attribute="class"

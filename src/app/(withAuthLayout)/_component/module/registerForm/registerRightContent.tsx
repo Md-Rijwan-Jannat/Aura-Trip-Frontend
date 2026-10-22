@@ -11,20 +11,20 @@ export default function RegisterRightContent() {
   const users = usersData?.data as TUser[];
 
   return (
-    <div className="w-full md:w-[500px] xl:w-[530px] p-8 flex flex-col justify-center items-center rounded-r-lg relative overflow-hidden mb-10 md:mb-0">
+    <div className="w-full md:flex-1 md:min-w-0 px-5 py-8 sm:px-8 sm:py-10 md:p-10 flex flex-col justify-center items-center relative overflow-hidden">
       <Link
-        className="flex items-center justify-center w-full mb-10 gap-2 -ml-4 -mt-4 md:hidden"
+        className="flex items-center justify-center w-full mb-6 md:mb-8 gap-2"
         href="/"
       >
         <BrandLogo />
       </Link>
       {/* Foreground Content */}
       <div className="relative text-center z-10">
-        <h3 className="text-3xl font-bold text-default-900 flex flex-wrap items-center justify-center">
-          Join Our <p className="text-primaryColor">Thriving Travel </p>
+        <h3 className="text-2xl sm:text-3xl font-bold text-default-900 flex flex-wrap items-center justify-center gap-x-1">
+          Join Our <span className="text-primaryColor">Thriving Travel</span>{" "}
           Community
         </h3>
-        <p className="mt-2 text-default-600">
+        <p className="mt-2 text-default-600 text-sm sm:text-base leading-relaxed">
           Explore hidden gems, share your travel stories, and connect with
           fellow adventurers. Our platform is trusted by thousands of
           globetrotters worldwide.

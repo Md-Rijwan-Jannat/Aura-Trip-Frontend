@@ -93,26 +93,26 @@ export default function RegisterForm() {
   };
 
   return (
-    <div className="w-full pt-5 md:mt-0 md:min-h-screen flex items-center justify-center max-w-7xl">
+    <div className="w-full min-h-[100svh] flex items-center justify-center max-w-7xl py-6 md:py-10">
       {/* Conditionally render the GlassLoader */}
       {RegisterLoading && <GlassLoader />}
-      <div className="flex flex-col items-start my-2 mx-1">
-        <div className="flex flex-row gap-3 w-full items-center justify-start">
+      <div className="flex flex-col items-stretch w-full">
+        <div className="flex flex-row gap-3 w-full items-center justify-center">
           <BackButton />
         </div>
-        <div className="flex flex-col-reverse justify-center md:flex-row bg-default-100 rounded-lg w-full overflow-hidden my-5">
+        <div className="flex flex-col-reverse md:flex-row bg-default-100 border border-default-200 rounded-2xl md:rounded-xl w-full max-w-5xl mx-auto overflow-hidden mt-4 shadow-sm md:shadow-none">
           {/* Left side - Form Section */}
-          <div className="w-full md:w-[500px] xl:w-[530px] flex flex-col justify-center">
-            <div className="flex flex-col gap-6 p-2 pt-5 pb-10 md:px-12">
-              <Link
-                className="md:flex items-center gap-2 hidden -ml-5 mb-2 cursor-pointer z-20"
-                href="/"
-              >
-                <BrandLogo />
-              </Link>
-              {/* <div className="flex items-center justify-center flex-col md:flex-row gap-5">
-                <GoogleButton />
-              </div> */}
+          <div className="w-full md:flex-1 md:min-w-0 flex flex-col justify-center">
+            <div className="flex flex-col gap-6 px-4 py-6 sm:px-7 sm:py-8 md:px-12 md:py-12">
+             
+              <div className="flex flex-col items-center gap-4 w-full">
+                <GoogleButton redirect={redirect} />
+                <div className="flex items-center gap-3 w-full" role="separator" aria-orientation="horizontal">
+                  <div className="flex-1 h-px bg-default-200" />
+                  <span className="text-default-400 text-xs">or</span>
+                  <div className="flex-1 h-px bg-default-200" />
+                </div>
+              </div>
               {/* Form Fields */}
               <form
                 className="w-full flex flex-col gap-4"
@@ -186,11 +186,11 @@ export default function RegisterForm() {
                   )}
                 </div>
 
-                <div className="mx-auto">
+                <div className="flex justify-center">
                   <Button
+                    className="secondary-button min-w-[240px] sm:min-w-[280px]"
                     isLoading={RegisterLoading}
                     disabled={RegisterLoading}
-                    className="secondary-button"
                     type="submit"
                   >
                     {RegisterLoading ? "Register..." : "Register"}

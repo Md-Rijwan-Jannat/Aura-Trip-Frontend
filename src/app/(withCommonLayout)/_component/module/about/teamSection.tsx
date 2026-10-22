@@ -16,7 +16,7 @@ interface TeamMember {
 
 const teamMembers: TeamMember[] = [
   {
-    name: 'Md Rijwan Jannat',
+    name: 'Aura Trip Admin Jannat',
     role: 'Founder',
     imageUrl: 'https://i.ibb.co.com/fVg8DVg/sketch1699926435270.png',
     socialLinks: {

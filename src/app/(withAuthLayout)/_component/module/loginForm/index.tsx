@@ -63,6 +63,22 @@ export default function LoginForm() {
     try {
       const res = await loginUser(data);
 
+      // 2FA enabled: no session yet — route to the second-factor screen.
+      if (
+        res?.data?.success &&
+        res?.data?.data?.twoFactorRequired &&
+        res?.data?.data?.challengeToken
+      ) {
+        const params = new URLSearchParams({
+          challenge: res.data.data.challengeToken,
+        });
+
+        if (redirect) params.set("redirect", redirect);
+        router.push(`/two-factor?${params.toString()}`);
+
+        return;
+      }
+
       if (res?.data?.success && res?.data?.data?.accessToken) {
         const decodedUser = jwtDecode(
           res.data.data.accessToken
@@ -114,27 +130,27 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="w-full md:min-h-screen flex flex-col items-center justify-center max-w-7xl">
+    <div className="w-full min-h-[100svh] flex flex-col items-center justify-center max-w-7xl py-6 md:py-10">
       {LoginIsLoading && !isSuccess && <GlassLoader />}
-      <div className="flex flex-col items-start my-2 mx-1">
+      <div className="flex flex-col items-stretch w-full">
         <div className="flex flex-col md:flex-row gap-3 w-full items-center justify-center">
           <BackButton />
         </div>
-        <div className="flex flex-col md:flex-row bg-default-100 rounded-lg w-full overflow-hidden my-5">
-          <div className="p-5 absolute cursor-pointer z-20">
-            <Link className="flex items-center gap-2" href="/">
-              <BrandLogo />
-            </Link>
-          </div>
+        <div className="flex flex-col md:flex-row bg-default-100 border border-default-200 rounded-2xl md:rounded-xl w-full max-w-5xl mx-auto overflow-hidden mt-4 shadow-sm md:shadow-nonet">
           {/* Left side - Form Section */}
           <LoginRightContent />
 
           {/* Right side - Info Section */}
-          <div className="w-full md:w-[500px] xl:w-[530px] flex flex-col justify-center">
-            <div className="flex flex-col gap-6 p-2 md:p-16">
-              {/* <div className="flex items-center justify-center flex-col md:flex-row gap-5">
-                <GoogleButton />
-              </div> */}
+          <div className="w-full md:flex-1 md:min-w-0 flex flex-col justify-center">
+            <div className="flex flex-col gap-6 px-4 py-6 sm:px-7 sm:py-8 md:p-14">
+              <div className="flex flex-col items-center gap-4 w-full">
+                <GoogleButton redirect={redirect} />
+                <div className="flex items-center gap-3 w-full" role="separator" aria-orientation="horizontal">
+                  <div className="flex-1 h-px bg-default-200" />
+                  <span className="text-default-400 text-xs">or</span>
+                  <div className="flex-1 h-px bg-default-200" />
+                </div>
+              </div>
 
               {/* Login Form */}
               <form
@@ -202,11 +218,11 @@ export default function LoginForm() {
                     Forgot password
                   </Link>
                 </div>
-                <div className="mx-auto">
+                <div className="flex justify-center">
                   <Button
+                    className="secondary-button min-w-[240px] sm:min-w-[280px]"
                     isLoading={LoginIsLoading}
                     disabled={LoginIsLoading}
-                    className="secondary-button"
                     type="submit"
                   >
                     {LoginIsLoading ? "Logging in..." : "Log in"}

@@ -65,12 +65,16 @@ module.exports = {
           colors: {
             background: "#F7FAF7",
             primary: { DEFAULT: "#2F7D62", foreground: "#FFFFFF" },
+            // Aura Trip secondary — same blue as `secondaryColor` in
+            // src/styles/button.ts (NextUI's default secondary is purple).
+            secondary: { DEFAULT: "#2DB2FF", foreground: "#FFFFFF" },
           },
         },
         dark: {
           colors: {
             background: "#121614",
             primary: { DEFAULT: "#65A982", foreground: "#10231B" },
+            secondary: { DEFAULT: "#2DB2FF", foreground: "#FFFFFF" },
           },
         },
       },

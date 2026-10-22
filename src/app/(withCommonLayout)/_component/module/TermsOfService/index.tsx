@@ -17,7 +17,7 @@ export default function TermsOfService() {
     "account-registration": useRef<HTMLDivElement>(null),
     "user-content": useRef<HTMLDivElement>(null),
     "community-guidelines": useRef<HTMLDivElement>(null),
-    "travel-tips": useRef<HTMLDivElement>(null),
+    "aura-trip": useRef<HTMLDivElement>(null),
     "photo-sharing": useRef<HTMLDivElement>(null),
     "reviews-ratings": useRef<HTMLDivElement>(null),
     "third-party-links": useRef<HTMLDivElement>(null),

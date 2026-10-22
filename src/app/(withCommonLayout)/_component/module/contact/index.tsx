@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@nextui-org/button";
+import { SUPPORT_EMAIL } from "@/src/constants/support";
 
 export default function Contact() {
   const [name, setName] = useState("");
@@ -149,13 +150,16 @@ export default function Contact() {
           </p>
           <div className="flex flex-col md:flex-row gap-4 items-center mt-4 justify-center">
             <p className="bg-default-50 rounded-md px-3 py-1 border border-default-100 text-xs">
-              <strong>Phone:</strong> +123 456 7890
+              <strong>Email:</strong>{" "}
+              <a
+                className="text-sage-600 dark:text-sage-400 hover:text-sage-700 dark:hover:text-sage-300"
+                href={`mailto:${SUPPORT_EMAIL}`}
+              >
+                {SUPPORT_EMAIL}
+              </a>
             </p>
             <p className="bg-default-50 rounded-md px-3 py-1 border border-default-100 text-xs">
-              <strong>Email:</strong> contact@example.com
-            </p>
-            <p className="bg-default-50 rounded-md px-3 py-1 border border-default-100 text-xs">
-              <strong>WhatsApp:</strong> +123 456 7890
+              <strong>Support:</strong> We usually reply within 24 hours
             </p>
           </div>
         </motion.div>

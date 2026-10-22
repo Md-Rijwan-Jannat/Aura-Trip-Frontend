@@ -16,6 +16,7 @@ import Link from "next/link";
 import BrandLogo from "@/src/components/shared/logo";
 import SocialLinks from "../socialLinks";
 import Container from "@/src/components/shared/container";
+import { SUPPORT_EMAIL } from "@/src/constants/support";
 
 const Footer = () => {
   const date = new Date().getFullYear();
@@ -120,25 +121,16 @@ const Footer = () => {
             </div>
             <div className="text-sm text-default-700 space-y-2">
               <p className="flex items-center gap-1">
-                <p>Email:</p>{" "}
+                <span>Email:</span>{" "}
                 <a
-                  href="mailto:info@fitnessgear.com"
+                  href={`mailto:${SUPPORT_EMAIL}`}
                   className="text-sage-600 dark:text-sage-400 hover:text-sage-700 dark:hover:text-sage-300"
                 >
-                  info@fitnessgear.com
+                  {SUPPORT_EMAIL}
                 </a>
               </p>
               <p className="flex items-center gap-1">
-                <p>Phone:</p>{" "}
-                <a
-                  href="tel:+1234567890"
-                  className="text-sage-600 dark:text-sage-400 hover:text-sage-700 dark:hover:text-sage-300"
-                >
-                  +1 234 567 890
-                </a>
-              </p>
-              <p className="flex items-center gap-1">
-                Address: 123 Fitness Lane, Wellness City, Fitland 45678
+                <span>We&apos;re here to help with any question about your journey.</span>
               </p>
             </div>
           </motion.div>

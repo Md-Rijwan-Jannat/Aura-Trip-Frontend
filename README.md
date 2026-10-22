@@ -34,13 +34,13 @@ Check out the live site [here](https://traveltipsdestinationcommunity.vercel.app
 1. **Clone the repository**:
 
    ```bash
-   git clone https://github.com/Md-Rijwan-Jannat/Travel-Tips-Destination-Frontend.git
+   git clone https://github.com/Md-Rijwan-Jannat/Aura-Trip-Frontend.git
    ```
 
 2. **Navigate into the project directory**:
 
    ```bash
-   cd Travel-Tips-Destination-Frontend
+   cd Aura-Trip-Frontend
    ```
 
 3. **Install dependencies**:
@@ -61,7 +61,7 @@ Check out the live site [here](https://traveltipsdestinationcommunity.vercel.app
    # important links
    NEXT_PUBLIC_WORKSPACE=development
    NEXT_PUBLIC_BASE_API=http://localhost:5000/api/v1
-   NEXT_PUBLIC_LIVE_API=https://travel-tips-destinationco.vercel.app/api/v1
+   NEXT_PUBLIC_LIVE_API=https://Aura-Tripco.vercel.app/api/v1
    # Jwt credentials
    NEXT_PUBLIC_JWT_ACCESS_TOKEN=your_jwt_access_token_here
    # cloudinary credentials

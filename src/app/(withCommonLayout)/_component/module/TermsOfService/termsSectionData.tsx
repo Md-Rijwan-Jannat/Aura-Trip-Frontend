@@ -94,7 +94,7 @@ export const sections = [
     icon: <MessageCircle size={24} />,
   },
   {
-    id: "travel-tips",
+    id: "aura-trip",
     title: "Travel Tips and Advice",
     content: (
       <p>

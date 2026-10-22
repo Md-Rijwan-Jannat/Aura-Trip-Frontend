@@ -64,7 +64,7 @@ export default function MiniDashboard() {
 
   return (
     <div
-      className={`${isAdminPage && 'hidden'} md:sticky top-20 h-screen mt-20 lg:w-1/4 overflow-y-auto scrollbar-hide`}
+      className={`${isAdminPage && 'hidden'} md:sticky top-28 h-screen mt-28 lg:w-1/4 overflow-y-auto scrollbar-hide`}
     >
       <div className="flex-col gap-6 hidden lg:flex">
         {/* Profile Overview Card */}
@@ -117,7 +117,7 @@ export default function MiniDashboard() {
             <p className="text-sm text-default-400">
               Most popular destination:
             </p>
-            <h3 className="text-lg font-bold">{popularPots?.[0].title}</h3>
+            <h3 className="text-lg font-bold">{popularPots?.[0]?.title}</h3>
             <Link
               className="items-center justify-center"
               href={`/news-feed/posts/${popularPots?.[0]?._id}`}
@@ -125,7 +125,7 @@ export default function MiniDashboard() {
               {' '}
               <Image
                 className="rounded-md object-cover mt-3"
-                src={popularPots?.[0].images[0]}
+                src={popularPots?.[0]?.images[0]}
                 height={500}
                 width={500}
                 alt="posts image"
