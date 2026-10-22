@@ -24,7 +24,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import BackButton from "../../ui/backButton";
 import DemoCredential from "../../ui/demoCredential";
 import { Button } from "@nextui-org/button";
-import { useUser } from "@/src/hooks/useUser";
 import BrandLogo from "@/src/components/shared/logo";
 
 type LoginFormInputs = z.infer<typeof loginSchema>;
@@ -46,7 +45,6 @@ export default function LoginForm() {
   const searchParams = useSearchParams();
   const redirect = searchParams.get("redirect");
   const router = useRouter();
-  const { userInfo } = useUser();
 
   // Form handling
   const {
@@ -90,12 +88,14 @@ export default function LoginForm() {
         // Set token in cookies
         Cookies.set("accessToken", res?.data?.data?.accessToken);
 
+        // Redirect based on the freshly authenticated user's role (the
+        // redux `userInfo` in this closure is stale on first login).
         router.push(
           redirect
             ? redirect
-            : userInfo?.role === "USER"
+            : decodedUser.role === "USER"
               ? "/news-feed/posts"
-              : "admin-dashboard/analytics"
+              : "/admin-dashboard/analytics"
         );
         // Show success toast
         toast.success("Login successful");
