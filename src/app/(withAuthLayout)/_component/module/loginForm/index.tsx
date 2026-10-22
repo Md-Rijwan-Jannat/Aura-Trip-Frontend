@@ -22,7 +22,6 @@ import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { SerializedError } from "@reduxjs/toolkit";
 import { useRouter, useSearchParams } from "next/navigation";
 import BackButton from "../../ui/backButton";
-import DemoCredential from "../../ui/demoCredential";
 import { Button } from "@nextui-org/button";
 import BrandLogo from "@/src/components/shared/logo";
 
@@ -59,12 +58,6 @@ export default function LoginForm() {
       password: "",
     },
   });
-
-  // Function to handle demo credentials
-  const setDemoCredentials = (email: string, password: string) => {
-    setEmail(email);
-    setPassword(password);
-  };
 
   const onSubmit = async (data: LoginFormInputs) => {
     try {
@@ -126,7 +119,6 @@ export default function LoginForm() {
       <div className="flex flex-col items-start my-2 mx-1">
         <div className="flex flex-col md:flex-row gap-3 w-full items-center justify-center">
           <BackButton />
-          <DemoCredential onDemoClick={setDemoCredentials} />
         </div>
         <div className="flex flex-col md:flex-row bg-default-100 rounded-lg w-full overflow-hidden my-5">
           <div className="p-5 absolute cursor-pointer z-20">

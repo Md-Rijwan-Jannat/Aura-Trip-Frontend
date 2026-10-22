@@ -23,7 +23,6 @@ import { useState } from "react";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { SerializedError } from "@reduxjs/toolkit";
 import BackButton from "../../ui/backButton";
-import DemoCredential from "../../ui/demoCredential";
 import { Button } from "@nextui-org/button";
 import BrandLogo from "@/src/components/shared/logo";
 

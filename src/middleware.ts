@@ -43,16 +43,17 @@ const PublicRoutes = [
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  // Verified server-side (signature + expiry); undefined for missing, forged,
+  // or expired tokens. An unverified jwtDecode must not drive routing.
   const user = (await currentUser()) as TDecodeUser | undefined;
-  const accessToken = request.cookies.get("accessToken")?.value; // ✅ FIXED: Correct way to get cookies in middleware
 
   // ✅ Allow access to public routes
   if (PublicRoutes.some((route) => pathname.match(route))) {
     return NextResponse.next();
   }
 
-  // ✅ Redirect unauthenticated users to login
-  if (!user && !accessToken) {
+  // ✅ Redirect users without a valid session (no cookie, forged, or expired)
+  if (!user) {
     if (!AuthPathname.includes(pathname)) {
       return NextResponse.redirect(
         new URL(`/login?redirect=${pathname}`, request.url)
