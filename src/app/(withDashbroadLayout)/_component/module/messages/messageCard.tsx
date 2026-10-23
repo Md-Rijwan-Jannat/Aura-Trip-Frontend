@@ -2,13 +2,12 @@ import React from 'react';
 import { Card, CardBody } from '@nextui-org/card';
 import { Avatar } from '@nextui-org/avatar';
 import Link from 'next/link';
-import { useChat } from '@/src/context/chatContext';
 import { TChat, TMessage } from '@/src/types';
 import { useCreateChatMutation } from '@/src/redux/features/message/chatApi';
 import { getSender } from '@/src/utils/chatLogics';
 import { useUser } from '@/src/hooks/useUser';
 import { GoVerified } from 'react-icons/go';
-import { format, formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNow } from 'date-fns';
 import { messagePreview } from '@/src/utils/messagePreview';
 
 const MessageCard = ({

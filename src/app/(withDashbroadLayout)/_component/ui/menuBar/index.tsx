@@ -2,12 +2,12 @@
 'use client';
 
 import React from 'react';
-import { FaBell, FaConnectdevelop, FaUsers } from 'react-icons/fa';
+import { FaConnectdevelop, FaUsers } from 'react-icons/fa';
 import { IoIosCheckmarkCircle } from 'react-icons/io';
 import { TbArrowAutofitContentFilled, TbPremiumRights } from 'react-icons/tb';
 import { RiSecurePaymentFill } from 'react-icons/ri';
 import { FaFacebookMessenger } from 'react-icons/fa6';
-import { MdAnalytics, MdDynamicFeed, MdSlowMotionVideo } from 'react-icons/md';
+import { MdAnalytics, MdHomeFilled, MdSlowMotionVideo } from 'react-icons/md';
 import { TbUsersGroup } from 'react-icons/tb';
 import { useAppSelector, useAppDispatch } from '@/src/redux/hook';
 import { useRouter } from 'next/navigation';
@@ -48,28 +48,25 @@ export default function MenuBar({ className }: TMenuBarProps) {
     >
       {userInfo?.role === 'USER' && (
         <>
-          {/* Common Menu Items */}
-          <MenubarButton
-            className="hidden lg:block"
-            href="/add-connections"
-            title="Add Connection"
-            icon={<FaConnectdevelop className="text-[17px] md:text-[20px]" />}
-          />
+          {/* 1. Home (News Feed) */}
           <MenubarButton
             href="/news-feed/posts"
-            title="News Feed"
-            icon={<MdDynamicFeed className="text-[17px] md:text-[20px]" />}
+            title="Home"
+            icon={<MdHomeFilled className="text-[17px] md:text-[20px]" />}
           />
+          {/* 2. Groups */}
           <MenubarButton
             href="/groups"
             title="Groups"
             icon={<TbUsersGroup className="text-[17px] md:text-[20px]" />}
           />
+          {/* 3. Shorts */}
           <MenubarButton
             href="/shorts"
             title="Shorts"
             icon={<MdSlowMotionVideo className="text-[17px] md:text-[20px]" />}
           />
+          {/* 4. Premium Posts */}
           {userInfo?.verified ? (
             <MenubarButton
               onClick={onOpen}
@@ -85,31 +82,34 @@ export default function MenuBar({ className }: TMenuBarProps) {
               icon={<TbPremiumRights className="text-[17px] md:text-[20px]" />}
             />
           )}
-          {/* rest of the MenuBar component */}
+          {/* 5. Add Connection */}
+          <MenubarButton
+            className="hidden lg:block"
+            href="/add-connections"
+            title="Add Connection"
+            icon={<FaConnectdevelop className="text-[17px] md:text-[20px]" />}
+          />
           <PremiumModal
             isOpen={isOpen}
             onOpenChange={onOpenChange}
             user={userInfo}
           />
+          {/* 6. Followers */}
           <MenubarButton
             href="/followers"
             title="Followers"
             icon={<FaUsers className="text-[17px] md:text-[20px]" />}
           />
+          {/* 7. Following */}
           <MenubarButton
             href="/following"
-            title="Flowing"
+            title="Following"
             icon={
               <IoIosCheckmarkCircle className="text-[17px] md:text-[20px]" />
             }
           />
+          {/* 8. Messages */}
           <MenubarButton
-            href="/notifications"
-            title="Notifications"
-            icon={<FaBell className="text-[17px] md:text-[20px]" />}
-          />
-          <MenubarButton
-            href="/messages"
             title="Messages"
             active={chatOpen}
             icon={
@@ -123,16 +123,25 @@ export default function MenuBar({ className }: TMenuBarProps) {
       {/* Admin-specific Menu Items */}
       {userInfo?.role === 'ADMIN' && (
         <>
+          {/* 1. Home (News Feed) */}
+          <MenubarButton
+            href="/news-feed/posts"
+            title="Home"
+            icon={<MdHomeFilled className="text-[17px] md:text-[20px]" />}
+          />
+          {/* 2. View Analytics */}
           <MenubarButton
             href="/admin-dashboard/analytics"
             title="View Analytics"
             icon={<MdAnalytics className="text-[17px] md:text-[20px]" />}
           />
+          {/* 3. Manage Users */}
           <MenubarButton
             href="/admin-dashboard/manage-users"
             title="Manage Users"
             icon={<FaUsers className="text-[17px] md:text-[20px]" />}
           />
+          {/* 4. Manage Content */}
           <MenubarButton
             href="/admin-dashboard/manage-content"
             title="Manage Content"
@@ -140,17 +149,19 @@ export default function MenuBar({ className }: TMenuBarProps) {
               <TbArrowAutofitContentFilled className="text-[17px] md:text-[20px]" />
             }
           />
+          {/* 5. Add Connection */}
+          <MenubarButton
+            className="hidden lg:block"
+            href="/add-connections"
+            title="Add Connection"
+            icon={<FaConnectdevelop className="text-[17px] md:text-[20px]" />}
+          />
           <MenubarButton
             href="/admin-dashboard/payments"
             title="Payments"
             icon={
               <RiSecurePaymentFill className="text-[17px] md:text-[20px]" />
             }
-          />
-          <MenubarButton
-            href="/news-feed/posts"
-            title="News Feed"
-            icon={<MdDynamicFeed className="text-[17px] md:text-[20px]" />}
           />
           <MenubarButton
             href="/groups"
@@ -178,25 +189,12 @@ export default function MenuBar({ className }: TMenuBarProps) {
               icon={<TbPremiumRights className="text-[17px] md:text-[20px]" />}
             />
           )}
-          {/* rest of the MenuBar component */}
           <PremiumModal
             isOpen={isOpen}
             onOpenChange={onOpenChange}
             user={userInfo}
           />
           <MenubarButton
-            className="hidden lg:block"
-            href="/add-connections"
-            title="Add Connection"
-            icon={<FaConnectdevelop className="text-[17px] md:text-[20px]" />}
-          />
-          <MenubarButton
-            href="/notifications"
-            title="Notifications"
-            icon={<FaBell className="text-[17px] md:text-[20px]" />}
-          />
-          <MenubarButton
-            href="/messages"
             title="Messages"
             active={chatOpen}
             icon={

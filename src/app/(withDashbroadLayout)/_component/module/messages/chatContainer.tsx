@@ -13,8 +13,8 @@ import { useUser } from '@/src/hooks/useUser';
 import {
   useGetUserMessagesQuery,
   useCreateMessageMutation,
-  useReactToMessageMutation,
-  useRemoveReactionMutation,
+  useReactToMessageEmojiMutation,
+  useRemoveMessageReactionMutation,
 } from '@/src/redux/features/message/messageApi';
 import { useGetSingleChatQuery } from '@/src/redux/features/message/chatApi';
 import { getSender } from '@/src/utils/chatLogics';
@@ -44,7 +44,7 @@ import {
   DropdownMenu,
   DropdownItem,
 } from '@nextui-org/dropdown';
-import { ArrowLeft, Phone, Video, UserPlus, MoreVertical, Users } from 'lucide-react';
+import { ChevronLeft, Phone, Video, UserPlus, MoreVertical, Users } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import AddPeopleModal from './addPeopleModal';
 import GroupInfoModal from './groupInfoModal';
@@ -101,8 +101,8 @@ export default function ChatContainer({
   const userMessages = userMessagesData?.data;
 
   const [createMessageFn] = useCreateMessageMutation();
-  const [reactToMessageFn] = useReactToMessageMutation();
-  const [removeReactionFn] = useRemoveReactionMutation();
+  const [reactToMessageFn] = useReactToMessageEmojiMutation();
+  const [removeReactionFn] = useRemoveMessageReactionMutation();
 
   /** Apply a reaction summary (REST response or `message reacted` event). */
   const applyReactionUpdate = useCallback(
@@ -117,30 +117,69 @@ export default function ChatContainer({
   );
 
   /**
-   * Toggle an emoji reaction: same emoji again → remove, different → switch
-   * (the server replaces atomically, so nothing ever stacks). Local state is
-   * patched from the response — no history refetch, no scroll jump.
+   * Toggle an emoji reaction: same emoji again → remove (undo), different → switch.
+   * Optimistically updates UI immediately for instant feedback, then confirms with API.
    */
   const toggleReaction = useCallback(
     async (message: TMessage, type: TReactionType) => {
-      try {
-        const myCurrent = message.reactions?.myReaction ?? null;
-        const res =
-          myCurrent === type
-            ? await removeReactionFn(message._id).unwrap()
-            : await reactToMessageFn({ messageId: message._id, type }).unwrap();
-        const data = (
-          res as {
-            data?: { _id: string; reactions: TMessageReactionSummary };
-          }
-        )?.data;
+      const currentMsg = messages.find((m) => m._id === message._id) || message;
+      const prevReactions: TMessageReactionSummary = currentMsg.reactions ?? {
+        counts: {},
+        total: 0,
+        myReaction: null,
+      };
 
-        if (data?._id) applyReactionUpdate(data);
+      const myCurrent = prevReactions.myReaction ?? null;
+      const isUndo = myCurrent === type;
+
+      // Optimistically update counts and myReaction
+      const nextCounts: Partial<Record<string, number>> = { ...(prevReactions.counts || {}) };
+
+      if (isUndo) {
+        if (nextCounts[type]) {
+          nextCounts[type] = (nextCounts[type] || 1) - 1;
+          if (nextCounts[type]! <= 0) delete nextCounts[type];
+        }
+      } else {
+        if (myCurrent && nextCounts[myCurrent]) {
+          nextCounts[myCurrent] = (nextCounts[myCurrent] || 1) - 1;
+          if (nextCounts[myCurrent]! <= 0) delete nextCounts[myCurrent];
+        }
+        nextCounts[type] = (nextCounts[type] || 0) + 1;
+      }
+
+      const nextTotal = Object.values(nextCounts).reduce(
+        (acc: number, c) => acc + (c || 0),
+        0,
+      );
+      const optimisticSummary: TMessageReactionSummary = {
+        counts: nextCounts,
+        total: nextTotal,
+        myReaction: isUndo ? null : type,
+      };
+
+      // Apply optimistic update immediately
+      applyReactionUpdate({ _id: message._id, reactions: optimisticSummary });
+
+      try {
+        const res = isUndo
+          ? await removeReactionFn(message._id).unwrap()
+          : await reactToMessageFn({ messageId: message._id, type }).unwrap();
+
+        const payload =
+          (res as { data?: { _id: string; reactions: TMessageReactionSummary } })?.data ??
+          (res as unknown as { _id?: string; reactions?: TMessageReactionSummary });
+
+        if (payload?._id && payload?.reactions) {
+          applyReactionUpdate(payload as { _id: string; reactions: TMessageReactionSummary });
+        }
       } catch {
+        // Rollback on failure
+        applyReactionUpdate({ _id: message._id, reactions: prevReactions });
         toast.error('Could not save reaction');
       }
     },
-    [reactToMessageFn, removeReactionFn, applyReactionUpdate],
+    [messages, reactToMessageFn, removeReactionFn, applyReactionUpdate],
   );
 
   // ------------------------------------------------------------------
@@ -491,9 +530,9 @@ export default function ChatContainer({
       {isLoading && <TableSkeleton />}
 
       {/* Conversation header: fixed (never scrolls with messages) */}
-      <div className="shrink-0 mb-2 px-1">
+      <div className="shrink-0 pt-0.5">
         <div className="flex items-center justify-between gap-3">
-          <div className="flex items-center gap-2 min-w-0">
+          <div className="flex items-center min-w-0">
             {showBack && (
               <Button
                 isIconOnly
@@ -502,7 +541,7 @@ export default function ChatContainer({
                 aria-label="Go back"
                 onPress={() => router.back()}
               >
-                <ArrowLeft className="h-4 w-4 text-default-600" />
+                <ChevronLeft className="h-5 w-5 text-default-600" />
               </Button>
             )}
             <Avatar
@@ -519,7 +558,7 @@ export default function ChatContainer({
               }
               className="w-9 h-9 shrink-0"
             />
-            <div className="min-w-0">
+            <div className="min-w-0 pl-1">
               <p className="text-sm font-semibold text-default-700 truncate leading-tight">
                 {selectedChat?.isGroupChat
                   ? selectedChat?.chatName
@@ -545,16 +584,6 @@ export default function ChatContainer({
                     >
                       Group · {selectedChat.users?.length ?? 0} members
                     </button>
-                    <span className="text-[11px] text-default-300 dark:text-default-600">
-                      |
-                    </span>
-                    <button
-                      type="button"
-                      onClick={addPeopleDisclosure.onOpen}
-                      className="text-[11px] font-medium text-sage-600 dark:text-sage-400 hover:underline"
-                    >
-                      Add people
-                    </button>
                   </>
                 )}
               </div>
@@ -562,18 +591,7 @@ export default function ChatContainer({
           </div>
           {canCall && (
             <div className="flex items-center gap-1 shrink-0">
-              {selectedChat?.isGroupChat && (
-                <Button
-                  isIconOnly
-                  size="sm"
-                  radius="full"
-                  variant="flat"
-                  aria-label="Invite people"
-                  onPress={addPeopleDisclosure.onOpen}
-                >
-                  <UserPlus className="h-4 w-4 text-sage-600 dark:text-sage-400" />
-                </Button>
-              )}
+            
               {selectedChat?.isGroupChat && (
                 <Dropdown placement="bottom-end">
                   <DropdownTrigger>

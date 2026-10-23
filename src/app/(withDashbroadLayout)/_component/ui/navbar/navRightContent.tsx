@@ -8,7 +8,6 @@ import Link from 'next/link';
 import { useAppSelector } from '@/src/redux/hook';
 import { getNotifications } from '@/src/redux/features/message/notificationSlice';
 import { motion } from 'framer-motion';
-import ThemeDropdown from '@/src/components/modal/themeDropdown';
 
 export default function NavRightContent() {
   const notifications = useAppSelector(getNotifications);
@@ -37,7 +36,6 @@ export default function NavRightContent() {
       ) : (
         <Bell size={18} />
       )}
-      <ThemeDropdown />
       <NavDropdown />
     </div>
   );

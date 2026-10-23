@@ -44,18 +44,20 @@ const MessagesApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['messages'],
     }),
-    // Set/switch the caller's emoji reaction. Deliberately does NOT
+    // Set/switch the caller's emoji reaction on a MESSAGE. Deliberately does NOT
     // invalidate: the response + `message reacted` socket update local state,
     // avoiding a history refetch that would reset scroll/reply drafts.
-    reactToMessage: builder.mutation({
+    // NOTE: named uniquely to avoid RTK Query endpoint collision with postApi's removeReaction.
+    reactToMessageEmoji: builder.mutation({
       query: ({ messageId, type }: { messageId: string; type: string }) => ({
         url: `/messages/${messageId}/react`,
         method: 'POST',
         body: { type },
       }),
     }),
-    // Remove the caller's reaction (idempotent)
-    removeReaction: builder.mutation({
+    // Remove the caller's reaction from a MESSAGE (idempotent)
+    // NOTE: named uniquely to avoid RTK Query endpoint collision with postApi's removeReaction.
+    removeMessageReaction: builder.mutation({
       query: (messageId: string) => ({
         url: `/messages/${messageId}/react`,
         method: 'DELETE',
@@ -70,6 +72,6 @@ export const {
   useEditMessageMutation,
   useDeleteMessageMutation,
   useConsumeViewOnceMediaMutation,
-  useReactToMessageMutation,
-  useRemoveReactionMutation,
+  useReactToMessageEmojiMutation,
+  useRemoveMessageReactionMutation,
 } = MessagesApi;
