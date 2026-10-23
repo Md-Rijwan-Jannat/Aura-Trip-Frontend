@@ -37,6 +37,16 @@ export interface TMessageReplyPreview {
   isDeleted?: boolean;
 }
 
+/**
+ * Aggregate emoji reactions on a message as seen by ONE viewer — the raw
+ * user list never reaches the client, only counts + your own state.
+ */
+export interface TMessageReactionSummary {
+  counts: Partial<Record<string, number>>;
+  total: number;
+  myReaction: string | null;
+}
+
 export interface TMessage {
   _id: string;
   sender: TUser;
@@ -51,6 +61,8 @@ export interface TMessage {
   liveLocation?: TMessageLiveLocation | null;
   /** Flattened reply reference with an embedded preview. */
   replyTo?: TMessageReplyPreview | null;
+  /** Emoji reaction summary (absent on relayed/live payloads until set). */
+  reactions?: TMessageReactionSummary | null;
   isEdited?: boolean;
   editedAt?: string | null;
   isDeleted?: boolean;

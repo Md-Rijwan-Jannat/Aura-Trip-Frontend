@@ -23,6 +23,7 @@ import {
   ModalBody,
   ModalFooter,
 } from '@nextui-org/modal';
+import { Popover, PopoverTrigger, PopoverContent } from '@nextui-org/popover';
 import {
   format,
   isSameDay,
@@ -39,6 +40,7 @@ import {
   Mic,
   MoreVertical,
   Pencil,
+  SmilePlus,
   Trash2,
   X,
 } from 'lucide-react';
@@ -49,6 +51,7 @@ import {
   useEditMessageMutation,
   useConsumeViewOnceMediaMutation,
 } from '@/src/redux/features/message/messageApi';
+import { REACTION_EMOJI, REACTION_TYPES, TReactionType } from '@/src/types';
 
 interface ScrollableChatProps {
   messages: TMessage[];
@@ -61,6 +64,8 @@ interface ScrollableChatProps {
   onReply?: (message: TMessage) => void;
   /** Sharer-only: end an active LIVE_LOCATION session early. */
   onStopLiveShare?: (messageId: string) => void;
+  /** Toggle the viewer's emoji reaction on a message (set/switch/remove). */
+  onToggleReaction?: (message: TMessage, type: TReactionType) => void;
 }
 
 const formatDuration = (totalSeconds: number) => {
@@ -74,17 +79,20 @@ const BubbleShell = ({
   shouldShowAvatar,
   avatarSlot,
   children,
+  footer,
 }: {
   isCurrentUser: boolean;
   shouldShowAvatar: boolean;
   avatarSlot?: React.ReactNode;
   children: React.ReactNode;
+  /** Rendered under the bubble row (reaction chips). */
+  footer?: React.ReactNode;
 }) => (
   <div
     className={`flex w-full ${isCurrentUser ? 'justify-end' : 'justify-start'} items-start`}
   >
     <div
-      className={`flex flex-col items-start gap-1 ${isCurrentUser ? 'items-end' : 'items-start'}`}
+      className={`flex flex-col gap-1 ${isCurrentUser ? 'items-end' : 'items-start'}`}
     >
       <div className="flex">
         {!isCurrentUser && (
@@ -94,6 +102,7 @@ const BubbleShell = ({
         )}
         {children}
       </div>
+      {footer}
     </div>
   </div>
 );
@@ -108,6 +117,7 @@ const ScrollableChat = forwardRef<HTMLDivElement, ScrollableChatProps>(
     isTyping,
     onReply,
     onStopLiveShare,
+    onToggleReaction,
   }) => {
     const [editingId, setEditingId] = useState<string | null>(null);
     const [editDraft, setEditDraft] = useState('');
@@ -115,6 +125,8 @@ const ScrollableChat = forwardRef<HTMLDivElement, ScrollableChatProps>(
     const [viewOnceBusy, setViewOnceBusy] = useState<string | null>(null);
     const [removeTarget, setRemoveTarget] = useState<TMessage | null>(null);
     const [flashId, setFlashId] = useState<string | null>(null);
+    /** Only one quick-reaction picker is open at a time. */
+    const [reactionPickerFor, setReactionPickerFor] = useState<string | null>(null);
     const editInputRef = useRef<HTMLInputElement>(null);
 
     const [editMessageFn] = useEditMessageMutation();
@@ -281,6 +293,54 @@ const ScrollableChat = forwardRef<HTMLDivElement, ScrollableChatProps>(
       } finally {
         setViewOnceBusy(null);
       }
+    };
+
+    /**
+     * Reaction chips pinned under a bubble. Clicking your own chip removes
+     * it; clicking another switches to it — the parent handler decides.
+     */
+    const renderReactionChips = (message: TMessage, isCurrentUser: boolean) => {
+      const summary = message.reactions;
+      if (
+        !summary ||
+        summary.total <= 0 ||
+        message.isDeleted ||
+        editingId === message._id
+      ) {
+        return null;
+      }
+      const chips = (Object.entries(summary.counts || {}) as [TReactionType, number][]).filter(
+        ([, count]) => count > 0,
+      );
+      if (chips.length === 0) return null;
+
+      return (
+        <div
+          className={`flex flex-wrap gap-1 px-1 ${
+            isCurrentUser ? 'justify-end' : 'justify-start'
+          }`}
+        >
+          {chips.map(([type, count]) => {
+            const mine = summary.myReaction === type;
+            return (
+              <button
+                key={type}
+                type="button"
+                aria-label={`${type} reaction (${count})`}
+                onClick={() => onToggleReaction?.(message, type)}
+                className={`flex items-center gap-0.5 rounded-full border px-1.5 py-0.5 text-[11px] leading-none transition-colors ${
+                  mine
+                    ? 'border-sage-400 bg-sage-50 dark:bg-sage-500/15 text-sage-700 dark:text-sage-300'
+                    : 'border-default-200 dark:border-white/10 bg-default-100 dark:bg-white/[0.06] text-default-600 dark:text-default-300 hover:border-default-400'
+                }`}
+              >
+                <span>{REACTION_EMOJI[type]}</span>
+                <span className="font-semibold">{count}</span>
+              </button>
+            );
+          })}
+        </div>
+      );
     };
 
     const renderContent = (message: TMessage, isCurrentUser: boolean) => {
@@ -586,6 +646,7 @@ const ScrollableChat = forwardRef<HTMLDivElement, ScrollableChatProps>(
               <BubbleShell
                 isCurrentUser={isCurrentUser}
                 shouldShowAvatar={shouldShowAvatar}
+                footer={renderReactionChips(message, isCurrentUser)}
                 avatarSlot={
                   shouldShowAvatar && (
                     <Avatar
@@ -631,9 +692,46 @@ const ScrollableChat = forwardRef<HTMLDivElement, ScrollableChatProps>(
                     {renderContent(message, isCurrentUser)}
                   </div>
 
-                  {/* Message actions: 3-dot menu (Reply / Edit / Remove) */}
+                  {/* Message actions: quick reaction + 3-dot (Reply/Edit/Remove) */}
                   {!message.isDeleted && editingId !== message._id && (
-                    <div className="opacity-60 group-hover/msg:opacity-100 focus-within:opacity-100 transition-opacity pt-1">
+                    <div className="opacity-60 group-hover/msg:opacity-100 focus-within:opacity-100 transition-opacity pt-1 flex items-start gap-0.5">
+                      <Popover
+                        placement={isCurrentUser ? 'left' : 'right'}
+                        isOpen={reactionPickerFor === message._id}
+                        onOpenChange={(open) =>
+                          setReactionPickerFor(open ? message._id : null)
+                        }
+                      >
+                        <PopoverTrigger>
+                          <Button
+                            isIconOnly
+                            size="sm"
+                            variant="light"
+                            className="h-6 min-w-6"
+                            aria-label="Add reaction"
+                          >
+                            <SmilePlus className="h-3.5 w-3.5 text-default-500" />
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent>
+                          <div className="flex items-center gap-0.5 px-1 py-1">
+                            {REACTION_TYPES.map((type) => (
+                              <button
+                                key={type}
+                                type="button"
+                                aria-label={type}
+                                onClick={() => {
+                                  setReactionPickerFor(null);
+                                  onToggleReaction?.(message, type);
+                                }}
+                                className="h-7 w-7 rounded-full text-base leading-none hover:bg-default-200 dark:hover:bg-white/10 transition-colors"
+                              >
+                                {REACTION_EMOJI[type]}
+                              </button>
+                            ))}
+                          </div>
+                        </PopoverContent>
+                      </Popover>
                       <Dropdown placement={isCurrentUser ? 'left' : 'right'}>
                         <DropdownTrigger>
                           <Button

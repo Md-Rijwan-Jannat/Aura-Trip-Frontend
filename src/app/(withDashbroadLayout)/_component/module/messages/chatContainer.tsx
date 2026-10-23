@@ -13,11 +13,18 @@ import { useUser } from '@/src/hooks/useUser';
 import {
   useGetUserMessagesQuery,
   useCreateMessageMutation,
+  useReactToMessageMutation,
+  useRemoveReactionMutation,
 } from '@/src/redux/features/message/messageApi';
 import { useGetSingleChatQuery } from '@/src/redux/features/message/chatApi';
 import { getSender } from '@/src/utils/chatLogics';
 import ScrollableChat from './scrollableChat';
-import { TChat, TMessage } from '@/src/types';
+import {
+  TChat,
+  TMessage,
+  TMessageReactionSummary,
+  TReactionType,
+} from '@/src/types';
 import MessageBar, { TMessagePayload } from './messageBar';
 import TableSkeleton from '@/src/components/ui/skeleton/tableSkeleton';
 import { useAppDispatch } from '@/src/redux/hook';
@@ -27,6 +34,7 @@ import {
 } from '@/src/redux/features/message/notificationSlice';
 import { useSocket } from '@/src/context/socketProvider';
 import { useCall } from '@/src/context/callContext';
+import { toast } from 'sonner';
 import { Avatar } from '@nextui-org/avatar';
 import { Button } from '@nextui-org/button';
 import { useDisclosure } from '@nextui-org/modal';
@@ -93,6 +101,46 @@ export default function ChatContainer({
   const userMessages = userMessagesData?.data;
 
   const [createMessageFn] = useCreateMessageMutation();
+  const [reactToMessageFn] = useReactToMessageMutation();
+  const [removeReactionFn] = useRemoveReactionMutation();
+
+  /** Apply a reaction summary (REST response or `message reacted` event). */
+  const applyReactionUpdate = useCallback(
+    (payload: { _id: string; reactions: TMessageReactionSummary }) => {
+      setMessages((prev) =>
+        prev.map((m) =>
+          m._id === payload._id ? { ...m, reactions: payload.reactions } : m,
+        ),
+      );
+    },
+    [],
+  );
+
+  /**
+   * Toggle an emoji reaction: same emoji again → remove, different → switch
+   * (the server replaces atomically, so nothing ever stacks). Local state is
+   * patched from the response — no history refetch, no scroll jump.
+   */
+  const toggleReaction = useCallback(
+    async (message: TMessage, type: TReactionType) => {
+      try {
+        const myCurrent = message.reactions?.myReaction ?? null;
+        const res =
+          myCurrent === type
+            ? await removeReactionFn(message._id).unwrap()
+            : await reactToMessageFn({ messageId: message._id, type }).unwrap();
+        const data = (
+          res as {
+            data?: { _id: string; reactions: TMessageReactionSummary };
+          }
+        )?.data;
+        if (data?._id) applyReactionUpdate(data);
+      } catch {
+        toast.error('Could not save reaction');
+      }
+    },
+    [reactToMessageFn, removeReactionFn, applyReactionUpdate],
+  );
 
   // ------------------------------------------------------------------
   // Live location sharing: one geolocation watcher per chat started from
@@ -311,9 +359,22 @@ export default function ChatContainer({
     socket.on('message edited', (edited: TMessage) => {
       if (chatIdOf(edited.chat) !== chatId) return;
       setMessages((prev) =>
-        prev.map((m) => (m._id === edited._id ? edited : m))
+        prev.map((m) => (m._id === edited._id ? edited : m)),
       );
     });
+
+    // Someone reacted (the server sends each member their own myReaction).
+    socket.on(
+      'message reacted',
+      (payload: {
+        _id: string;
+        chat: string;
+        reactions: TMessageReactionSummary;
+      }) => {
+        if (payload.chat !== chatId) return;
+        applyReactionUpdate(payload);
+      },
+    );
 
     socket.on(
       'message deleted',
@@ -367,6 +428,7 @@ export default function ChatContainer({
     return () => {
       socket.off('message received');
       socket.off('message edited');
+      socket.off('message reacted');
       socket.off('message deleted');
       socket.off('live:position');
       socket.off('live:ended');
@@ -381,6 +443,7 @@ export default function ChatContainer({
     refetch,
     clearLiveShare,
     markLiveEnded,
+    applyReactionUpdate,
   ]);
 
   const typingHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -586,6 +649,7 @@ export default function ChatContainer({
         isTyping={isTyping}
         onReply={setReplyTarget}
         onStopLiveShare={stopLiveShare}
+        onToggleReaction={toggleReaction}
       />
       <MessageBar
         onSendMessage={sendMessage}
