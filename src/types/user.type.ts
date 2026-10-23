@@ -9,6 +9,7 @@ export interface TUser {
   email: string;
   bio: string;
   image?: string;
+  coverImage?: string | null;
   password: string;
   role: string;
   status: string;

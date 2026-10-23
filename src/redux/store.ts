@@ -14,6 +14,7 @@ import {
 import { baseApi } from './api/baseApi';
 import authReducer from './features/auth/authSlice';
 import notificationReducer from './features/message/notificationSlice';
+import groupPreviewReducer from './features/group/groupPreviewSlice';
 
 // Fallback storage if localStorage is not available
 const createNoopStorage = () => ({
@@ -50,6 +51,7 @@ export const store = configureStore({
   reducer: {
     auth: persistedAuthReducer,
     notifications: persistedNotificationReducer,
+    groupPreview: groupPreviewReducer,
     [baseApi.reducerPath]: baseApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>

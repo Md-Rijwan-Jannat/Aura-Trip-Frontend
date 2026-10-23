@@ -13,7 +13,6 @@ import { Button } from '@nextui-org/button';
 import { useUpdateMyProfileMutation } from '@/src/redux/features/user/userApi';
 import { Input } from '@nextui-org/input';
 import { IoIosImages } from 'react-icons/io';
-import GlassLoader from '@/src/components/shared/glassLoader';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { FaUser } from 'react-icons/fa';
 
@@ -24,6 +23,7 @@ interface CloudinaryResponse {
 interface UpdateUserModalProps {
   defaultName: string;
   defaultImage: string | undefined;
+  defaultCover?: string | null;
   userId: string;
   bio: string;
   country: string;
@@ -33,6 +33,7 @@ interface UpdateUserModalProps {
 interface FormInputs {
   name: string;
   imageFile: File | null;
+  coverFile: File | null;
   bio: string;
   country: string;
   address: string;
@@ -41,6 +42,7 @@ interface FormInputs {
 export default function UpdateUserModal({
   defaultName,
   defaultImage,
+  defaultCover,
   country,
   bio,
   address,
@@ -48,6 +50,7 @@ export default function UpdateUserModal({
 }: UpdateUserModalProps) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [image, setImage] = useState<string>(defaultImage || '');
+  const [cover, setCover] = useState<string>(defaultCover || '');
   const [isUploading, setIsUploading] = useState<boolean>(false);
 
   const [updateMyProfileFn, { isLoading }] = useUpdateMyProfileMutation();
@@ -63,6 +66,7 @@ export default function UpdateUserModal({
     defaultValues: {
       name: defaultName,
       imageFile: null,
+      coverFile: null,
       bio: bio || '',
       country: country || '',
       address: address || '',
@@ -75,20 +79,31 @@ export default function UpdateUserModal({
       reset({
         name: defaultName,
         imageFile: null,
+        coverFile: null,
         bio,
         country,
         address,
       });
       setImage(defaultImage || '');
+      setCover(defaultCover || '');
     }
-  }, [isOpen, defaultName, defaultImage, bio, country, address, reset]);
+  }, [isOpen, defaultName, defaultImage, defaultCover, bio, country, address, reset]);
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const file = e.target.files?.[0];
 
     if (file) {
-      setValue('imageFile', file);
+      setValue('imageFile', file, { shouldDirty: true });
       setImage(URL.createObjectURL(file));
+    }
+  };
+
+  const handleCoverChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    const file = e.target.files?.[0];
+
+    if (file) {
+      setValue('coverFile', file, { shouldDirty: true });
+      setCover(URL.createObjectURL(file));
     }
   };
 
@@ -126,10 +141,19 @@ export default function UpdateUserModal({
 
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
     let uploadedImageUrl = image;
+    let uploadedCoverUrl = cover;
 
     if (data.imageFile) {
       try {
         uploadedImageUrl = await uploadImageToCloudinary(data.imageFile);
+      } catch (error) {
+        return;
+      }
+    }
+
+    if (data.coverFile) {
+      try {
+        uploadedCoverUrl = await uploadImageToCloudinary(data.coverFile);
       } catch (error) {
         return;
       }
@@ -141,6 +165,7 @@ export default function UpdateUserModal({
       country: data.country,
       address: data.address,
       image: uploadedImageUrl,
+      coverImage: uploadedCoverUrl,
     };
 
     try {
@@ -175,7 +200,6 @@ export default function UpdateUserModal({
         isOpen={isOpen}
         onOpenChange={onOpenChange}
       >
-        {(isLoading || isUploading) && <GlassLoader />}
         <ModalContent className="m-2">
           <ModalHeader>
             <h1 className="text-xl font-bold text-sage-600 dark:text-sage-400">Update Profile</h1>
@@ -193,6 +217,24 @@ export default function UpdateUserModal({
                       height={500}
                     />
                   )}
+                </div>
+                <div>
+                  <p className="text-sm mb-1">Cover photo</p>
+                  {cover ? (
+                    <Image
+                      src={cover}
+                      alt="Cover Preview"
+                      className="w-full h-24 object-cover rounded-lg mb-2"
+                      width={500}
+                      height={100}
+                    />
+                  ) : null}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleCoverChange}
+                    className="text-sm w-full"
+                  />
                 </div>
                 <Input
                   type="text"
@@ -252,6 +294,7 @@ export default function UpdateUserModal({
                 className="primary-button"
                 type="submit"
                 isDisabled={!isDirty}
+                isLoading={isLoading || isUploading}
               >
                 Save
               </Button>

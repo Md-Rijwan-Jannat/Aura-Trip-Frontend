@@ -45,6 +45,7 @@ const isPasswordRequiredError = (error: unknown) => {
 
   return message.includes("Password confirmation");
 };
+
 type TDisableContext = "disable" | "regenerate";
 
 interface TTwoFactorStatus {
@@ -270,6 +271,7 @@ export default function TwoFactorCard() {
         setEnrollPassword("");
         setSetupStep("confirm");
         setupDisclosure.onOpen();
+
         return;
       }
       const message =
@@ -287,6 +289,7 @@ export default function TwoFactorCard() {
       setEnrollPassword("");
       setSetupStep("confirm");
       setupDisclosure.onOpen();
+
       return;
     }
     requestEnroll();
@@ -370,6 +373,7 @@ export default function TwoFactorCard() {
       if (isPasswordRequiredError(error)) {
         setActionNeedsPassword(true);
         toast.error("Confirm your password to continue");
+
         return;
       }
       const message =

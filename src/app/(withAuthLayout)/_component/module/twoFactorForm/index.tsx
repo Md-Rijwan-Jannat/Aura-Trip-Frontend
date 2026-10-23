@@ -52,6 +52,7 @@ const digitsOnly = (value: string) => value.replace(/\D/g, "").slice(0, 6);
 const formatSeconds = (total: number) => {
   const minutes = Math.floor(total / 60);
   const seconds = total % 60;
+
   return `${minutes}:${String(seconds).padStart(2, "0")}`;
 };
 

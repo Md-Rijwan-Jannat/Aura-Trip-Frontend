@@ -29,6 +29,7 @@ export default function Profile({ user }: TUserProps) {
     bio,
     name,
     image,
+    coverImage,
     follower,
     following,
     verified,
@@ -43,8 +44,20 @@ export default function Profile({ user }: TUserProps) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
+      {/* Cover photo */}
+      <div className="w-full h-32 sm:h-44 rounded-xl overflow-hidden mb-2 relative bg-gradient-to-br from-sage-600 via-sage-500 to-sage-300 dark:from-sage-800 dark:via-sage-700 dark:to-sage-500">
+        {coverImage ? (
+          <img
+            src={coverImage}
+            alt={`${name} cover`}
+            className="w-full h-full object-cover"
+          />
+        ) : null}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent" />
+      </div>
+
       {/* Profile Section */}
-      <div className="flex flex-col items-center relative">
+      <div className="flex flex-col items-center relative z-10 -mt-9">
         {currentUser?.email === email && (
           <div className="absolute md:top-2 md:right-2">
             <Button
@@ -59,7 +72,7 @@ export default function Profile({ user }: TUserProps) {
           </div>
         )}
 
-        <div>
+        <div className="ring-4 ring-surface rounded-full shadow-lg">
           <ActiveAvatar
             className={`cursor-pointer text-[24px] font-bold z-20`}
             name={name?.charAt(0)?.toUpperCase()}

@@ -13,3 +13,6 @@ export * from "./chat.type";
 export * from "./story.type";
 export * from "./termSection.type";
 export * from "./review.type";
+export * from "./group.type";
+export * from "./short.type";
+export * from "./notification.type";

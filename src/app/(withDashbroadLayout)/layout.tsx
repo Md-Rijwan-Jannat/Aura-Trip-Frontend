@@ -2,8 +2,7 @@ import React from 'react';
 import FeedNavbar from './_component/ui/navbar';
 import MenuBar from './_component/ui/menuBar';
 import Container from '@/src/components/shared/container';
-import MiniDashboard from './_component/module/adminDashboard/analytics/miniDashboard';
-import Suggestions from './_component/module/dashboardSuggessions';
+import RightRail from './_component/ui/rightRail';
 import { cookies } from 'next/headers';
 import { jwtDecode } from 'jwt-decode';
 
@@ -47,8 +46,8 @@ export default async function WithDashboardLayout({
             {children}
           </main>
 
-          {/* Premium Posts Section (hidden for ADMIN) */}
-          {user?.role === 'ADMIN' ? <MiniDashboard /> : <Suggestions />}
+          {/* Right rail: live preview while creating/editing a group, else suggestions/admin dashboard */}
+          <RightRail role={user?.role} />
 
           {/* Bottom Menu for Mobile Devices */}
           <div className="fixed bottom-0 left-0 right-0 lg:hidden border-t border-default-200">

@@ -81,6 +81,7 @@ export default function GoogleConnectionCard() {
       if (message.includes("Password confirmation")) {
         setNeedsPassword(true);
         toast.error("Confirm your password to continue");
+
         return;
       }
       toast.error(message || "Could not disconnect Google");

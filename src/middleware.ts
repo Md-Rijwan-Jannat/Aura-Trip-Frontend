@@ -21,6 +21,9 @@ const RoleBasedRoutes = {
     /^\/news-feed\/posts\/[a-zA-Z0-9]+$/,
     /^\/profile\/[a-zA-Z0-9]+$/,
     "/settings",
+    "/groups",
+    /^\/groups\/.+$/,
+    "/shorts",
   ],
   ADMIN: [
     "/admin-dashboard",
@@ -30,6 +33,9 @@ const RoleBasedRoutes = {
     "/settings",
     "/add-connections",
     "messages",
+    "/groups",
+    /^\/groups\/.+$/,
+    "/shorts",
   ],
 };
 
@@ -94,5 +100,7 @@ export const config = {
     "/settings",
     "/login",
     "/register",
+    "/groups/:path*",
+    "/shorts/:path*",
   ],
 };

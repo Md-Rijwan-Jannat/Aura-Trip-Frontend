@@ -20,7 +20,6 @@ import { toast } from "sonner";
 import { Button } from "@nextui-org/button";
 import { useCreatePostMutation } from "@/src/redux/features/post/postApi";
 import { TUser } from "@/src/types";
-import GlassLoader from "@/src/components/shared/glassLoader";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Import Quill's styles
 import { GoVerified } from "react-icons/go";
@@ -59,13 +58,14 @@ const PostModal = ({ userInfo }: TPostModalProps) => {
   const [createPostFn, { isLoading }] = useCreatePostMutation();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+  const [imageFiles, setImageFiles] = useState<File[]>([]);
   const [isError, setIsError] = useState<string>("");
   const [isFormValid, setIsFormValid] = useState<boolean>(false);
   const [description, setDescription] = useState<string>("");
 
   // current user
 
-  const { handleSubmit, control, setValue, reset, watch } = useForm<PostData>({
+  const { handleSubmit, control, reset, watch } = useForm<PostData>({
     defaultValues: {
       images: [],
       title: "",
@@ -76,77 +76,78 @@ const PostModal = ({ userInfo }: TPostModalProps) => {
     },
   });
 
-  const images = watch("images");
   const title = watch("title");
 
   useEffect(() => {
-    if (title || description || images.length > 0) {
+    if (title || description || imagePreviews.length > 0) {
       setIsFormValid(true);
     } else {
       setIsFormValid(false);
     }
-  }, [title, description, images]);
+  }, [title, description, imagePreviews]);
 
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
-    const previews: string[] = [];
+    const previews = files.map((file) => URL.createObjectURL(file));
 
-    files.forEach((file) => {
-      previews.push(URL.createObjectURL(file));
-    });
-
+    // Keep the files locally — upload only on submit
+    setImageFiles(files);
     setImagePreviews(previews);
-
-    try {
-      const uploadedImages = await Promise.all(
-        files.map(async (file) => {
-          const formData = new FormData();
-
-          formData.append("file", file);
-          formData.append("upload_preset", "aura-trip");
-          formData.append(
-            "cloud_name",
-            "Travel-tips&-destination-guides-images"
-          );
-
-          const cloudinaryUrl = process.env.NEXT_PUBLIC_CLOUDINARY_URL;
-          const res = await fetch(`${cloudinaryUrl}`, {
-            method: "POST",
-            body: formData,
-          });
-
-          const data = await res.json();
-
-          return data.secure_url;
-        })
-      );
-
-      setValue("images", uploadedImages);
-    } catch (error) {
-      setIsError("Failed to upload image");
-    }
+    e.target.value = "";
   };
 
   const removeImagePreview = (index: number) => {
-    const updatedPreviews = [...imagePreviews];
+    setImagePreviews((prev) => prev.filter((_, i) => i !== index));
+    setImageFiles((prev) => prev.filter((_, i) => i !== index));
+  };
 
-    updatedPreviews.splice(index, 1);
-    setImagePreviews(updatedPreviews);
+  const uploadImagesToCloudinary = async (files: File[]): Promise<string[]> => {
+    return Promise.all(
+      files.map(async (file) => {
+        const formData = new FormData();
 
-    const updatedImages = [...images];
+        formData.append("file", file);
+        formData.append("upload_preset", "aura-trip");
+        formData.append(
+          "cloud_name",
+          "Travel-tips&-destination-guides-images"
+        );
 
-    updatedImages.splice(index, 1);
-    setValue("images", updatedImages);
+        const cloudinaryUrl = process.env.NEXT_PUBLIC_CLOUDINARY_URL;
+        const res = await fetch(`${cloudinaryUrl}`, {
+          method: "POST",
+          body: formData,
+        });
+
+        const data = await res.json();
+
+        return data.secure_url;
+      })
+    );
   };
 
   const onSubmit = async (data: PostData) => {
-    const postData = { ...data, description };
+    // Upload picked images only now — on submit
+    let uploadedImages: string[] = [];
+
+    if (imageFiles.length > 0) {
+      try {
+        uploadedImages = await uploadImagesToCloudinary(imageFiles);
+      } catch {
+        toast.error("Failed to upload image");
+
+        return;
+      }
+    }
+
+    const postData = { ...data, images: uploadedImages, description };
 
     try {
       const res = await createPostFn(postData);
 
       if (res?.data?.success) {
         setImagePreviews([]);
+        setImageFiles([]);
         reset();
         onOpenChange();
         toast.success("Post created successfully");
@@ -162,7 +163,6 @@ const PostModal = ({ userInfo }: TPostModalProps) => {
 
   return (
     <>
-      {isLoading && <GlassLoader />}
       <div className="flex items-center gap-4 w-full">
         <div className="flex items-center gap-3">
           <Link href={`/profile/${userInfo?._id}`}>
@@ -344,7 +344,11 @@ const PostModal = ({ userInfo }: TPostModalProps) => {
               </div>
             </ModalBody>
             <ModalFooter>
-              <Button className="primary-button" type="submit">
+              <Button
+                className="primary-button"
+                type="submit"
+                isLoading={isLoading}
+              >
                 Post
               </Button>
             </ModalFooter>

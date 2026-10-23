@@ -35,6 +35,9 @@ export const baseApi = createApi({
     'stories',
     'userStories',
     'reviews',
+    'groups',
+    'shorts',
+    'notifications',
   ],
   endpoints: (builder) => ({}),
 });

@@ -58,6 +58,7 @@ export default function Settings() {
               bio={userInfo?.bio || ''}
               defaultName={userInfo?.name || ''}
               defaultImage={userInfo?.image}
+              defaultCover={userInfo?.coverImage}
               country={userInfo?.country}
               address={userInfo?.address}
             />

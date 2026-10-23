@@ -86,11 +86,11 @@ export default function Post() {
         {categoriesList.map((category) => (
           <button
             key={category}
-            className={`px-4 text-xs py-1 rounded-full border border-default-200 focus:outline-none ${
+            className={`px-4 text-xs py-1 rounded-full border border-default-200 dark:border-white/10 focus:outline-none ${
               selectedCategory === category
-                ? "bg-default-100 text-primaryColor"
-                : "bg-default-50"
-            } hover:bg-default-100 hover:text-primaryColor hover:transition-colors duration-500`}
+                ? "bg-default-100 text-primaryColor dark:bg-white/[0.1] dark:border-primaryColor/50"
+                : "bg-default-50 dark:bg-white/[0.05] dark:text-default-300"
+            } hover:bg-default-100 hover:text-primaryColor dark:hover:bg-white/[0.08] hover:transition-colors duration-500`}
             onClick={() =>
               setSelectedCategory(category === selectedCategory ? "" : category)
             }
@@ -99,7 +99,7 @@ export default function Post() {
           </button>
         ))}
         <button
-          className="px-4 py-1 rounded-full border border-default-200 bg-default-50 focus:outline-none hover:bg-default-100 hover:text-primaryColor hover:transition-colors duration-500"
+          className="px-4 py-1 rounded-full border border-default-200 dark:border-white/10 bg-default-50 dark:bg-white/[0.05] dark:text-default-300 focus:outline-none hover:bg-default-100 hover:text-primaryColor dark:hover:bg-white/[0.08] hover:transition-colors duration-500"
           onClick={() => setSelectedCategory("")}
         >
           <MdLockReset />

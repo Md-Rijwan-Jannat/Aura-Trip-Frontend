@@ -7,7 +7,8 @@ import { IoIosCheckmarkCircle } from 'react-icons/io';
 import { TbArrowAutofitContentFilled, TbPremiumRights } from 'react-icons/tb';
 import { RiSecurePaymentFill } from 'react-icons/ri';
 import { FaFacebookMessenger } from 'react-icons/fa6';
-import { MdAnalytics, MdDynamicFeed } from 'react-icons/md';
+import { MdAnalytics, MdDynamicFeed, MdSlowMotionVideo } from 'react-icons/md';
+import { TbUsersGroup } from 'react-icons/tb';
 import { useAppSelector } from '@/src/redux/hook';
 import { useRouter } from 'next/navigation';
 import { useUser } from '@/src/hooks/useUser';
@@ -46,6 +47,16 @@ export default function MenuBar({ className }: TMenuBarProps) {
             href="/news-feed/posts"
             title="News Feed"
             icon={<MdDynamicFeed className="text-[17px] md:text-[20px]" />}
+          />
+          <MenubarButton
+            href="/groups"
+            title="Groups"
+            icon={<TbUsersGroup className="text-[17px] md:text-[20px]" />}
+          />
+          <MenubarButton
+            href="/shorts"
+            title="Shorts"
+            icon={<MdSlowMotionVideo className="text-[17px] md:text-[20px]" />}
           />
           {userInfo?.verified ? (
             <MenubarButton
@@ -126,6 +137,16 @@ export default function MenuBar({ className }: TMenuBarProps) {
             href="/news-feed/posts"
             title="News Feed"
             icon={<MdDynamicFeed className="text-[17px] md:text-[20px]" />}
+          />
+          <MenubarButton
+            href="/groups"
+            title="Groups"
+            icon={<TbUsersGroup className="text-[17px] md:text-[20px]" />}
+          />
+          <MenubarButton
+            href="/shorts"
+            title="Shorts"
+            icon={<MdSlowMotionVideo className="text-[17px] md:text-[20px]" />}
           />
           {userInfo?.verified ? (
             <MenubarButton
