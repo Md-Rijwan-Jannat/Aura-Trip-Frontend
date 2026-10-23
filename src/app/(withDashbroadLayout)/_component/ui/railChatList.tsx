@@ -42,6 +42,7 @@ export default function RailChatList() {
   useEffect(() => {
     if (!data || !activeChatId) return;
     const list: TChat[] = data.data || [];
+
     if (!list.some((c) => c._id === activeChatId)) {
       dispatch(clearActiveChatId());
     }
@@ -62,7 +63,7 @@ export default function RailChatList() {
   }, [chats, search, userInfo]);
 
   return (
-    <aside className="hidden lg:block md:sticky top-0 pt-28 h-screen w-1/4 space-y-3 overflow-y-auto scrollbar-hide pb-5 p-3 rounded-2xl bg-surface border border-borderSubtle shadow-[0_1px_2px_rgba(31,78,61,0.04),0_8px_24px_-12px_rgba(31,78,61,0.12)]">
+    <aside className="hidden lg:block sticky top-[74px] h-[calc(100vh-84px)] w-1/4 shrink-0 space-y-3 overflow-y-auto scrollbar-hide p-3 rounded-2xl bg-surface border border-borderSubtle shadow-[0_1px_2px_rgba(31,78,61,0.04),0_8px_24px_-12px_rgba(31,78,61,0.12)]">
       <div className="flex items-center justify-between gap-2 px-1">
         <h3 className="text-sm font-bold text-default-800">Messages</h3>
         <div className="flex items-center gap-1.5">

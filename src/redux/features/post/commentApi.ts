@@ -9,6 +9,7 @@ export const CommentApi = baseApi.injectEndpoints({
       query: (arg: string | { postId: string; sort?: string }) => {
         const postId = typeof arg === "string" ? arg : arg.postId;
         const sort = typeof arg === "string" ? undefined : arg.sort;
+
         return {
           url: `/comments/${postId}`,
           method: "GET",

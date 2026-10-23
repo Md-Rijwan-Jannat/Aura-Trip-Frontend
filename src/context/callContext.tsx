@@ -59,7 +59,9 @@ const CallContext = createContext<TCallContextValue | null>(null);
 
 export const useCall = () => {
   const ctx = useContext(CallContext);
+
   if (!ctx) throw new Error("useCall must be used inside CallProvider");
+
   return ctx;
 };
 
@@ -144,6 +146,7 @@ export const CallProvider: React.FC<{ children: React.ReactNode }> = ({
     if (callState.peerId) {
       return chatUsers.find((u) => u._id === callState.peerId);
     }
+
     return chatUsers.find((u) => u._id !== myId);
   }, [chatUsers, callState.peerId, myId]);
 
@@ -171,11 +174,14 @@ export const CallProvider: React.FC<{ children: React.ReactNode }> = ({
   /** Aggregate every peer connection into one link-health state. */
   const recomputeLink = useCallback(() => {
     const entries = Array.from(peersRef.current.values());
+
     if (entries.length === 0) {
       setLinkState("connecting");
+
       return;
     }
     const states = entries.map((e) => e.pc.connectionState);
+
     if (states.some((s) => s === "connected")) setLinkState("connected");
     else if (states.some((s) => s === "failed" || s === "disconnected"))
       setLinkState("failed");
@@ -185,6 +191,7 @@ export const CallProvider: React.FC<{ children: React.ReactNode }> = ({
   const closePeer = useCallback(
     (remoteId: string) => {
       const entry = peersRef.current.get(remoteId);
+
       if (entry) {
         entry.pc.onicecandidate = null;
         entry.pc.ontrack = null;
@@ -200,7 +207,9 @@ export const CallProvider: React.FC<{ children: React.ReactNode }> = ({
       setRemoteStreams((prev) => {
         if (!(remoteId in prev)) return prev;
         const next = { ...prev };
+
         delete next[remoteId];
+
         return next;
       });
       setActiveSpeakerId((prev) => (prev === remoteId ? null : prev));
@@ -255,8 +264,10 @@ export const CallProvider: React.FC<{ children: React.ReactNode }> = ({
       audio: true,
       video: mediaType === "VIDEO",
     });
+
     localStreamRef.current = stream;
     setLocalStream(stream);
+
     return stream;
   }, []);
 
@@ -264,8 +275,10 @@ export const CallProvider: React.FC<{ children: React.ReactNode }> = ({
   const ensurePeerFor = useCallback(
     (remoteId: string): Promise<RTCPeerConnection> => {
       const existing = peersRef.current.get(remoteId);
+
       if (existing) return Promise.resolve(existing.pc);
       const inFlight = peerPromisesRef.current.get(remoteId);
+
       if (inFlight) return inFlight;
 
       const creation = (async () => {
@@ -285,8 +298,10 @@ export const CallProvider: React.FC<{ children: React.ReactNode }> = ({
 
         pc.ontrack = (event) => {
           const incoming = event.streams[0] ?? new MediaStream([event.track]);
+
           setRemoteStreams((prev) => {
             if (prev[remoteId]?.id === incoming.id) return prev;
+
             return { ...prev, [remoteId]: incoming };
           });
         };
@@ -295,6 +310,7 @@ export const CallProvider: React.FC<{ children: React.ReactNode }> = ({
 
         stream.getTracks().forEach((track) => pc.addTrack(track, stream));
         peersRef.current.set(remoteId, { pc, pending: [] });
+
         return pc;
       })();
 
@@ -314,8 +330,10 @@ export const CallProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const flushCandidates = useCallback(async (remoteId: string) => {
     const entry = peersRef.current.get(remoteId);
+
     if (!entry || !entry.pc.remoteDescription) return;
     const buffered = entry.pending;
+
     entry.pending = [];
     for (const raw of buffered) {
       try {
@@ -333,6 +351,7 @@ export const CallProvider: React.FC<{ children: React.ReactNode }> = ({
       try {
         const pc = await ensurePeerFor(remoteId);
         const offer = await pc.createOffer();
+
         await pc.setLocalDescription(offer);
         socket.emit("call:signal", {
           callId: callIdRef.current,
@@ -397,6 +416,7 @@ export const CallProvider: React.FC<{ children: React.ReactNode }> = ({
       clearEndedTimer();
       clearInviteTimer();
       const isGroup = Boolean(payload.isGroupCall);
+
       callIdRef.current = payload.callId;
       mediaTypeRef.current = payload.mediaType;
       peerIdRef.current = payload.caller;
@@ -432,6 +452,7 @@ export const CallProvider: React.FC<{ children: React.ReactNode }> = ({
       clearRingTimer();
       setCallState((prev) => ({ ...prev, status: "connecting" }));
       const remote = peerIdRef.current;
+
       if (remote) void createOfferTo(remote);
     });
 
@@ -448,6 +469,7 @@ export const CallProvider: React.FC<{ children: React.ReactNode }> = ({
       clearInviteTimer();
       mediaTypeRef.current = payload.mediaType;
       const roster = (payload.participants ?? []).map(String);
+
       setCallState((prev) => ({
         ...prev,
         status: "connecting",
@@ -458,6 +480,7 @@ export const CallProvider: React.FC<{ children: React.ReactNode }> = ({
         participants: roster,
       }));
       const me = myIdRef.current;
+
       for (const remoteId of roster) {
         if (remoteId !== me) void createOfferTo(remoteId);
       }
@@ -480,6 +503,7 @@ export const CallProvider: React.FC<{ children: React.ReactNode }> = ({
           prev.status === "outgoing"
             ? ("connecting" as TCallStatus)
             : prev.status;
+
         return { ...prev, status, participants };
       });
     });
@@ -505,6 +529,7 @@ export const CallProvider: React.FC<{ children: React.ReactNode }> = ({
       if (payload.callId !== callIdRef.current) return;
       const name =
         chatUsers.find((u) => u._id === payload.userId)?.name ?? "Someone";
+
       toast.info(`${name} declined the call`);
     });
 
@@ -540,6 +565,7 @@ export const CallProvider: React.FC<{ children: React.ReactNode }> = ({
                     duration % 60,
                   ).padStart(2, "0")}`
                 : "Call ended";
+
       goEnded(label);
     });
 
@@ -553,6 +579,7 @@ export const CallProvider: React.FC<{ children: React.ReactNode }> = ({
     }) => {
       if (payload.callId !== callIdRef.current) return;
       const from = payload.from;
+
       if (!from) return;
       // Mesh signals are addressed; ignore anything meant for someone else.
       if (payload.to && payload.to !== myIdRef.current) return;
@@ -563,22 +590,27 @@ export const CallProvider: React.FC<{ children: React.ReactNode }> = ({
             if (!payload.candidate) return;
             const raw = JSON.parse(payload.candidate) as RTCIceCandidateInit;
             const entry = peersRef.current.get(from);
+
             if (entry && entry.pc.remoteDescription) {
               await entry.pc.addIceCandidate(new RTCIceCandidate(raw));
+
               return;
             }
             if (entry) {
               entry.pending.push(raw);
+
               return;
             }
             // Candidate before any local peer exists → create it, then buffer.
             await ensurePeerFor(from);
             const created = peersRef.current.get(from);
+
             if (created && created.pc.remoteDescription) {
               await created.pc.addIceCandidate(new RTCIceCandidate(raw));
             } else if (created) {
               created.pending.push(raw);
             }
+
             return;
           }
 
@@ -591,6 +623,7 @@ export const CallProvider: React.FC<{ children: React.ReactNode }> = ({
             });
             await flushCandidates(from);
             const answer = await pc.createAnswer();
+
             await pc.setLocalDescription(answer);
             socket.emit("call:signal", {
               callId: payload.callId,
@@ -624,6 +657,7 @@ export const CallProvider: React.FC<{ children: React.ReactNode }> = ({
     socket.on("call:error", (payload: { message?: string }) => {
       toast.error(payload?.message || "Call failed");
       const status = statusRef.current;
+
       if (
         (status === "outgoing" && !callIdRef.current) ||
         status === "incoming" ||
@@ -666,6 +700,7 @@ export const CallProvider: React.FC<{ children: React.ReactNode }> = ({
     const timer = setInterval(() => {
       setDurationSeconds((s) => s + 1);
     }, 1000);
+
     return () => clearInterval(timer);
   }, [callState.status]);
 
@@ -673,23 +708,28 @@ export const CallProvider: React.FC<{ children: React.ReactNode }> = ({
   useEffect(() => {
     if (callState.status !== "active" && callState.status !== "connecting") {
       setActiveSpeakerId(null);
+
       return;
     }
     const timer = setInterval(() => {
       const entries = Array.from(peersRef.current.entries());
+
       if (entries.length === 0) return;
       void Promise.all(
         entries.map(
           async ([id, { pc }]): Promise<{ id: string; level: number }> => {
             let level = 0;
+
             try {
               const report = await pc.getStats();
+
               report.forEach((stat: any) => {
                 const s = stat as {
                   type?: string;
                   kind?: string;
                   audioLevel?: number;
                 };
+
                 if (
                   s.type === "inbound-rtp" &&
                   s.kind === "audio" &&
@@ -701,11 +741,13 @@ export const CallProvider: React.FC<{ children: React.ReactNode }> = ({
             } catch {
               // stats unavailable for this peer
             }
+
             return { id, level };
           },
         ),
       ).then((results) => {
         let best: { id: string; level: number } | null = null;
+
         for (const r of results) {
           if (r.level > 0.05 && (!best || r.level > best.level)) best = r;
         }
@@ -714,6 +756,7 @@ export const CallProvider: React.FC<{ children: React.ReactNode }> = ({
         }
       });
     }, 1200);
+
     return () => clearInterval(timer);
   }, [callState.status]);
 
@@ -736,10 +779,12 @@ export const CallProvider: React.FC<{ children: React.ReactNode }> = ({
     async (chatId: string, mediaType: TCallMediaType) => {
       if (!socket) {
         toast.error("Connecting to the server…");
+
         return;
       }
       if (statusRef.current !== "idle" && statusRef.current !== "ended") {
         toast.error("You are already in a call");
+
         return;
       }
       clearEndedTimer();
@@ -762,6 +807,7 @@ export const CallProvider: React.FC<{ children: React.ReactNode }> = ({
       } catch {
         setCallState(IDLE_STATE);
         toast.error("Microphone/camera access was denied");
+
         return;
       }
       socket.emit("call:invite", { chatId, mediaType });
@@ -781,6 +827,7 @@ export const CallProvider: React.FC<{ children: React.ReactNode }> = ({
   const acceptCall = useCallback(async () => {
     if (!socket || !callIdRef.current) return;
     const mediaType = mediaTypeRef.current;
+
     try {
       await getLocalStream(mediaType);
     } catch {
@@ -788,6 +835,7 @@ export const CallProvider: React.FC<{ children: React.ReactNode }> = ({
       socket.emit("call:reject", { callId: callIdRef.current });
       teardown();
       setCallState(IDLE_STATE);
+
       return;
     }
     clearRingTimer();
@@ -806,6 +854,7 @@ export const CallProvider: React.FC<{ children: React.ReactNode }> = ({
   const endCall = useCallback(() => {
     const wasRinging = statusRef.current === "outgoing";
     const callId = callIdRef.current;
+
     clearRingTimer();
     clearInviteTimer();
     // Works even without a socket: the local teardown must always run so the
@@ -817,9 +866,11 @@ export const CallProvider: React.FC<{ children: React.ReactNode }> = ({
   const toggleMute = useCallback(() => {
     setMuted((prev) => {
       const next = !prev;
+
       localStreamRef.current?.getAudioTracks().forEach((t) => {
         t.enabled = !next;
       });
+
       return next;
     });
   }, []);
@@ -827,9 +878,11 @@ export const CallProvider: React.FC<{ children: React.ReactNode }> = ({
   const toggleCamera = useCallback(() => {
     setCameraOff((prev) => {
       const next = !prev;
+
       localStreamRef.current?.getVideoTracks().forEach((t) => {
         t.enabled = !next;
       });
+
       return next;
     });
   }, []);

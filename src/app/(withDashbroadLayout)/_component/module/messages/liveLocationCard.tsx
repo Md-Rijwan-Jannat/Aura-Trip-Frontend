@@ -18,6 +18,7 @@ const formatRemaining = (ms: number) => {
   const total = Math.max(0, Math.ceil(ms / 1000));
   const minutes = Math.floor(total / 60);
   const seconds = total % 60;
+
   return `${minutes}:${String(seconds).padStart(2, '0')}`;
 };
 
@@ -45,6 +46,7 @@ const LiveLocationCard: React.FC<LiveLocationCardProps> = ({
   useEffect(() => {
     if (!isActive) return;
     const timer = setInterval(() => setNow(Date.now()), 1000);
+
     return () => clearInterval(timer);
   }, [isActive, expiresAtMs]);
 

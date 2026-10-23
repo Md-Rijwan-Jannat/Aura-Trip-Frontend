@@ -41,6 +41,7 @@ export default function AddPeopleModal({
   const candidates = useMemo(() => {
     const all: TUser[] = allUsersData?.data || [];
     const q = searchTerm.trim().toLowerCase();
+
     return all.filter(
       (u) => !memberIds.has(u._id) && (!q || u.name.toLowerCase().includes(q)),
     );
@@ -110,6 +111,7 @@ export default function AddPeopleModal({
                     const u = (allUsersData?.data || []).find(
                       (x: TUser) => x._id === id,
                     );
+
                     return (
                       <Chip
                         key={id}
@@ -130,6 +132,7 @@ export default function AddPeopleModal({
                   <div className="space-y-1">
                     {candidates.map((user: TUser) => {
                       const isSelected = selected.includes(user._id);
+
                       return (
                         <button
                           key={user._id}

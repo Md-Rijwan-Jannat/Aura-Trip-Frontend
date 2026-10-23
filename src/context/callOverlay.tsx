@@ -166,8 +166,10 @@ const CallOverlay: React.FC<CallOverlayProps> = ({
 
   const userById = useMemo(() => {
     const map = new Map<string, TUser>();
+
     for (const u of chatUsers) map.set(u._id, u);
     if (me) map.set(me._id, me);
+
     return map;
   }, [chatUsers, me]);
 
@@ -182,8 +184,10 @@ const CallOverlay: React.FC<CallOverlayProps> = ({
   // Full roster: group = live participants; DM = peer + self.
   const roster = useMemo(() => {
     const set = new Set<string>(callState.participants);
+
     if (callState.peerId) set.add(callState.peerId);
     if (myId) set.add(myId);
+
     return Array.from(set).filter(Boolean);
   }, [callState.participants, callState.peerId, myId]);
 
@@ -197,6 +201,7 @@ const CallOverlay: React.FC<CallOverlayProps> = ({
       return activeSpeakerId;
     }
     const other = roster.find((id) => id !== myId);
+
     return other ?? null;
   }, [activeSpeakerId, myId, roster]);
 
@@ -469,9 +474,11 @@ const CallOverlay: React.FC<CallOverlayProps> = ({
 
 const SelfPreview: React.FC<{ stream: MediaStream }> = ({ stream }) => {
   const ref = React.useRef<HTMLVideoElement>(null);
+
   React.useEffect(() => {
     if (ref.current) ref.current.srcObject = stream;
   }, [stream]);
+
   return (
     // eslint-disable-next-line jsx-a11y/media-has-caption -- live WebRTC stream
     <video

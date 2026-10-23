@@ -71,6 +71,7 @@ interface ScrollableChatProps {
 const formatDuration = (totalSeconds: number) => {
   const minutes = Math.floor(totalSeconds / 60);
   const seconds = Math.round(totalSeconds % 60);
+
   return `${minutes}:${seconds.toString().padStart(2, '0')}`;
 };
 
@@ -141,12 +142,15 @@ const ScrollableChat = forwardRef<HTMLDivElement, ScrollableChatProps>(
 
     useEffect(() => {
       const el = scrollRef?.current;
+
       if (!el) return;
       const onScroll = () => {
         wasAtBottomRef.current = el.scrollHeight - el.scrollTop - el.clientHeight < 80;
       };
+
       onScroll();
       el.addEventListener('scroll', onScroll, { passive: true });
+
       return () => el.removeEventListener('scroll', onScroll);
     }, [scrollRef]);
 
@@ -158,15 +162,18 @@ const ScrollableChat = forwardRef<HTMLDivElement, ScrollableChatProps>(
 
     useEffect(() => {
       const el = scrollRef?.current;
+
       if (!el) return;
       const count = messages.length;
       const prevCount = prevCountRef.current;
+
       prevCountRef.current = count;
       if (count === 0) return;
 
       if (prevCount === null) {
         // First paint for this conversation → jump straight to the bottom.
         el.scrollTop = el.scrollHeight;
+
         return;
       }
       if (count <= prevCount) return; // refetch/replace/delete → keep position
@@ -215,6 +222,7 @@ const ScrollableChat = forwardRef<HTMLDivElement, ScrollableChatProps>(
     // Get the last message to determine who is typing
     const lastMessage = messages[messages.length - 1];
     const isTypingForCurrentUser = lastMessage?.sender._id !== currentUser?._id;
+
     void isTypingForCurrentUser;
 
     const startEdit = (message: TMessage) => {
@@ -224,6 +232,7 @@ const ScrollableChat = forwardRef<HTMLDivElement, ScrollableChatProps>(
 
     const saveEdit = async (message: TMessage) => {
       const next = editDraft.trim();
+
       setEditingId(null);
       if (!next || next === message.content) return;
       try {
@@ -246,8 +255,10 @@ const ScrollableChat = forwardRef<HTMLDivElement, ScrollableChatProps>(
     /** Jump to the message a reply points at and flash it briefly. */
     const scrollToMessage = (id: string) => {
       const el = document.getElementById(`msg-${id}`);
+
       if (!el) {
         toast.info('The original message is not in the loaded history');
+
         return;
       }
       el.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -261,11 +272,13 @@ const ScrollableChat = forwardRef<HTMLDivElement, ScrollableChatProps>(
     const replyPreviewText = (parent: NonNullable<TMessage['replyTo']>) => {
       if (parent.isDeleted) return 'Message deleted';
       const type = parent.messageType;
+
       if (type === 'IMAGE') return 'Photo';
       if (type === 'VOICE') return 'Voice message';
       if (type === 'LOCATION') return 'Location';
       if (type === 'LIVE_LOCATION') return 'Live location';
       if (type === 'VIEW_ONCE_IMAGE') return 'View-once photo';
+
       return parent.content || 'Message';
     };
 
@@ -276,6 +289,7 @@ const ScrollableChat = forwardRef<HTMLDivElement, ScrollableChatProps>(
         const res = await consumeViewOnceFn(message._id).unwrap();
         const url = (res as { data?: { mediaUrl?: string } })?.data?.mediaUrl
           ?? (res as unknown as { mediaUrl?: string })?.mediaUrl;
+
         if (url) {
           setViewOnceUrl((prev) => ({ ...prev, [message._id]: url }));
         } else {
@@ -283,6 +297,7 @@ const ScrollableChat = forwardRef<HTMLDivElement, ScrollableChatProps>(
         }
       } catch (error: any) {
         const status = error?.status;
+
         if (status === 410) {
           toast.info('This view-once photo has already been opened');
         } else {
@@ -301,6 +316,7 @@ const ScrollableChat = forwardRef<HTMLDivElement, ScrollableChatProps>(
      */
     const renderReactionChips = (message: TMessage, isCurrentUser: boolean) => {
       const summary = message.reactions;
+
       if (
         !summary ||
         summary.total <= 0 ||
@@ -312,6 +328,7 @@ const ScrollableChat = forwardRef<HTMLDivElement, ScrollableChatProps>(
       const chips = (Object.entries(summary.counts || {}) as [TReactionType, number][]).filter(
         ([, count]) => count > 0,
       );
+
       if (chips.length === 0) return null;
 
       return (
@@ -322,6 +339,7 @@ const ScrollableChat = forwardRef<HTMLDivElement, ScrollableChatProps>(
         >
           {chips.map(([type, count]) => {
             const mine = summary.myReaction === type;
+
             return (
               <button
                 key={type}
@@ -431,6 +449,7 @@ const ScrollableChat = forwardRef<HTMLDivElement, ScrollableChatProps>(
 
         case 'VOICE': {
           const duration = message.mediaMeta?.durationSeconds;
+
           return (
             <div
               className={`flex items-center gap-2 max-w-xs px-3 py-2 rounded-lg ${
@@ -455,6 +474,7 @@ const ScrollableChat = forwardRef<HTMLDivElement, ScrollableChatProps>(
 
         case 'LOCATION': {
           const loc = message.location;
+
           if (!loc) {
             return (
               <p className="max-w-xs px-4 py-2 text-xs rounded-lg bg-default-200">
@@ -462,6 +482,7 @@ const ScrollableChat = forwardRef<HTMLDivElement, ScrollableChatProps>(
               </p>
             );
           }
+
           return (
             <a
               href={`https://www.google.com/maps?q=${loc.lat},${loc.lng}`}

@@ -21,7 +21,7 @@ export default function MainShell({
     <main
       className={`flex-1 w-full md:w-[550px] xl:w-[640px] mx-auto ${
         role === 'ADMIN' ? 'lg:w-full' : 'lg:w-3/5'
-      } md:px-4 overflow-hidden pt-20 md:pt-28 mb-20 lg:mb-5 rounded-2xl bg-surface border border-borderSubtle shadow-[0_1px_2px_rgba(31,78,61,0.04),0_8px_24px_-12px_rgba(31,78,61,0.12)]`}
+      } p-1.5 md:p-2 overflow-hidden min-h-[calc(100vh-84px)] mb-20 lg:mb-0 rounded-2xl bg-surface border border-borderSubtle shadow-[0_1px_2px_rgba(31,78,61,0.04),0_8px_24px_-12px_rgba(31,78,61,0.12)]`}
     >
       {/* Keep the current page mounted (hidden) so state/scroll survive */}
       <div className={showChat ? 'hidden' : undefined}>{children}</div>

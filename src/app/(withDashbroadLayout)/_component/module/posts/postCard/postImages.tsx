@@ -110,6 +110,7 @@ const PostImages: FC<TPostImagesProps> = ({ post, className = '' }) => {
       case 'FEATURE': {
         // 1 large tile + a vertical stack of the rest (any count ≥ 3).
         const [main, ...rest] = validImages;
+
         return [
           <div key="feature-cluster" className="flex h-[320px] gap-2 md:h-[420px]">
             <a
@@ -152,6 +153,7 @@ const PostImages: FC<TPostImagesProps> = ({ post, className = '' }) => {
         // Top row: two large tiles (3 cols each). Below: the rest in thirds.
         const top = validImages.slice(0, 2);
         const bottom = validImages.slice(2);
+
         return [
           ...top.map((image, index) => (
             <a

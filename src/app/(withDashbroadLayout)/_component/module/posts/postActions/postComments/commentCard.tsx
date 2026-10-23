@@ -124,9 +124,11 @@ const CommentCard: React.FC<TCommentCardProps> = ({ postId, postUserId }) => {
     }
 
     const roots: TRenderedComment[] = [];
+
     Array.from(nodes.values()).forEach((node) => {
       const parentId = node.parentComment ? String(node.parentComment) : null;
       const parent = parentId ? nodes.get(parentId) : undefined;
+
       if (parent) {
         parent.replies!.push(node);
       } else {
@@ -136,6 +138,7 @@ const CommentCard: React.FC<TCommentCardProps> = ({ postId, postUserId }) => {
 
     // The featured comment always surfaces to the top of the root list.
     roots.sort((a, b) => Number(b.isFeatured) - Number(a.isFeatured));
+
     return roots;
   }, [source, featuredId]);
 
@@ -143,6 +146,7 @@ const CommentCard: React.FC<TCommentCardProps> = ({ postId, postUserId }) => {
     if (!newComment.trim()) return;
     try {
       const commentData = { post: postId, text: newComment };
+
       await addComment(commentData);
       toast.success("Comment added successfully!");
       setNewComment("");
@@ -158,6 +162,7 @@ const CommentCard: React.FC<TCommentCardProps> = ({ postId, postUserId }) => {
         commentId: replyingTo,
         data: { post: postId, text: replyCommentText },
       };
+
       await replyComment(replyData);
       setReplyCommentText("");
       setReplyingTo(null);

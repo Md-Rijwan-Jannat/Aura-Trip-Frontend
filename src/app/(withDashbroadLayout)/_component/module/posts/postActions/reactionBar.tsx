@@ -60,6 +60,7 @@ export default function ReactionBar({
     // Optimistic switch: remove from the old type, apply to the new one.
     setLocal((prev) => {
       const counts = { ...prev.counts };
+
       if (prev.myReaction) {
         counts[prev.myReaction] = Math.max(
           0,
@@ -70,6 +71,7 @@ export default function ReactionBar({
       if (!isActive) {
         counts[type] = (counts[type] ?? 0) + 1;
       }
+
       return { counts, myReaction: isActive ? null : type };
     });
 
@@ -101,6 +103,7 @@ export default function ReactionBar({
       {REACTION_TYPES.map((type) => {
         const isActive = local.myReaction === type;
         const count = local.counts[type] ?? 0;
+
         return (
           <motion.button
             key={type}

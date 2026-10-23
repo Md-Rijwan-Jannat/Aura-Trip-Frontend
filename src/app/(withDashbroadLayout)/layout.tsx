@@ -32,10 +32,10 @@ export default async function WithDashboardLayout({
       <FeedNavbar />
 
       <Container>
-        <div className="flex w-full scrollbar-hide gap-3">
+        <div className="flex w-full scrollbar-hide gap-3 pt-[74px] pb-[10px]">
           {/* Sidebar Menu — sticky surface panel, theme-aware (surface/border tokens) */}
-          <aside className="hidden lg:block md:sticky top-0 pt-28 h-screen w-1/4 lg:w-1/5">
-            <MenuBar className="space-y-2 rounded-2xl bg-surface border border-borderSubtle shadow-[0_1px_2px_rgba(31,78,61,0.04),0_8px_24px_-12px_rgba(31,78,61,0.12)] p-2 h-[calc(100vh-7.5rem)] overflow-y-auto scrollbar-hide" />
+          <aside className="hidden lg:block sticky top-[74px] h-[calc(100vh-84px)] w-1/4 lg:w-1/5 shrink-0">
+            <MenuBar className="h-full space-y-2 rounded-2xl bg-surface border border-borderSubtle shadow-[0_1px_2px_rgba(31,78,61,0.04),0_8px_24px_-12px_rgba(31,78,61,0.12)] p-2 overflow-y-auto scrollbar-hide" />
           </aside>
 
           {/* Main Section */}

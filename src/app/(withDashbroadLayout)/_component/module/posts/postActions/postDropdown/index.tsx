@@ -64,6 +64,7 @@ export default function PostDropdown({
   const handleTogglePin = async () => {
     try {
       const pinned = !postData?.pinned;
+
       await pinPostFn({ postId: postData._id, pinned }).unwrap();
       toast.success(
         pinned
@@ -78,6 +79,7 @@ export default function PostDropdown({
   const handleToggleFeature = async () => {
     try {
       const featured = !postData?.featured;
+
       await featurePostFn({ postId: postData._id, featured }).unwrap();
       toast.success(
         featured ? 'Post highlighted on your profile' : 'Highlight removed',

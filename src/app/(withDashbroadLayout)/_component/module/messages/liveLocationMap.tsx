@@ -36,10 +36,12 @@ const FollowPosition = ({
   follow: boolean;
 }) => {
   const map = useMap();
+
   useEffect(() => {
     if (!follow) return;
     map.panTo([lat, lng], { animate: true, duration: 0.4 });
   }, [map, lat, lng, follow]);
+
   return null;
 };
 

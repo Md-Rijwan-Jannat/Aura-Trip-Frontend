@@ -64,7 +64,7 @@ export default function MiniDashboard() {
 
   return (
     <div
-      className={`${isAdminPage && 'hidden'} md:sticky top-28 h-screen mt-28 lg:w-1/4 overflow-y-auto scrollbar-hide rounded-2xl bg-surface border border-borderSubtle shadow-[0_1px_2px_rgba(31,78,61,0.04),0_8px_24px_-12px_rgba(31,78,61,0.12)] p-3`}
+      className={`${isAdminPage ? 'hidden' : 'hidden lg:block'} sticky top-[74px] h-[calc(100vh-84px)] w-1/4 shrink-0 overflow-y-auto scrollbar-hide rounded-2xl bg-surface border border-borderSubtle shadow-[0_1px_2px_rgba(31,78,61,0.04),0_8px_24px_-12px_rgba(31,78,61,0.12)] p-3`}
     >
       <div className="flex-col gap-6 hidden lg:flex">
         {/* Profile Overview Card */}

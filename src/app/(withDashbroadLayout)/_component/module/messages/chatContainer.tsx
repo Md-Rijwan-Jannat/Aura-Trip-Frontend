@@ -134,6 +134,7 @@ export default function ChatContainer({
             data?: { _id: string; reactions: TMessageReactionSummary };
           }
         )?.data;
+
         if (data?._id) applyReactionUpdate(data);
       } catch {
         toast.error('Could not save reaction');
@@ -162,6 +163,7 @@ export default function ChatContainer({
 
   const clearLiveShare = useCallback((chatKey: string) => {
     const share = liveSharesRef.current.get(chatKey);
+
     if (!share) return;
     navigator.geolocation.clearWatch(share.watchId);
     clearTimeout(share.timeoutId);
@@ -206,12 +208,14 @@ export default function ChatContainer({
       const watchId = navigator.geolocation.watchPosition(
         (pos) => {
           const share = liveSharesRef.current.get(chatKey);
+
           if (!share || share.messageId !== messageId || !socket) return;
           const lat = pos.coords.latitude;
           const lng = pos.coords.longitude;
           const now = Date.now();
           const moved =
             Math.abs(lat - share.lastSent.lat) + Math.abs(lng - share.lastSent.lng);
+
           // ~10s cadence, or immediately after a meaningful jump (~100 m).
           if (now - share.lastSent.ts < 10_000 && moved < 0.001) return;
           share.lastSent = { ts: now, lat, lng };
@@ -255,6 +259,7 @@ export default function ChatContainer({
   // its server-side window at the last known position.
   useEffect(() => {
     const shares = liveSharesRef.current;
+
     return () => {
       for (const share of Array.from(shares.values())) {
         navigator.geolocation.clearWatch(share.watchId);
@@ -274,6 +279,7 @@ export default function ChatContainer({
     const hasText = Boolean(payload.content?.trim());
     const hasMedia = Boolean(payload.mediaUrl);
     const hasLocation = Boolean(payload.location);
+
     if (!hasText && !hasMedia && !hasLocation) return;
 
     try {
