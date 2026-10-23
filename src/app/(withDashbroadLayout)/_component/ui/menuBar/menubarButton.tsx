@@ -10,7 +10,7 @@ interface MenubarButtonProps {
   icon: React.ReactNode;
   delay?: number;
   className?: string;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent) => void;
 }
 
 const MenubarButton: React.FC<MenubarButtonProps> = ({

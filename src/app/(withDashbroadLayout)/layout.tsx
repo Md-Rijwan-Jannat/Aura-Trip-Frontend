@@ -3,6 +3,7 @@ import FeedNavbar from './_component/ui/navbar';
 import MenuBar from './_component/ui/menuBar';
 import Container from '@/src/components/shared/container';
 import RightRail from './_component/ui/rightRail';
+import MainShell from './_component/ui/mainShell';
 import { cookies } from 'next/headers';
 import { jwtDecode } from 'jwt-decode';
 
@@ -38,13 +39,7 @@ export default async function WithDashboardLayout({
           </aside>
 
           {/* Main Section */}
-          <main
-            className={`flex-1 w-full md:w-[550px] xl:w-[640px] mx-auto ${
-              user?.role === 'ADMIN' ? 'lg:w-full' : 'lg:w-3/5'
-            }             md:px-4 overflow-hidden pt-20 md:pt-28 mb-20 lg:mb-5`}
-          >
-            {children}
-          </main>
+          <MainShell role={user?.role}>{children}</MainShell>
 
           {/* Right rail: live preview while creating/editing a group, else suggestions/admin dashboard */}
           <RightRail role={user?.role} />

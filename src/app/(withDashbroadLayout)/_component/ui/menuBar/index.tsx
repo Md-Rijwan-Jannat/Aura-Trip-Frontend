@@ -9,12 +9,13 @@ import { RiSecurePaymentFill } from 'react-icons/ri';
 import { FaFacebookMessenger } from 'react-icons/fa6';
 import { MdAnalytics, MdDynamicFeed, MdSlowMotionVideo } from 'react-icons/md';
 import { TbUsersGroup } from 'react-icons/tb';
-import { useAppSelector } from '@/src/redux/hook';
+import { useAppSelector, useAppDispatch } from '@/src/redux/hook';
 import { useRouter } from 'next/navigation';
 import { useUser } from '@/src/hooks/useUser';
 import MenubarButton from './menubarButton';
 import PremiumModal from '../premiumModal';
 import { useDisclosure } from '@nextui-org/modal';
+import { setChatPanelOpen } from '@/src/redux/features/message/chatUiSlice';
 
 interface TMenuBarProps {
   className: string;
@@ -24,7 +25,16 @@ export default function MenuBar({ className }: TMenuBarProps) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const { userInfo } = useUser();
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const token = useAppSelector((state) => state.auth?.token);
+
+  // Desktop: open the chat list in the right sidebar. Mobile: old /messages page.
+  const handleMessagesClick = (e: React.MouseEvent) => {
+    if (typeof window !== 'undefined' && window.innerWidth >= 1024) {
+      e.preventDefault();
+      dispatch(setChatPanelOpen(true));
+    }
+  };
 
   if (!token) {
     router.push('/login');
@@ -102,6 +112,7 @@ export default function MenuBar({ className }: TMenuBarProps) {
             icon={
               <FaFacebookMessenger className="text-[17px] md:text-[20px]" />
             }
+            onClick={handleMessagesClick}
           />
         </>
       )}
@@ -187,6 +198,7 @@ export default function MenuBar({ className }: TMenuBarProps) {
             icon={
               <FaFacebookMessenger className="text-[17px] md:text-[20px]" />
             }
+            onClick={handleMessagesClick}
           />
         </>
       )}

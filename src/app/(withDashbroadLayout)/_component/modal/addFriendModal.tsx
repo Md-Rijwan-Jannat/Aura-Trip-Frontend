@@ -9,11 +9,12 @@ import { useGetAllNormalForAnalyticsUsersQuery } from '@/src/redux/features/user
 import { Avatar } from '@nextui-org/avatar';
 import { GoVerified } from 'react-icons/go';
 import { useCreateChatMutation } from '@/src/redux/features/message/chatApi';
-import { useRouter } from 'next/navigation';
+import { useAppDispatch } from '@/src/redux/hook';
+import { setActiveChatId } from '@/src/redux/features/message/chatUiSlice';
 
 interface TAddFriendModalProps {
   isOpen: boolean;
-  onOpenChange: () => void;
+  onOpenChange: (v?: boolean) => void;
 }
 
 export default function AddFriendModal({
@@ -24,7 +25,7 @@ export default function AddFriendModal({
   const { data: allUsersData } =
     useGetAllNormalForAnalyticsUsersQuery(undefined);
   const [createChatFn, { isLoading }] = useCreateChatMutation();
-  const router = useRouter(); // useRouter hook for dynamic routing
+  const dispatch = useAppDispatch();
 
   const allUsers = allUsersData?.data || [];
 
@@ -43,7 +44,9 @@ export default function AddFriendModal({
         const newChat = res.data;
 
         if (newChat) {
-          router.push(`/messages/${newChat._id}`);
+          // Open the new chat in the middle of the screen
+          dispatch(setActiveChatId(newChat._id));
+          onOpenChange(false);
         }
       }
     } catch (error) {

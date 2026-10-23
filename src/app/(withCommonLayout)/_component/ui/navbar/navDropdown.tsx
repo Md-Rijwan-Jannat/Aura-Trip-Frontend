@@ -30,6 +30,7 @@ import {
 import { FaConnectdevelop } from "react-icons/fa";
 import { TbPremiumRights } from "react-icons/tb";
 import { ActiveAvatar } from "./activeAvatar";
+import { setChatPanelOpen } from "@/src/redux/features/message/chatUiSlice";
 
 const NavDropdown: FC = () => {
   const dispatch = useAppDispatch();
@@ -37,6 +38,16 @@ const NavDropdown: FC = () => {
   const router = useRouter();
 
   const { userInfo } = useUser();
+
+  // Desktop: open the chat list in the right sidebar. Mobile: old /messages page.
+  const handleChatClick = () => {
+    if (typeof window !== "undefined" && window.innerWidth >= 1024) {
+      dispatch(setChatPanelOpen(true));
+    } else {
+      router.push("/messages");
+    }
+  };
+
   const handleLogout = async () => {
     dispatch(clearCredentials());
     await Logout();
@@ -99,8 +110,7 @@ const NavDropdown: FC = () => {
               Add Connection
             </DropdownItem>
             <DropdownItem
-              as={Link}
-              href="/messages"
+              onClick={handleChatClick}
               className={dropdownItemClass}
               startContent={<MessageCircle className="w-4 h-4" />}
             >

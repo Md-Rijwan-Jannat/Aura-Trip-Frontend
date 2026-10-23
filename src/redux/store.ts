@@ -14,6 +14,7 @@ import {
 import { baseApi } from './api/baseApi';
 import authReducer from './features/auth/authSlice';
 import notificationReducer from './features/message/notificationSlice';
+import chatUiReducer from './features/message/chatUiSlice';
 import groupPreviewReducer from './features/group/groupPreviewSlice';
 
 // Fallback storage if localStorage is not available
@@ -52,6 +53,7 @@ export const store = configureStore({
     auth: persistedAuthReducer,
     notifications: persistedNotificationReducer,
     groupPreview: groupPreviewReducer,
+    chatUi: chatUiReducer,
     [baseApi.reducerPath]: baseApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
