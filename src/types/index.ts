@@ -16,3 +16,4 @@ export * from "./review.type";
 export * from "./group.type";
 export * from "./short.type";
 export * from "./notification.type";
+export * from "./reaction.type";

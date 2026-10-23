@@ -1,4 +1,5 @@
 import { TUser } from "./user.type";
+import { TMessageType, TMessageLocation } from "./message.type";
 
 export interface TChat {
   _id: string;
@@ -17,6 +18,10 @@ export interface TLatestMessage {
   content: string;
   chat: string;
   readBy: string[];
+  messageType?: TMessageType;
+  location?: TMessageLocation | null;
+  mediaUrl?: string | null;
+  isDeleted?: boolean;
   createdAt: string;
   updatedAt: string;
   __v: number;

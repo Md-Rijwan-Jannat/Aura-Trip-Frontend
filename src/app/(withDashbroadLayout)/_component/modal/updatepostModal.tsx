@@ -15,7 +15,7 @@ import { Select, SelectItem } from '@nextui-org/select';
 import { toast } from 'sonner';
 
 import { useUpdatePostMutation } from '@/src/redux/features/post/postApi';
-import { TUser, TPost } from '@/src/types';
+import { TUser, TPost, MEDIA_LAYOUT_OPTIONS } from '@/src/types';
 import GlassLoader from '@/src/components/shared/glassLoader';
 import dynamic from 'next/dynamic';
 
@@ -44,7 +44,7 @@ const UpdatePostModal = ({
     postData?.description || ''
   );
 
-  const { handleSubmit, control, reset, watch } = useForm<TPost>({
+  const { handleSubmit, control, reset, watch, setValue } = useForm<TPost>({
     defaultValues: {
       title: '',
       description: '',
@@ -61,6 +61,7 @@ const UpdatePostModal = ({
         description: postData?.description,
         status: postData?.status || 'FREE',
         reportCount: postData?.reportCount || 0,
+        mediaLayout: postData?.mediaLayout || 'AUTO',
       });
       setEditorContent(postData?.description || '');
     }
@@ -160,6 +161,30 @@ const UpdatePostModal = ({
                   </Select>
                 )}
               />
+
+              {/* Multi-image layout picker (edit-time; 2+ images only) */}
+              {(postData?.images?.length ?? 0) > 1 && (
+                <div className="space-y-1">
+                  <p className="text-xs text-default-500">Grid layout</p>
+                  <div className="flex flex-wrap gap-2">
+                    {MEDIA_LAYOUT_OPTIONS.map((option) => (
+                      <button
+                        key={option.key}
+                        type="button"
+                        onClick={() => setValue('mediaLayout', option.key)}
+                        className={`rounded-full border px-3 py-1 text-xs transition-colors ${
+                          watch('mediaLayout') === option.key
+                            ? 'border-primary bg-primary-100 text-primary'
+                            : 'border-default-300 text-default-600 hover:border-primary-300'
+                        }`}
+                      >
+                        <span className="mr-1">{option.hint}</span>
+                        {option.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
             </ModalBody>
             <ModalFooter>
               <Button className="primary-button" type="submit">

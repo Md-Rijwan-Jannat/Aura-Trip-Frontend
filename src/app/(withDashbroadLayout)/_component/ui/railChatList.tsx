@@ -8,11 +8,12 @@ import { FaUserPlus, FaSearch } from 'react-icons/fa';
 import { useGetUserChatQuery } from '@/src/redux/features/message/chatApi';
 import { useSocket } from '@/src/context/socketProvider';
 import { useAppDispatch, useAppSelector } from '@/src/redux/hook';
-import { setActiveChatId } from '@/src/redux/features/message/chatUiSlice';
+import { setActiveChatId, closeChatPanel, clearActiveChatId } from '@/src/redux/features/message/chatUiSlice';
 import { getSender } from '@/src/utils/chatLogics';
 import { useUser } from '@/src/hooks/useUser';
 import { TChat } from '@/src/types';
 import AddFriendModal from '../modal/addFriendModal';
+import { messagePreview } from '@/src/utils/messagePreview';
 
 export default function RailChatList() {
   const dispatch = useAppDispatch();
@@ -36,6 +37,16 @@ export default function RailChatList() {
 
   const chats: TChat[] = data?.data || [];
 
+  // The active conversation is restored from localStorage on reload — drop
+  // it if it no longer exists (deleted chat / lost membership).
+  useEffect(() => {
+    if (!data || !activeChatId) return;
+    const list: TChat[] = data.data || [];
+    if (!list.some((c) => c._id === activeChatId)) {
+      dispatch(clearActiveChatId());
+    }
+  }, [data, activeChatId, dispatch]);
+
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
 
@@ -51,17 +62,41 @@ export default function RailChatList() {
   }, [chats, search, userInfo]);
 
   return (
-    <aside className="hidden lg:block md:sticky top-0 pt-28 h-screen w-1/4 space-y-3 overflow-y-auto scrollbar-hide pb-5">
+    <aside className="hidden lg:block md:sticky top-0 pt-28 h-screen w-1/4 space-y-3 overflow-y-auto scrollbar-hide pb-5 p-3 rounded-2xl bg-surface border border-borderSubtle shadow-[0_1px_2px_rgba(31,78,61,0.04),0_8px_24px_-12px_rgba(31,78,61,0.12)]">
       <div className="flex items-center justify-between gap-2 px-1">
         <h3 className="text-sm font-bold text-default-800">Messages</h3>
-        <button
-          type="button"
-          onClick={onOpen}
-          title="New chat"
-          className="w-8 h-8 rounded-full border border-default-200 bg-default-50 hover:bg-default-100 dark:bg-white/[0.04] dark:border-white/10 flex items-center justify-center text-default-600 transition-colors"
-        >
-          <FaUserPlus className="text-xs" />
-        </button>
+        <div className="flex items-center gap-1.5">
+          <button
+            type="button"
+            onClick={onOpen}
+            title="New chat"
+            className="w-8 h-8 rounded-full border border-borderSubtle bg-surface hover:bg-default-100 dark:hover:bg-white/[0.06] flex items-center justify-center text-default-600 hover:text-sage-600 dark:hover:text-sage-400 transition-colors"
+          >
+            <FaUserPlus className="text-xs" />
+          </button>
+          <button
+            type="button"
+            onClick={() => dispatch(closeChatPanel())}
+            title="Close messenger"
+            aria-label="Close messenger"
+            className="w-8 h-8 rounded-full border border-borderSubtle bg-surface hover:bg-default-100 dark:hover:bg-white/[0.06] flex items-center justify-center text-default-600 hover:text-danger-600 dark:hover:text-danger-400 transition-colors"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="12"
+              height="12"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M18 6 6 18" />
+              <path d="m6 6 12 12" />
+            </svg>
+          </button>
+        </div>
       </div>
 
       {/* Search */}
@@ -87,7 +122,7 @@ export default function RailChatList() {
           {filtered.map((chat) => {
             const user = chat.isGroupChat ? undefined : getSender(chat, userInfo);
             const name = chat.isGroupChat ? chat.chatName : user?.name || 'Chat';
-            const last = chat.latestMessage?.content;
+            const last = messagePreview(chat.latestMessage);
             const time = chat.latestMessage?.createdAt
               ? formatDistanceToNow(new Date(chat.latestMessage.createdAt), {
                   addSuffix: true,
@@ -103,7 +138,7 @@ export default function RailChatList() {
                 className={`w-full flex items-center gap-2.5 p-2 rounded-xl text-left transition-colors ${
                   active
                     ? 'bg-sage-50 dark:bg-sage-500/10 ring-1 ring-sage-400/60'
-                    : 'hover:bg-default-50 dark:hover:bg-white/[0.04]'
+                    : 'hover:bg-default-100/70 dark:hover:bg-white/[0.05]'
                 }`}
               >
                 <Avatar

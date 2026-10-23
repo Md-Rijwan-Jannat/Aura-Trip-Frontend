@@ -2,6 +2,8 @@ import { baseApi } from '../../api/baseApi';
 
 const MessagesApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+    // Create a typed message (TEXT / IMAGE / VOICE / LOCATION / EMOJI /
+    // VIEW_ONCE_IMAGE — the body is passed through to the backend).
     createMessage: builder.mutation({
       query: (data) => ({
         url: `/messages`,
@@ -17,8 +19,38 @@ const MessagesApi = baseApi.injectEndpoints({
       }),
       providesTags: ['chats', 'messages'],
     }),
+    // Edit a message (sender-only: text/caption or location coordinates)
+    editMessage: builder.mutation({
+      query: ({ messageId, data }) => ({
+        url: `/messages/${messageId}`,
+        method: 'PATCH',
+        body: data,
+      }),
+      invalidatesTags: ['messages', 'chats'],
+    }),
+    // Soft-delete a message (sender-only)
+    deleteMessage: builder.mutation({
+      query: (messageId) => ({
+        url: `/messages/${messageId}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['messages', 'chats'],
+    }),
+    // Consume view-once media: succeeds once, then 410 forever
+    consumeViewOnceMedia: builder.mutation({
+      query: (messageId) => ({
+        url: `/messages/${messageId}/view-once`,
+        method: 'POST',
+      }),
+      invalidatesTags: ['messages'],
+    }),
   }),
 });
 
-export const { useCreateMessageMutation, useGetUserMessagesQuery } =
-  MessagesApi;
+export const {
+  useCreateMessageMutation,
+  useGetUserMessagesQuery,
+  useEditMessageMutation,
+  useDeleteMessageMutation,
+  useConsumeViewOnceMediaMutation,
+} = MessagesApi;

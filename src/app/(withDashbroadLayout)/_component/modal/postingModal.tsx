@@ -19,7 +19,7 @@ import { FaX } from "react-icons/fa6";
 import { toast } from "sonner";
 import { Button } from "@nextui-org/button";
 import { useCreatePostMutation } from "@/src/redux/features/post/postApi";
-import { TUser } from "@/src/types";
+import { MEDIA_LAYOUT_OPTIONS, TUser } from "@/src/types";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Import Quill's styles
 import { GoVerified } from "react-icons/go";
@@ -33,6 +33,7 @@ interface PostData {
   status: string;
   reportCount: number;
   category: string;
+  mediaLayout: string;
 }
 
 interface TPostModalProps {
@@ -65,7 +66,7 @@ const PostModal = ({ userInfo }: TPostModalProps) => {
 
   // current user
 
-  const { handleSubmit, control, reset, watch } = useForm<PostData>({
+  const { handleSubmit, control, reset, watch, setValue } = useForm<PostData>({
     defaultValues: {
       images: [],
       title: "",
@@ -73,6 +74,7 @@ const PostModal = ({ userInfo }: TPostModalProps) => {
       status: "FREE",
       reportCount: 0,
       category: "Other",
+      mediaLayout: "AUTO",
     },
   });
 
@@ -308,6 +310,30 @@ const PostModal = ({ userInfo }: TPostModalProps) => {
                   </Select>
                 )}
               />
+
+              {/* Multi-image layout picker (only meaningful with 2+ images) */}
+              {imagePreviews.length > 1 && (
+                <div className="space-y-1">
+                  <p className="text-xs text-default-500">Grid layout</p>
+                  <div className="flex flex-wrap gap-2">
+                    {MEDIA_LAYOUT_OPTIONS.map((option) => (
+                      <button
+                        key={option.key}
+                        type="button"
+                        onClick={() => setValue("mediaLayout", option.key)}
+                        className={`rounded-full border px-3 py-1 text-xs transition-colors ${
+                          watch("mediaLayout") === option.key
+                            ? "border-primary bg-primary-100 text-primary"
+                            : "border-default-300 text-default-600 hover:border-primary-300"
+                        }`}
+                      >
+                        <span className="mr-1">{option.hint}</span>
+                        {option.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* Image Upload */}
               <div className="">

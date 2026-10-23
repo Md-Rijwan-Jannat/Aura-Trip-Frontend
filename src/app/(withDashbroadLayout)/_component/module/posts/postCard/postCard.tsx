@@ -26,7 +26,7 @@ export default function PostCard({ post }: TPostCardProps) {
       transition={{ duration: 0.7 }}
       className="w-full"
     >
-      <article className="group/post space-y-4 rounded-lg border border-default-200 bg-default-50 p-2 md:p-6 duration-300 ease-in-out">
+      <article className="group/post space-y-4 rounded-xl border border-borderSubtle bg-default-100/60 dark:bg-white/[0.03] p-3 md:p-6 duration-300 ease-in-out transition-colors hover:border-sage-300/70 dark:hover:border-sage-700/60">
         {/* Post Header */}
         <PostHeader post={post} />
 
@@ -54,7 +54,7 @@ export default function PostCard({ post }: TPostCardProps) {
         <PostActions post={post} />
 
         {/* Comment Card */}
-        <CommentCard postId={post?._id} />
+        <CommentCard postId={post?._id} postUserId={post?.user?._id} />
       </article>
     </motion.div>
   );

@@ -41,19 +41,27 @@ const persistNotificationConfig = {
   storage: typeof window !== 'undefined' ? storage : createNoopStorage(),
 };
 
+// Messenger open state + the conversation you were in: survive a reload so
+// the inbox comes back exactly as you left it.
+const persistChatUiConfig = {
+  key: 'chatUi',
+  storage: typeof window !== 'undefined' ? storage : createNoopStorage(),
+};
+
 // Create persisted reducers
 const persistedAuthReducer = persistReducer(persistAuthConfig, authReducer);
 const persistedNotificationReducer = persistReducer(
   persistNotificationConfig,
   notificationReducer
 );
+const persistedChatUiReducer = persistReducer(persistChatUiConfig, chatUiReducer);
 
 export const store = configureStore({
   reducer: {
     auth: persistedAuthReducer,
     notifications: persistedNotificationReducer,
     groupPreview: groupPreviewReducer,
-    chatUi: chatUiReducer,
+    chatUi: persistedChatUiReducer,
     [baseApi.reducerPath]: baseApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>

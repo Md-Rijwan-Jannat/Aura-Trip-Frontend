@@ -64,11 +64,11 @@ export default function MiniDashboard() {
 
   return (
     <div
-      className={`${isAdminPage && 'hidden'} md:sticky top-28 h-screen mt-28 lg:w-1/4 overflow-y-auto scrollbar-hide`}
+      className={`${isAdminPage && 'hidden'} md:sticky top-28 h-screen mt-28 lg:w-1/4 overflow-y-auto scrollbar-hide rounded-2xl bg-surface border border-borderSubtle shadow-[0_1px_2px_rgba(31,78,61,0.04),0_8px_24px_-12px_rgba(31,78,61,0.12)] p-3`}
     >
       <div className="flex-col gap-6 hidden lg:flex">
         {/* Profile Overview Card */}
-        <Card className="bg-default-50 border border-default-100 rounded p-4">
+        <Card className="bg-default-100/70 dark:bg-white/[0.04] border border-borderSubtle rounded-xl p-4">
           <div className="flex justify-between">
             <h2 className="text-sm font-semibold">Travel Stats</h2>
             <Button
@@ -111,7 +111,7 @@ export default function MiniDashboard() {
         </Card>
 
         {/* Travel Insights Card */}
-        <Card className="bg-default-50 border border-default-100 rounded p-4">
+        <Card className="bg-default-100/70 dark:bg-white/[0.04] border border-borderSubtle rounded-xl p-4">
           <h2 className="text-xl font-semibold">Top Travel Insights</h2>
           <div className="space-y-4 mt-4">
             <p className="text-sm text-default-400">

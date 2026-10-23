@@ -118,7 +118,7 @@ export default function Post() {
       </div>
 
       {/* Tabs for For You and Following */}
-      <div className="flex my-5 rounded-xl bg-default-100 p-1 gap-6 text-xs w-full">
+      <div className="flex my-5 rounded-xl bg-default-100/70 dark:bg-white/[0.05] border border-borderSubtle p-1 gap-6 text-xs w-full">
         <button
           className={`px-4 py-2 rounded-xl w-full ${
             selectedTab === "forYou" ? "bg-default-50" : "bg-default-100"

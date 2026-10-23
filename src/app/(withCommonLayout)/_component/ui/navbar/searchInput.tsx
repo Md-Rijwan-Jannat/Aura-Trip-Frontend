@@ -108,7 +108,7 @@ export default function SearchInput() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.3 }}
-            className="absolute w-[250px] md:w-full left-0 mt-2 bg-default-50 border border-default-200 rounded-lg backdrop-blur-2xl h-[200px] md:h-[300px] overflow-auto scrollbar-hide"
+            className="absolute w-[250px] md:w-full left-0 mt-2 bg-surface border border-borderSubtle rounded-xl shadow-[0_8px_24px_-12px_rgba(31,78,61,0.25)] backdrop-blur-2xl h-[200px] md:h-[300px] overflow-auto scrollbar-hide"
           >
             {/* Posts Section */}
             {posts && posts.length > 0 && (

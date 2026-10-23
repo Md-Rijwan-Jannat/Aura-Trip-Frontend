@@ -18,6 +18,14 @@ import { copyToClipboard } from '@/src/utils/copyToClipboard';
 import ReportModal from '../../../../modal/reportModal';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { toast } from 'sonner';
+import {
+  useFeaturePostMutation,
+  useHidePostMutation,
+  usePinPostMutation,
+} from '@/src/redux/features/post/postApi';
+import { AiOutlineEyeInvisible } from 'react-icons/ai';
+import { BsPinAngle, BsPinAngleFill, BsStar, BsStarFill } from 'react-icons/bs';
 
 interface TPostDropdownProps {
   userInfo: TUser;
@@ -47,6 +55,47 @@ export default function PostDropdown({
     onOpenChange: onReportChange,
   } = useDisclosure();
 
+  const [pinPostFn] = usePinPostMutation();
+  const [featurePostFn] = useFeaturePostMutation();
+  const [hidePostFn] = useHidePostMutation();
+
+  const isOwner = userInfo?.email === currentUser?.email;
+
+  const handleTogglePin = async () => {
+    try {
+      const pinned = !postData?.pinned;
+      await pinPostFn({ postId: postData._id, pinned }).unwrap();
+      toast.success(
+        pinned
+          ? 'Post pinned to the top of your profile'
+          : 'Post unpinned',
+      );
+    } catch {
+      toast.error('Could not update pin');
+    }
+  };
+
+  const handleToggleFeature = async () => {
+    try {
+      const featured = !postData?.featured;
+      await featurePostFn({ postId: postData._id, featured }).unwrap();
+      toast.success(
+        featured ? 'Post highlighted on your profile' : 'Highlight removed',
+      );
+    } catch {
+      toast.error('Could not update highlight');
+    }
+  };
+
+  const handleHide = async () => {
+    try {
+      await hidePostFn(postData._id).unwrap();
+      toast.success('Post hidden from your feed');
+    } catch {
+      toast.error('Could not hide the post');
+    }
+  };
+
   const handleCopyLink = () => {
     const postUrl = `${window.location.origin}/posts/${postData?._id}`;
 
@@ -73,30 +122,62 @@ export default function PostDropdown({
           </DropdownItem>
           <DropdownItem
             className={`${pathname === `/news-feed/posts/${postData?._id}` && 'hidden'}`}
-            key="copy-link"
+            key="view-details"
             as={Link}
             href={`/news-feed/posts/${postData?._id}`}
           >
             View details
           </DropdownItem>
 
+          {/* Owner: single profile pin (one pinned post per author) */}
           <DropdownItem
-            className={`${userInfo?.email !== currentUser?.email && 'hidden'}`}
+            className={`${!isOwner && 'hidden'}`}
+            key="pin-post"
+            onClick={handleTogglePin}
+            startContent={
+              postData?.pinned ? <BsPinAngleFill /> : <BsPinAngle />
+            }
+          >
+            {postData?.pinned ? 'Unpin from profile' : 'Pin to profile'}
+          </DropdownItem>
+
+          {/* Owner: single profile highlight (one highlighted post) */}
+          <DropdownItem
+            className={`${!isOwner && 'hidden'}`}
+            key="feature-post"
+            onClick={handleToggleFeature}
+            startContent={postData?.featured ? <BsStarFill /> : <BsStar />}
+          >
+            {postData?.featured ? 'Remove highlight' : 'Highlight on profile'}
+          </DropdownItem>
+
+          <DropdownItem
+            className={`${!isOwner && 'hidden'}`}
             key="edit-post"
             onClick={onEditOpen}
           >
             Edit post
           </DropdownItem>
+
+          {/* Anyone: hide from my own feed (never deletes the post) */}
           <DropdownItem
-            className={`text-danger ${userInfo?.email === currentUser?.email && 'hidden'}`}
-            key="copy-link"
+            key="hide-post"
+            onClick={handleHide}
+            startContent={<AiOutlineEyeInvisible />}
+          >
+            Hide from my feed
+          </DropdownItem>
+
+          <DropdownItem
+            className={`text-danger ${isOwner && 'hidden'}`}
+            key="report-post"
             onClick={onReportOpen}
           >
             Report a post
           </DropdownItem>
           <DropdownItem
             key="delete-post"
-            className={`text-danger ${userInfo?.email !== currentUser?.email && 'hidden'}`}
+            className={`text-danger ${!isOwner && 'hidden'}`}
             color="danger"
             onClick={onDeleteOpen}
           >

@@ -2,12 +2,19 @@ import { baseApi } from "../../api/baseApi";
 
 export const CommentApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    // Get comments
+    // Get comments (flat list + meta: sortMode / featuredCommentId / featuredMode).
+    // Accepts either a postId string or { postId, sort } — `sort` overrides
+    // the post owner's default ordering for this viewer.
     getCommentsForPosts: builder.query({
-      query: (postId) => ({
-        url: `/comments/${postId}`,
-        method: "GET",
-      }),
+      query: (arg: string | { postId: string; sort?: string }) => {
+        const postId = typeof arg === "string" ? arg : arg.postId;
+        const sort = typeof arg === "string" ? undefined : arg.sort;
+        return {
+          url: `/comments/${postId}`,
+          method: "GET",
+          params: sort ? { sort } : undefined,
+        };
+      },
       providesTags: ["comments", "posts", "users"],
     }),
 

@@ -26,9 +26,18 @@ const chatUiSlice = createSlice({
       state.open = false;
       state.activeChatId = null;
     },
+    // Drop a stale restored conversation (persisted id no longer exists)
+    // while keeping the messenger panel itself open.
+    clearActiveChatId: (state) => {
+      state.activeChatId = null;
+    },
   },
 });
 
-export const { setChatPanelOpen, setActiveChatId, closeChatPanel } =
-  chatUiSlice.actions;
+export const {
+  setChatPanelOpen,
+  setActiveChatId,
+  closeChatPanel,
+  clearActiveChatId,
+} = chatUiSlice.actions;
 export default chatUiSlice.reducer;

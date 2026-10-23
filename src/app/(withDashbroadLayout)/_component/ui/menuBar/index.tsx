@@ -27,6 +27,8 @@ export default function MenuBar({ className }: TMenuBarProps) {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const token = useAppSelector((state) => state.auth?.token);
+  // Highlight the Messages button whenever the docked messenger is open.
+  const chatOpen = useAppSelector((state) => state.chatUi.open);
 
   // Desktop: open the chat list in the right sidebar. Mobile: old /messages page.
   const handleMessagesClick = (e: React.MouseEvent) => {
@@ -42,7 +44,7 @@ export default function MenuBar({ className }: TMenuBarProps) {
 
   return (
     <div
-      className={`${className} flex flex-row justify-between lg:justify-center lg:flex-col gap-4 overflow-y-auto scrollbar-hide`}
+      className={`${className} flex flex-row justify-between lg:justify-start lg:flex-col gap-2 overflow-y-auto scrollbar-hide`}
     >
       {userInfo?.role === 'USER' && (
         <>
@@ -109,6 +111,7 @@ export default function MenuBar({ className }: TMenuBarProps) {
           <MenubarButton
             href="/messages"
             title="Messages"
+            active={chatOpen}
             icon={
               <FaFacebookMessenger className="text-[17px] md:text-[20px]" />
             }
@@ -195,6 +198,7 @@ export default function MenuBar({ className }: TMenuBarProps) {
           <MenubarButton
             href="/messages"
             title="Messages"
+            active={chatOpen}
             icon={
               <FaFacebookMessenger className="text-[17px] md:text-[20px]" />
             }

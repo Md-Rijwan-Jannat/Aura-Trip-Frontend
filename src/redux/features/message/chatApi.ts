@@ -25,6 +25,15 @@ const ChatsApi = baseApi.injectEndpoints({
       }),
       providesTags: ['chats', 'messages'],
     }),
+    // Add an existing user to a group chat (group-only, server-enforced).
+    addToGroup: builder.mutation({
+      query: (data: { chatId: string; userId: string }) => ({
+        url: `/chats/group-add`,
+        method: 'PUT',
+        body: data,
+      }),
+      invalidatesTags: ['chats'],
+    }),
   }),
 });
 
@@ -32,4 +41,5 @@ export const {
   useCreateChatMutation,
   useGetUserChatQuery,
   useGetSingleChatQuery,
+  useAddToGroupMutation,
 } = ChatsApi;

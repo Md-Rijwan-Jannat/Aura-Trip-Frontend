@@ -9,6 +9,7 @@ import { getSender } from '@/src/utils/chatLogics';
 import { useUser } from '@/src/hooks/useUser';
 import { GoVerified } from 'react-icons/go';
 import { format, formatDistanceToNow } from 'date-fns';
+import { messagePreview } from '@/src/utils/messagePreview';
 
 const MessageCard = ({
   chat,
@@ -91,7 +92,9 @@ const MessageCard = ({
             </h2>
           )}
           <div className="text-xs text-default-500 truncate">
-            {newMessage?.content || latestMessage?.content || 'No messages yet'}
+            {newMessage
+              ? messagePreview(newMessage)
+              : messagePreview(latestMessage)}
           </div>
         </div>
         <div className="text-xs text-default-400">{timestamp}</div>

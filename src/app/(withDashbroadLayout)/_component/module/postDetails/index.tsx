@@ -31,12 +31,12 @@ export default function PostDetails({ postId }: TPostDetailsProps) {
   const post = postData?.data;
 
   return (
-    <div className="w-full w-full md:w-[550px] xl:w-[640px] mx-auto mx-auto bg-default-50 rounded-md p-2 md:p-6">
+    <div className="w-full w-full md:w-[550px] xl:w-[640px] mx-auto mx-auto bg-default-100/60 dark:bg-white/[0.03] border border-borderSubtle rounded-xl p-3 md:p-6">
       <PostDetailsHeader post={post} />
       <PostDetailsContent post={post} />
       {post?.images?.length > 0 && <PostImages post={post} />}
       <PostActions post={post} />
-      <DetailsCommentCard postId={post?._id} />
+      <DetailsCommentCard postId={post?._id} postUserId={post?.user?._id} />
     </div>
   );
 }

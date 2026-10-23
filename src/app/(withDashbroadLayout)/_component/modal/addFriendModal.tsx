@@ -11,6 +11,7 @@ import { GoVerified } from 'react-icons/go';
 import { useCreateChatMutation } from '@/src/redux/features/message/chatApi';
 import { useAppDispatch } from '@/src/redux/hook';
 import { setActiveChatId } from '@/src/redux/features/message/chatUiSlice';
+import { useRouter } from 'next/navigation';
 
 interface TAddFriendModalProps {
   isOpen: boolean;
@@ -26,6 +27,7 @@ export default function AddFriendModal({
     useGetAllNormalForAnalyticsUsersQuery(undefined);
   const [createChatFn, { isLoading }] = useCreateChatMutation();
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const allUsers = allUsersData?.data || [];
 
@@ -44,8 +46,13 @@ export default function AddFriendModal({
         const newChat = res.data;
 
         if (newChat) {
-          // Open the new chat in the middle of the screen
-          dispatch(setActiveChatId(newChat._id));
+          // Below lg the docked messenger (right rail) is hidden, so navigate
+          // to the dedicated chat route instead of opening the rail panel.
+          if (typeof window !== 'undefined' && window.innerWidth < 1024) {
+            router.push(`/messages/${newChat._id}`);
+          } else {
+            dispatch(setActiveChatId(newChat._id));
+          }
           onOpenChange(false);
         }
       }

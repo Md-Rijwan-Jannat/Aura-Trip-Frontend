@@ -17,7 +17,7 @@ import Link from "next/link";
 export default function NavBar() {
   return (
     <NextUINavbar
-      className="shadow-sm bg-default-50/20 backdrop-blur-2xl fixed"
+      className="bg-surface/80 backdrop-blur-xl border-b border-borderSubtle shadow-sm fixed"
       maxWidth="xl"
       position="sticky"
     >

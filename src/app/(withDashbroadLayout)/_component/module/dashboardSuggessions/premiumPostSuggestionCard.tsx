@@ -61,7 +61,7 @@ export default function PremiumPostSuggestionCard({
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.7 }}
-      className="bg-default-50 border border-default-200 rounded-md p-2 duration-300 ease-in-out"
+      className="bg-default-100/70 dark:bg-white/[0.04] border border-borderSubtle rounded-xl p-3 duration-300 ease-in-out hover:border-sage-300/70 dark:hover:border-sage-700/60 transition-colors"
     >
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-2">

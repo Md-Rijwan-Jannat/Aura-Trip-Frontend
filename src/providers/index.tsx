@@ -12,6 +12,7 @@ import { Toaster } from "sonner";
 import { persistor, store } from "../redux/store";
 import ChatProvider from "../context/chatContext";
 import { SocketProvider } from "../context/socketProvider";
+import { CallProvider } from "../context/callContext";
 import { IsConnectedProvider } from "../context/isConnectProvider";
 import AuthCookieHydrator from "../components/providers/authCookieHydrator";
 
@@ -30,16 +31,18 @@ export function Providers({ children, themeProps }: ProvidersProps) {
         <IsConnectedProvider>
           <ChatProvider>
             <SocketProvider>
-              <PersistGate loading={null} persistor={persistor}>
-                <AuthCookieHydrator />
-                <NextThemesProvider
-                  {...themeProps}
-                  attribute="class"
-                  defaultTheme="system"
-                >
-                  {children}
-                </NextThemesProvider>
-              </PersistGate>
+              <CallProvider>
+                <PersistGate loading={null} persistor={persistor}>
+                  <AuthCookieHydrator />
+                  <NextThemesProvider
+                    {...themeProps}
+                    attribute="class"
+                    defaultTheme="system"
+                  >
+                    {children}
+                  </NextThemesProvider>
+                </PersistGate>
+              </CallProvider>
             </SocketProvider>
           </ChatProvider>
         </IsConnectedProvider>

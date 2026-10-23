@@ -47,15 +47,15 @@ export default function CommentDropdown({ comment }: CommentDropdownProps) {
         </DropdownTrigger>
         <DropdownMenu aria-label="Comment Actions">
           <DropdownItem
-            className={`${comment?.user?._id === currentUser?._id && "hidden"}`}
-            key="edit-post"
+            className={`${comment?.user?._id !== currentUser?._id && "hidden"}`}
+            key="edit-comment"
             onClick={onEditOpen}
           >
-            Edit post
+            Edit comment
           </DropdownItem>
           <DropdownItem
-            key="delete-post"
-            className={`text-danger ${comment?.user?._id === currentUser?._id && "hidden"}`}
+            key="delete-comment"
+            className={`text-danger ${comment?.user?._id !== currentUser?._id && "hidden"}`}
             color="danger"
             onClick={onDeleteOpen}
           >

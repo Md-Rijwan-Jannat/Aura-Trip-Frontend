@@ -171,6 +171,99 @@ export const PostApi = baseApi.injectEndpoints({
       }),
       providesTags: ["users", "posts", "comments", "reacts"],
     }),
+
+    // ------------------------------------------------------------------
+    // 7-type emoji reactions (one reaction per user per post)
+    // ------------------------------------------------------------------
+
+    // Counts per reaction type + the caller's own reaction
+    getReactionSummary: builder.query({
+      query: ({ targetType = "post", targetId }) => ({
+        url: `/react/summary/${targetType}/${targetId}`,
+        method: "GET",
+      }),
+      providesTags: ["reacts", "posts"],
+    }),
+
+    // Set or change the caller's reaction
+    setReaction: builder.mutation({
+      query: ({ targetType = "post", targetId, type }) => ({
+        url: `/react/${targetType}/${targetId}`,
+        method: "POST",
+        body: { type },
+      }),
+      invalidatesTags: ["reacts", "posts", "users"],
+    }),
+
+    // Remove the caller's reaction
+    removeReaction: builder.mutation({
+      query: ({ targetType = "post", targetId }) => ({
+        url: `/react/${targetType}/${targetId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["reacts", "posts", "users"],
+    }),
+
+    // ------------------------------------------------------------------
+    // Profile pin / highlight, per-user hide, group pin, comment settings
+    // ------------------------------------------------------------------
+
+    // Owner pins/unpins a post to their profile (one pin per author)
+    pinPost: builder.mutation({
+      query: ({ postId, pinned }) => ({
+        url: `/posts/${postId}/pin`,
+        method: "POST",
+        body: { pinned },
+      }),
+      invalidatesTags: [{ type: "posts", id: "LIST" }, "posts"],
+    }),
+
+    // Owner highlights/unhighlights a post (one highlight per author)
+    featurePost: builder.mutation({
+      query: ({ postId, featured }) => ({
+        url: `/posts/${postId}/feature`,
+        method: "POST",
+        body: { featured },
+      }),
+      invalidatesTags: [{ type: "posts", id: "LIST" }, "posts"],
+    }),
+
+    // Group staff pin/unpin inside a community group feed
+    groupPinPost: builder.mutation({
+      query: ({ postId, pinned }) => ({
+        url: `/posts/${postId}/group-pin`,
+        method: "POST",
+        body: { pinned },
+      }),
+      invalidatesTags: [{ type: "posts", id: "LIST" }, "posts"],
+    }),
+
+    // Hide a post from the caller's own feed (never deletes the post)
+    hidePost: builder.mutation({
+      query: (postId) => ({
+        url: `/posts/${postId}/hide`,
+        method: "POST",
+      }),
+      invalidatesTags: [{ type: "posts", id: "LIST" }, "posts"],
+    }),
+
+    unhidePost: builder.mutation({
+      query: (postId) => ({
+        url: `/posts/${postId}/hide`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [{ type: "posts", id: "LIST" }, "posts"],
+    }),
+
+    // Comment ordering + featured-comment settings (owner only)
+    updateCommentSettings: builder.mutation({
+      query: ({ postId, data }) => ({
+        url: `/posts/${postId}/comment-settings`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["posts", "comments"],
+    }),
   }),
 });
 
@@ -187,6 +280,15 @@ export const {
   useUnLikeMutation,
   useDisLikeMutation,
   useUnDislikeMutation,
+  useGetReactionSummaryQuery,
+  useSetReactionMutation,
+  useRemoveReactionMutation,
+  usePinPostMutation,
+  useFeaturePostMutation,
+  useGroupPinPostMutation,
+  useHidePostMutation,
+  useUnhidePostMutation,
+  useUpdateCommentSettingsMutation,
 } = PostApi;
 
 // import { baseApi } from "../../api/baseApi";
