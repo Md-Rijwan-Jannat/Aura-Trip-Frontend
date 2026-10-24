@@ -23,25 +23,6 @@ const manageUserApi = baseApi.injectEndpoints({
       },
       providesTags: ["users"],
     }),
-    // Get all users query
-    getAllUsers: builder.query({
-      query: (args) => {
-        const params = new URLSearchParams();
-
-        if (args) {
-          Object.entries(args).forEach(([name, value]) => {
-            params.append(name, value as string);
-          });
-        }
-
-        return {
-          url: `/users/normal-users`,
-          method: "GET",
-          params,
-        };
-      },
-      providesTags: ["users"],
-    }),
 
     // Get all premium users query
     getAllPremiumUsers: builder.query({
@@ -87,7 +68,6 @@ const manageUserApi = baseApi.injectEndpoints({
 export const {
   useGetAllUserForAnalyticsQuery,
   useGetAlPremiumUserForAnalyticsQuery,
-  useGetAllUsersQuery,
   useGetAllPremiumUsersQuery,
   useUpdateUserStatusMutation,
   useUpdateUserRoleMutation,

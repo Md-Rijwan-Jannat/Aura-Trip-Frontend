@@ -60,21 +60,66 @@ module.exports = {
   darkMode: "class",
   plugins: [
     nextui({
+      defaultExtendTheme: "light",
       theme: {
         light: {
           colors: {
             background: "#F7FAF7",
-            primary: { DEFAULT: "#2F7D62", foreground: "#FFFFFF" },
-            // Aura Trip secondary — same blue as `secondaryColor` in
-            // src/styles/button.ts (NextUI's default secondary is purple).
-            secondary: { DEFAULT: "#2DB2FF", foreground: "#FFFFFF" },
+            foreground: "#000000",
+            // Aura Trip Primary - Sage Green
+            primary: {
+              50: "#F4FAF6",
+              100: "#EAF5ED",
+              200: "#D7EDE0",
+              300: "#B4DEC7",
+              400: "#8AC8A6",
+              500: "#65A982",
+              600: "#2F7D62",
+              700: "#245743",
+              800: "#1F4E3D",
+              900: "#194D3A",
+              DEFAULT: "#2F7D62",
+              foreground: "#FFFFFF",
+            },
+            // Aura Trip Secondary - Blue
+            secondary: {
+              DEFAULT: "#2DB2FF",
+              foreground: "#FFFFFF",
+            },
+            // Aura Trip Sage theme
+            sage: { DEFAULT: "#2F7D62", foreground: "#FFFFFF" },
+            // Focus visible state (green)
+            focus: "#2F7D62",
           },
         },
         dark: {
           colors: {
             background: "#121614",
-            primary: { DEFAULT: "#65A982", foreground: "#10231B" },
-            secondary: { DEFAULT: "#2DB2FF", foreground: "#FFFFFF" },
+            foreground: "#FFFFFF",
+            // Aura Trip Primary - Sage Green (Dark Mode)
+            primary: {
+              50: "#F4FAF6",
+              100: "#EAF5ED",
+              200: "#D7EDE0",
+              300: "#B4DEC7",
+              400: "#8AC8A6",
+              500: "#65A982",
+              600: "#2F7D62",
+              700: "#245743",
+              800: "#1F4E3D",
+              900: "#194D3A",
+              DEFAULT: "#65A982",
+              foreground: "#10231B",
+            },
+            // Aura Trip Secondary - Blue
+            secondary: {
+              DEFAULT: "#2DB2FF",
+              foreground: "#FFFFFF",
+            },
+            // Aura Trip Sage theme for dark mode
+            sage: { DEFAULT: "#65A982", foreground: "#10231B" },
+            // Focus visible state (green)
+            focus: "#65A982",
           },
         },
       },

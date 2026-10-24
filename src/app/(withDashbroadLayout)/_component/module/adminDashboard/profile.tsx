@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Profile from "../userProfile/profile";
+import Profile from "../publicProfile/Profile";
 import { useUser } from "@/src/hooks/useUser";
 
 export default function AdminProfile() {
@@ -9,7 +9,7 @@ export default function AdminProfile() {
 
   return (
     <div>
-      <Profile user={userInfo} />
+      <Profile user={userInfo} isOwnProfile={true} />
     </div>
   );
 }

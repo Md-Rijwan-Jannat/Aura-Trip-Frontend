@@ -3,12 +3,12 @@ import PublicProfile from "../../../_component/module/publicProfile";
 
 interface TPublicProfilePageProps {
   params: {
-    profileId: string;
+    userId: string;
   };
 }
 
 export default function PublicProfilePage({ params }: TPublicProfilePageProps) {
-  const userId = params.profileId;
+  const userId = params.userId;
 
   return (
     <div>

@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSocket } from "@/src/context/socketProvider";
 import { Avatar } from "@nextui-org/avatar";
-import { FaCheckDouble, FaUserPlus, FaThumbsUp, FaComment, FaUsers, FaVideo, FaShieldHalved, FaCog } from "react-icons/fa6";
-import { FaRegBell } from "react-icons/fa";
+import { FaCheckDouble, FaUserPlus, FaThumbsUp, FaComment, FaUsers, FaVideo, FaShieldHalved } from "react-icons/fa6";
+import { FaRegBell, FaCog } from "react-icons/fa";
 import {
   useGetNotificationsQuery,
   useMarkAllNotificationsReadMutation,

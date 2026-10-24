@@ -25,28 +25,24 @@ export function Providers({ children, themeProps }: ProvidersProps) {
   const router = useRouter();
 
   return (
-    <NextUIProvider navigate={router.push}>
-      <Provider store={store}>
-        <Toaster />
-        <IsConnectedProvider>
-          <ChatProvider>
-            <SocketProvider>
-              <CallProvider>
-                <PersistGate loading={null} persistor={persistor}>
-                  <AuthCookieHydrator />
-                  <NextThemesProvider
-                    {...themeProps}
-                    attribute="class"
-                    defaultTheme="system"
-                  >
+    <NextThemesProvider {...themeProps} attribute='class' defaultTheme='system' enableSystem>
+      <NextUIProvider navigate={router.push}>
+        <Provider store={store}>
+          <Toaster />
+          <IsConnectedProvider>
+            <ChatProvider>
+              <SocketProvider>
+                <CallProvider>
+                  <PersistGate loading={null} persistor={persistor}>
+                    <AuthCookieHydrator />
                     {children}
-                  </NextThemesProvider>
-                </PersistGate>
-              </CallProvider>
-            </SocketProvider>
-          </ChatProvider>
-        </IsConnectedProvider>
-      </Provider>
-    </NextUIProvider>
+                  </PersistGate>
+                </CallProvider>
+              </SocketProvider>
+            </ChatProvider>
+          </IsConnectedProvider>
+        </Provider>
+      </NextUIProvider>
+    </NextThemesProvider>
   );
 }

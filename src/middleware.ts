@@ -41,11 +41,7 @@ const RoleBasedRoutes = {
 
 const AuthPathname = ["/login", "/register"];
 
-const PublicRoutes = [
-  /^\/news-feed\/posts\/[a-zA-Z0-9]+$/,
-  "/news-feed/posts",
-  /^\/profile\/[a-zA-Z0-9]+$/,
-];
+const PublicRoutes = [/^\/news-feed\/posts\/[a-zA-Z0-9]+$/, "/news-feed/posts", /^\/profile\/[a-zA-Z0-9]+$/];
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -61,9 +57,7 @@ export async function middleware(request: NextRequest) {
   // ✅ Redirect users without a valid session (no cookie, forged, or expired)
   if (!user) {
     if (!AuthPathname.includes(pathname)) {
-      return NextResponse.redirect(
-        new URL(`/login?redirect=${pathname}`, request.url)
-      );
+      return NextResponse.redirect(new URL(`/login?redirect=${pathname}`, request.url));
     }
 
     return NextResponse.next();
@@ -71,8 +65,7 @@ export async function middleware(request: NextRequest) {
 
   // ✅ Redirect authenticated users after login based on role
   if (pathname === "/login" && user?.role) {
-    const redirectTo =
-      user.role === "ADMIN" ? "/admin-dashboard/analytics" : "/news-feed/posts";
+    const redirectTo = user.role === "ADMIN" ? "/admin-dashboard/analytics" : "/news-feed/posts";
 
     return NextResponse.redirect(new URL(redirectTo, request.url));
   }
@@ -96,7 +89,7 @@ export const config = {
     "/admin-dashboard",
     "/admin-dashboard/:page*",
     "/news-feed/posts/:postId*",
-    "/profile/:profileId*",
+    "/profile/:userId*",
     "/settings",
     "/login",
     "/register",

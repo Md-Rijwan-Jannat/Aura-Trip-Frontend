@@ -1,21 +1,13 @@
-import { configureStore } from '@reduxjs/toolkit';
-import storage from 'redux-persist/lib/storage';
-import {
-  persistStore,
-  persistReducer,
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
-} from 'redux-persist';
+import { configureStore } from "@reduxjs/toolkit";
+import storage from "redux-persist/lib/storage";
+import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist";
 
-import { baseApi } from './api/baseApi';
-import authReducer from './features/auth/authSlice';
-import notificationReducer from './features/message/notificationSlice';
-import chatUiReducer from './features/message/chatUiSlice';
-import groupPreviewReducer from './features/group/groupPreviewSlice';
+import { baseApi } from "./api/baseApi";
+import authReducer from "./features/auth/authSlice";
+import notificationReducer from "./features/message/notificationSlice";
+import chatUiReducer from "./features/message/chatUiSlice";
+import groupPreviewReducer from "./features/group/groupPreviewSlice";
+import appNotificationsReducer from "./features/notification/notificationSlice";
 
 // Fallback storage if localStorage is not available
 const createNoopStorage = () => ({
@@ -32,34 +24,32 @@ const createNoopStorage = () => ({
 
 // Use localStorage in the browser
 const persistAuthConfig = {
-  key: 'auth',
-  storage: typeof window !== 'undefined' ? storage : createNoopStorage(),
+  key: "auth",
+  storage: typeof window !== "undefined" ? storage : createNoopStorage(),
 };
 
 const persistNotificationConfig = {
-  key: 'notifications',
-  storage: typeof window !== 'undefined' ? storage : createNoopStorage(),
+  key: "notifications",
+  storage: typeof window !== "undefined" ? storage : createNoopStorage(),
 };
 
 // Messenger open state + the conversation you were in: survive a reload so
 // the inbox comes back exactly as you left it.
 const persistChatUiConfig = {
-  key: 'chatUi',
-  storage: typeof window !== 'undefined' ? storage : createNoopStorage(),
+  key: "chatUi",
+  storage: typeof window !== "undefined" ? storage : createNoopStorage(),
 };
 
 // Create persisted reducers
 const persistedAuthReducer = persistReducer(persistAuthConfig, authReducer);
-const persistedNotificationReducer = persistReducer(
-  persistNotificationConfig,
-  notificationReducer
-);
+const persistedNotificationReducer = persistReducer(persistNotificationConfig, notificationReducer);
 const persistedChatUiReducer = persistReducer(persistChatUiConfig, chatUiReducer);
 
 export const store = configureStore({
   reducer: {
     auth: persistedAuthReducer,
     notifications: persistedNotificationReducer,
+    appNotifications: appNotificationsReducer,
     groupPreview: groupPreviewReducer,
     chatUi: persistedChatUiReducer,
     [baseApi.reducerPath]: baseApi.reducer,

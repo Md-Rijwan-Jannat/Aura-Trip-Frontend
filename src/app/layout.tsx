@@ -17,16 +17,14 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: siteConfig.name,
-    description:
-      "Aura Trip — the travel social community for sharing stories, tips, and destinations.",
+    description: "Aura Trip — the travel social community for sharing stories, tips, and destinations.",
     siteName: siteConfig.name,
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: siteConfig.name,
-    description:
-      "Aura Trip — the travel social community for sharing stories, tips, and destinations.",
+    description: "Aura Trip — the travel social community for sharing stories, tips, and destinations.",
   },
 };
 
@@ -37,23 +35,12 @@ export const viewport: Viewport = {
   ],
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html suppressHydrationWarning lang="en">
+    <html suppressHydrationWarning lang='en' cz-shortcut-listen>
       <head />
-      <body
-        className={clsx(
-          "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable
-        )}
-      >
-        <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-          {children}
-        </Providers>
+      <body className={clsx("min-h-screen bg-background font-sans antialiased", fontSans.variable)} suppressHydrationWarning>
+        <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>{children}</Providers>
       </body>
     </html>
   );
