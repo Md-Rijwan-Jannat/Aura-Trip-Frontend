@@ -1,4 +1,4 @@
-import { baseApi } from '../../api/baseApi';
+import { baseApi } from "../../api/baseApi";
 
 export const NotificationApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -8,30 +8,35 @@ export const NotificationApi = baseApi.injectEndpoints({
 
         if (args) {
           Object.entries(args).forEach(([key, value]) => {
-            if (value !== undefined && value !== null && value !== '') {
+            if (value !== undefined && value !== null && value !== "") {
               params.append(key, value as string);
             }
           });
         }
 
-        return { url: '/notifications', method: 'GET', params };
+        return { url: "/notifications", method: "GET", params };
       },
-      providesTags: ['notifications'],
+      providesTags: ["notifications"],
     }),
 
     getUnreadNotificationCount: builder.query({
-      query: () => ({ url: '/notifications/unread-count', method: 'GET' }),
-      providesTags: ['notifications'],
+      query: () => ({ url: "/notifications/unread-count", method: "GET" }),
+      providesTags: ["notifications"],
     }),
 
     markAllNotificationsRead: builder.mutation({
-      query: () => ({ url: '/notifications/read-all', method: 'PATCH' }),
-      invalidatesTags: ['notifications'],
+      query: () => ({ url: "/notifications/read-all", method: "PATCH" }),
+      invalidatesTags: ["notifications"],
     }),
 
     markNotificationRead: builder.mutation({
-      query: (id) => ({ url: `/notifications/${id}/read`, method: 'PATCH' }),
-      invalidatesTags: ['notifications'],
+      query: (id) => ({ url: `/notifications/${id}/read`, method: "PATCH" }),
+      invalidatesTags: ["notifications"],
+    }),
+
+    deleteNotification: builder.mutation({
+      query: (id) => ({ url: `/notifications/${id}`, method: "DELETE" }),
+      invalidatesTags: ["notifications"],
     }),
   }),
 });
@@ -41,4 +46,5 @@ export const {
   useGetUnreadNotificationCountQuery,
   useMarkAllNotificationsReadMutation,
   useMarkNotificationReadMutation,
+  useDeleteNotificationMutation,
 } = NotificationApi;

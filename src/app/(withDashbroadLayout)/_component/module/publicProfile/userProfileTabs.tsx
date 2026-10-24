@@ -4,7 +4,7 @@ import { TPost } from '@/src/types';
 import { Tab, Tabs } from '@nextui-org/tabs';
 import { motion } from 'framer-motion';
 import React, { useState } from 'react';
-import PostCard from '../../module/posts/postCard/postCard';
+import PostCard from '../posts/postCard/postCard';
 import { useGetSingleUserPostsQuery } from '@/src/redux/features/user/userApi';
 import Empty from '@/src/components/ui/empty';
 import InfiniteScrollContainer from '@/src/components/ui/infiniteScrollerContainer';

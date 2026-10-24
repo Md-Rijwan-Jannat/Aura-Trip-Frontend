@@ -6,7 +6,7 @@ import {
 import { TPost } from '@/src/types';
 import { Tab, Tabs } from '@nextui-org/tabs';
 import { motion } from 'framer-motion';
-import PostCard from '../../module/posts/postCard/postCard';
+import PostCard from '../posts/postCard/postCard';
 import Empty from '@/src/components/ui/empty';
 import { useGetAllPremiumPostsQuery } from '@/src/redux/features/premiumPost/premiumPostApi';
 import { PiCrownSimpleDuotone } from 'react-icons/pi';
