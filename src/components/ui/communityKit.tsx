@@ -152,6 +152,7 @@ export function CommunityButton({
         className={cls}
         onClick={(e) => {
           const handler = onClick || onPress;
+
           if (handler) {
             if (typeof handler === "function" && handler.length === 0) {
               // onPress style function
@@ -176,6 +177,7 @@ export function CommunityButton({
       disabled={off}
       onClick={(e) => {
         const handler = onPress || onClick;
+
         if (handler) {
           if ("length" in handler && handler.length === 0) {
             // onPress style function

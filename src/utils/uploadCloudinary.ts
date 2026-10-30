@@ -26,6 +26,7 @@ export async function uploadToCloudinary(file: File): Promise<string> {
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
+
     throw new Error(errorData.message || "Failed to upload file to Cloudinary");
   }
 

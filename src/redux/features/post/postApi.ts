@@ -264,6 +264,16 @@ export const PostApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["posts", "comments"],
     }),
+
+    // Share a post to the requester's feed
+    sharePostToFeed: builder.mutation({
+      query: ({ postId, caption, audience }) => ({
+        url: `/posts/${postId}/share`,
+        method: "POST",
+        body: { caption, audience },
+      }),
+      invalidatesTags: [{ type: "posts", id: "LIST" }, "posts"],
+    }),
   }),
 });
 
@@ -289,6 +299,7 @@ export const {
   useHidePostMutation,
   useUnhidePostMutation,
   useUpdateCommentSettingsMutation,
+  useSharePostToFeedMutation,
 } = PostApi;
 
 // import { baseApi } from "../../api/baseApi";

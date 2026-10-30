@@ -66,6 +66,16 @@ export const CommentApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["comments", "posts", "users"],
     }),
+
+    // Set or remove highlighted comment (post owner only)
+    setHighlightedComment: builder.mutation({
+      query: ({ postId, commentId }) => ({
+        url: `/comments/highlight/${postId}`,
+        method: "POST",
+        body: { commentId },
+      }),
+      invalidatesTags: ["comments", "posts"],
+    }),
   }),
 });
 
@@ -76,4 +86,5 @@ export const {
   useUpdateCommentsForPostsMutation,
   useDeleteCommentsForPostsMutation,
   useReplayCommentsForPostsMutation,
+  useSetHighlightedCommentMutation,
 } = CommentApi;

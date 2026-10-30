@@ -33,6 +33,7 @@ export default function LinkedInStyleProfile({ user, isOwnProfile }: ILinkedInSt
       setIsFollowing(user.follower?.includes(currentUser._id as string) || false);
       const userFollowsMe = currentUser.follower?.includes(user._id as string) || false;
       const iFollow = currentUser.following?.includes(user._id as string) || false;
+
       setIsMutualConnection(userFollowsMe && iFollow);
     }
   }, [user, currentUser]);
@@ -90,10 +91,10 @@ export default function LinkedInStyleProfile({ user, isOwnProfile }: ILinkedInSt
           {coverImage ? (
             <Image src={coverImage} alt='Profile Cover' fill className='object-cover w-full h-full' priority />
           ) : (
-            <div className='w-full h-full bg-gradient-to-r from-sage-400 via-sage-500 to-sage-600 dark:from-default-400 dark:via-default-500 dark:to-default-600'></div>
+            <div className='w-full h-full bg-gradient-to-r from-sage-400 via-sage-500 to-sage-600 dark:from-default-400 dark:via-default-500 dark:to-default-600' />
           )}
           {/* Overlay gradient for depth */}
-          <div className='absolute inset-0 bg-gradient-to-t from-black/20 to-transparent'></div>
+          <div className='absolute inset-0 bg-gradient-to-t from-black/20 to-transparent' />
         </motion.div>
 
         {/* Profile Card Section */}
@@ -248,7 +249,7 @@ export default function LinkedInStyleProfile({ user, isOwnProfile }: ILinkedInSt
         </motion.div>
 
         {/* Footer Spacing */}
-        <div className='mt-12'></div>
+        <div className='mt-12' />
       </div>
     </motion.div>
   );

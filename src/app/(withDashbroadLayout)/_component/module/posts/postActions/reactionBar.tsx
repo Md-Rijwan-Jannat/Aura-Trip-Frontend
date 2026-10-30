@@ -128,6 +128,7 @@ export default function ReactionBar({ targetType = "post", targetId, compact = f
           <div className='flex items-center gap-1 flex-wrap px-1 py-2 border-t border-default-100'>
             {REACTION_TYPES.map((type) => {
               const count = local.counts[type] ?? 0;
+
               if (count === 0) return null;
 
               return (
@@ -173,6 +174,7 @@ export default function ReactionBar({ targetType = "post", targetId, compact = f
       {/* Reaction count pills - compact */}
       {REACTION_TYPES.map((type) => {
         const count = local.counts[type] ?? 0;
+
         if (count === 0) return null;
 
         return (

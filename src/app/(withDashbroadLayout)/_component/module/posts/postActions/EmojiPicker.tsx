@@ -25,8 +25,10 @@ export default function EmojiPicker({ onSelectReaction, isLoading = false, child
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
+
     checkMobile();
     window.addEventListener("resize", checkMobile);
+
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
@@ -41,6 +43,7 @@ export default function EmojiPicker({ onSelectReaction, isLoading = false, child
     };
 
     document.addEventListener("mousedown", handleClickOutside);
+
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [showPicker]);
 

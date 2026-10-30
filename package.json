@@ -33,6 +33,7 @@
     "@nextui-org/scroll-shadow": "^2.1.20",
     "@nextui-org/select": "^2.2.7",
     "@nextui-org/skeleton": "^2.0.32",
+    "@nextui-org/slider": "^2.4.7",
     "@nextui-org/snippet": "2.0.43",
     "@nextui-org/switch": "2.0.34",
     "@nextui-org/system": "2.4.0",

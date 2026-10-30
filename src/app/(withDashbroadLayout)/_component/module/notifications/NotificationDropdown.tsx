@@ -117,9 +117,11 @@ export default function NotificationDropdown({ isOpen, onClose }: NotificationDr
         onClose();
       }
     };
+
     if (isOpen) {
       document.addEventListener("mousedown", handleClickOutside);
     }
+
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isOpen, onClose]);
 
